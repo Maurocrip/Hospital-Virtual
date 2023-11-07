@@ -1,0 +1,49 @@
+input
+{
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    margin-bottom: 0px;
+    border: none;
+    border-bottom: 1px solid #000000;
+    outline: none;
+    background: transparent;
+}
+.formulario
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+.opcion
+{
+    padding: 5px;
+}
+.fondo
+{
+    background-color: #7aaacc;
+    margin: 10px;
+}
+.centro
+{
+    display: flex;
+    flex-direction: column;
+}
+.boton
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+button
+{
+    background-color: #007b7b;
+    border-radius: 10px;
+}
+button:hover
+{
+    background-color: rgb(81, 255, 0);
+}

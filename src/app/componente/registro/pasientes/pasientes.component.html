@@ -1,0 +1,128 @@
+<div class="fondo">
+    <div class="centro">
+        <form class="formulario" [formGroup]="grupo">
+            <div class="opcion">
+                <label>Nombre</label>
+                <input type="text" formControlName="nombre"  [(ngModel)]="paciente.nombre">
+                <small 
+                *ngIf="
+                grupo.controls['nombre'].errors?.['required'] && 
+                grupo.controls['nombre'].touched 
+                ">
+                  falta Nombre
+                </small>
+            </div>
+            <div class="opcion">
+                <label>Apellido</label>
+                <input type="text" formControlName="apellido"  [(ngModel)]="paciente.apellido">
+                <small 
+                *ngIf="
+                grupo.controls['apellido'].errors?.['required'] && 
+                grupo.controls['apellido'].touched 
+                ">
+                  falta apellido
+                </small>
+            </div>
+            <div class="opcion">
+                <label>Dni</label>
+                <input type="number" formControlName="dni" [(ngModel)]="paciente.dni" >
+                <small 
+                *ngIf="
+                grupo.controls['dni'].errors?.['required'] && 
+                grupo.controls['dni'].touched 
+                ">
+                  falta Dni
+                </small>
+                <small 
+                *ngIf="
+                grupo.controls['dni'].errors?.['max'] || grupo.controls['dni'].errors?.['min'] && grupo.controls['dni'].touched 
+                ">
+                  Su DNI debe estar entre 11111111 y 99999999
+                </small>
+            </div>
+            <div class="opcion">
+                <label>Años</label>
+                <input type="number" formControlName="edad" [(ngModel)]="paciente.edad">
+                <small 
+                *ngIf="
+                grupo.controls['edad'].errors?.['required'] && 
+                grupo.controls['edad'].touched 
+                ">
+                  falta edad
+                </small>
+                <small 
+                *ngIf="
+                grupo.controls['edad'].errors?.['max'] || grupo.controls['edad'].errors?.['min'] && grupo.controls['edad'].touched 
+                ">
+                  Su DNI debe estar entre 0 y 99
+                </small>
+            </div>
+            <div class="opcion">
+                <label>Email</label>
+                <input type="email" formControlName="email" [(ngModel)]="paciente.email">
+                <small 
+                *ngIf="
+                grupo.controls['email'].errors?.['required'] && 
+                grupo.controls['email'].touched 
+                ">
+                  falta email
+                </small>
+                <small 
+                *ngIf="
+                grupo.controls['email'].errors?.['email'] && grupo.controls['email'].touched 
+                ">
+                    Su email debe incluir "@" y no terminar en "."
+                </small>
+            </div>
+            <div class="opcion">
+                <label>Contraseña</label>
+                <input type="password" formControlName="contraseña" [(ngModel)]="paciente.contra">
+                <small 
+                *ngIf="
+                grupo.controls['contraseña'].errors?.['required'] && 
+                grupo.controls['contraseña'].touched 
+                ">
+                  falta contraseña
+                </small>
+            </div>
+            <div class="opcion">
+                <label>Obra social</label>
+                <input type="text" formControlName="obraSocial" [(ngModel)]="paciente.obraSocial">
+                <small 
+                *ngIf="
+                grupo.controls['obraSocial'].errors?.['required'] && 
+                grupo.controls['obraSocial'].touched 
+                ">
+                  falta obraSocial
+                </small>
+            </div>
+            <div class="opcion">
+                <label>Imagen 1</label>
+                <input type="file" formControlName="foto1" (change)="imgUpload($event, true)">
+                <small 
+                *ngIf="
+                grupo.controls['foto1'].errors?.['required'] && 
+                grupo.controls['foto1'].touched 
+                ">
+                  falta foto
+                </small>
+            </div>
+            <div class="opcion">
+                <label>Imagen 2</label>
+                <input type="file" formControlName="foto2" (change)="imgUpload($event, false)">
+                <small 
+                *ngIf="
+                grupo.controls['foto2'].errors?.['required'] && 
+                grupo.controls['foto2'].touched 
+                ">
+                  falta foto
+                </small>
+            </div>
+        </form>
+        <div>
+            <div class="boton">
+                <button (click)="Registrarse()">registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>

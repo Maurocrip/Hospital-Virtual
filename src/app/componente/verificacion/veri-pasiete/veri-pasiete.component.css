@@ -1,0 +1,32 @@
+.verificacion
+{
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.centro
+{
+    height: 500px;
+    border: solid;
+    width: 500px;
+    background: cadetblue;
+}
+
+label
+{
+    padding: 0px 50px 0px 50px;
+}
+
+
+.centrado
+{
+    display: flex;
+    height: 33%;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}

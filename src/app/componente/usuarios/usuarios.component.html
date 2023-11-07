@@ -1,0 +1,88 @@
+<div class="total">
+    
+    <div class="usuarios">
+        <button (click)="NuevosUsuarios()">Crear Usuario</button>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th class="a"colspan="8">PACIENTES</th>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Obra social</th>
+            <th>foto1</th>
+            <th>foto2</th>
+        </tr>
+        <tr *ngFor="let paciente of global.arrayPasietes">
+            <td>{{paciente.nombre}}</td>
+            <td>{{paciente.apellido}}</td>
+            <td>{{paciente.edad}}</td>
+            <td>{{paciente.dni}}</td>
+            <td>{{paciente.email}}</td>
+            <td>{{paciente.obraSocial}}</td>
+            <td style="width: 5%"><img src={{paciente.foto1}} width="100%" height="100%"></td>
+            <td style="width: 5%"><img src={{paciente.foto2}} width="100%" height="100%"></td>
+        </tr>
+    </table>
+    
+
+    <table class="table">
+        <tr>
+            <th class="a"colspan="8">ESPECIALISTAS</th>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Especialidad</th>
+            <th>foto</th>
+            <th>Estado</th>
+        </tr>
+        <tr *ngFor="let especialista of global.arrayEspecialista">
+            <td>{{especialista.nombre}}</td>
+            <td>{{especialista.apellido}}</td>
+            <td>{{especialista.edad}}</td>
+            <td>{{especialista.dni}}</td>
+            <td>{{especialista.email}}</td>
+            <td>{{especialista.especialiadad}}</td>
+            <td style="width: 5%;"><img src={{especialista.foto}} width="100%" height="100%"></td>
+            <td *ngIf="especialista.estado == 'desahabilitado'; else elseBlock">
+                <button (click)="Aceptar(especialista)">Aceptar</button>
+                <button class="denegar" (click)="Denegar(especialista)">Denegar</button>
+            </td>
+            <ng-template #elseBlock>
+                <td>{{especialista.estado}}</td>
+            </ng-template>
+            
+        </tr>
+    </table>
+
+    <table class="table">
+        <tr>
+            <th class="a"colspan="8">ADMINS</th>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>foto</th>
+        </tr>
+        <tr *ngFor="let especialista of global.arrayAdmin">
+            <td>{{especialista.nombre}}</td>
+            <td>{{especialista.apellido}}</td>
+            <td>{{especialista.edad}}</td>
+            <td>{{especialista.dni}}</td>
+            <td>{{especialista.email}}</td>
+            <td style="width: 5%;"><img src={{especialista.foto}} width="100%" height="100%"></td>    
+        </tr>
+    </table>
+</div>

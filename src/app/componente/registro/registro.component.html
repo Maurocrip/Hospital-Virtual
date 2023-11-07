@@ -1,0 +1,28 @@
+<div class="fondo">   
+    <div class="center">
+        <div>
+            <div class="titulo">
+                <label>REGISTRO</label>
+            </div>
+            <div class="registro">
+                <div>
+                    <div class="opciones">
+                        <div class="botones">
+                            <button *ngIf="global.tipo == 'admin'" [ngClass]="{'select': tipo ===2}" (click)="Cambiar(2)">Administrador</button>
+                            <button [ngClass]="{'select': tipo ===1}" (click)="Cambiar(1)">Especialista</button>
+                            <button [ngClass]="{'select': tipo ===0}" (click)="Cambiar(0)">Paciente</button>
+                        </div>
+                        <div class="volver">
+                            <button *ngIf="global.tipo == 'admin'"(click)="Volver()">Volver</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="componentes">
+                    <app-admin *ngIf="tipo === 2"></app-admin>
+                    <app-especialistas *ngIf="tipo === 1"></app-especialistas>
+                    <app-pasientes *ngIf="tipo === 0"></app-pasientes>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="fondo">
+    <div class="login">
+        <div class="centro">
+            <div class="titulo">
+                <label>LOGIN</label>
+            </div>
+            <div class="sombra">
+                <div class="espacio">
+                    <form class="formulario" [formGroup]="grupo">
+                        <div class="opcion">
+                            <label>Email</label>
+                            <input type="email" formControlName="email" [(ngModel)]="email">
+                            <small 
+                            *ngIf="
+                            grupo.controls['email'].errors?.['required'] && 
+                            grupo.controls['email'].touched 
+                            ">
+                              falta email
+                            </small>
+                            <small 
+                            *ngIf="
+                            grupo.controls['email'].errors?.['email'] && grupo.controls['email'].touched 
+                            ">
+                                Su email debe incluir "@" y no terminar en "."
+                            </small>
+                        </div>
+                        <div class="opcion">
+                            <label>Contraseña</label>
+                            <input type="password" formControlName="contraseña" [(ngModel)]="contra">
+                            <small 
+                            *ngIf="
+                            grupo.controls['contraseña'].errors?.['required'] && 
+                            grupo.controls['contraseña'].touched 
+                            ">
+                              falta contraseña
+                            </small>
+                        </div>
+                    </form>
+                    <div class="botones">
+                        <div class="boton">
+                            <button (click)="Registrarse()">Login</button>
+                        </div>
+                        <div class="boton">
+                            <button (click)="CompletarAdm()">Admin</button>
+                        </div>
+                        <div class="boton">
+                            <button (click)="CompletarPas()">Paciente</button>
+                        </div>
+                        <div class="boton">
+                            <button (click)="CompletarEsp()">Especialista</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

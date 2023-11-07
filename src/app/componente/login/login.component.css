@@ -1,0 +1,80 @@
+input
+{
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    margin-bottom: 0px;
+    border: none;
+    border-bottom: 1px solid #000000;
+    outline: none;
+    background: transparent;
+}
+.formulario
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+.opcion
+{
+    padding: 5px;
+}
+.fondo
+{
+    background-color: rgb(246, 197, 18);
+    height: 900px;
+}
+.centro
+{
+    display: flex;
+    flex-direction: column;
+}
+.boton
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+button
+{
+    background-color: #007b7b;
+    border-radius: 10px;
+}
+button:hover
+{
+    background-color: rgb(81, 255, 0);
+}
+.login
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.titulo
+{
+    background-color: #007b7b;
+    border-radius: 15px 15px 0px 0px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+.espacio
+{
+    background-color: #7aaacc;
+    margin: 10px;
+}
+.sombra
+{
+    background-color: #000000db;
+}
+.botones
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

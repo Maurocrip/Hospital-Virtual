@@ -1,0 +1,132 @@
+<div class="fondo">
+    <div class="centro">
+        <form class="formulario" [formGroup]="formGroup">
+            
+          <div class="opcion">
+                <label>Nombre</label>
+                <input type="text" formControlName="nombre"  [(ngModel)]="especialista.nombre">
+                <small 
+                *ngIf="
+                formGroup.controls['nombre'].errors?.['required'] && 
+                formGroup.controls['nombre'].touched 
+                ">
+                  falta Nombre
+                </small>
+            </div>
+
+            <div class="opcion">
+                <label>Apellido</label>
+                <input type="text" formControlName="apellido" [(ngModel)]="especialista.apellido">
+                <small 
+                *ngIf="
+                formGroup.controls['apellido'].errors?.['required'] && 
+                formGroup.controls['apellido'].touched 
+                ">
+                  falta apellido
+                </small>
+            </div>
+
+            <div class="opcion">
+                <label>Dni</label>
+                <input type="number" formControlName="dni" [(ngModel)]="especialista.dni">
+                <small 
+                *ngIf="
+                formGroup.controls['dni'].errors?.['required'] && 
+                formGroup.controls['dni'].touched 
+                ">
+                  falta Dni
+                </small>
+                <small 
+                *ngIf="
+                formGroup.controls['dni'].errors?.['max'] || formGroup.controls['dni'].errors?.['min'] && formGroup.controls['dni'].touched 
+                ">
+                  Su DNI debe estar entre 11111111 y 99999999
+                </small>
+            </div>
+
+            <div class="opcion">
+                <label>Años</label>
+                <input type="number" formControlName="edad" [(ngModel)]="especialista.edad">
+                <small 
+                *ngIf="
+                formGroup.controls['edad'].errors?.['required'] && 
+                formGroup.controls['edad'].touched 
+                ">
+                  falta edad
+                </small>
+                <small 
+                *ngIf="
+                formGroup.controls['edad'].errors?.['max'] || formGroup.controls['edad'].errors?.['min'] && formGroup.controls['edad'].touched 
+                ">
+                  Su DNI debe estar entre 0 y 99
+                </small>
+            </div>
+
+            <div class="opcion">
+                <label>Email</label>
+                <input type="email" formControlName="email" [(ngModel)]="especialista.email">
+                <small 
+                *ngIf="
+                formGroup.controls['email'].errors?.['required'] && 
+                formGroup.controls['email'].touched 
+                ">
+                  falta email
+                </small>
+                <small 
+                *ngIf="
+                formGroup.controls['email'].errors?.['email'] && formGroup.controls['email'].touched 
+                ">
+                    Su email debe incluir "@" y no terminar en "."
+                </small>
+            </div>
+
+            <div class="opcion">
+                <label>Contraseña</label>
+                <input type="password" formControlName="contraseña" [(ngModel)]="especialista.contra">
+                <small 
+                *ngIf="
+                formGroup.controls['contraseña'].errors?.['required'] && 
+                formGroup.controls['contraseña'].touched 
+                ">
+                  falta contraseña
+                </small>
+            </div>
+
+            <div class="opcion">
+               <div>
+                   <label>Selecciona Especialidad</label>
+                   <select #select (change)="Selecion()">
+                        <option value="">-------</option>
+                        <option value="darmatologo">darmatologo</option>
+                   </select>
+               </div>
+               <div>
+                    <label>Nueva Especialidad</label>
+                   <input type="text" #especialidad (change)="Especialidad()" >
+                   <small 
+                   *ngIf="especialista.especialiadad == ''">
+                     falta especialidad
+                   </small>
+               </div>
+            </div>
+
+            <div class="opcion">
+                <label>Imagen</label>
+                <input type="file" formControlName="foto" (change)="imgUpload($event)">
+                <small 
+                *ngIf="
+                formGroup.controls['foto'].errors?.['required'] && 
+                formGroup.controls['foto'].touched 
+                ">
+                  falta foto
+                </small>
+            </div>
+
+        </form>
+        <div>
+            <div class="boton">
+                <button (click)="Registrarse()">registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>

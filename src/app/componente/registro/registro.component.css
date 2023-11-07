@@ -1,0 +1,60 @@
+.center
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.fondo
+{
+    background-color: rgb(246, 197, 18);
+    height: 900px;
+}
+.opciones
+{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    height: 100%;
+    position: relative;
+}
+button
+{
+    border: none;
+    background-color: rgba(103, 101, 101, 0.837);
+}
+button:hover
+{
+    background-color: #007b7b;
+}
+.registro
+{
+    background-color: #000000db;
+    display: flex;
+    flex-direction: row;
+    max-width: 720px;
+}
+.titulo
+{
+    background-color: #007b7b;
+    border-radius: 15px 15px 0px 0px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.botones
+{
+    display: flex;
+    flex-direction: column;
+}
+.select
+{
+    background-color: aqua;
+}
+.volver
+{
+    bottom: 20px;
+    position: absolute;
+}

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "hospitalonline-54e32"
+  },
+  "targets": {
+    "hospitalonline-54e32": {
+      "hosting": {
+        "appHospital": [
+          "hospitalonline-54e32"
+        ]
+      }
+    }
+  }
+}
