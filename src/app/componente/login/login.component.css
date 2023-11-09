@@ -68,13 +68,43 @@ button:hover
     background-color: #7aaacc;
     margin: 10px;
 }
+
 .sombra
 {
     background-color: #000000db;
 }
+
 .botones
 {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.favButtons
+{
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: auto;
+    bottom: 10px;
+    right: 10px;
+    flex-direction: column-reverse;
+}
+
+.fab
+{
+    height: 90px;
+    width: 90px;
+    display: flex;
+    background-color: #ff8989;
+    border-radius: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+img
+{
+    border-radius: 100%;
 }

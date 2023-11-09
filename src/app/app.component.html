@@ -1,6 +1,6 @@
 <div class="topnav">
   <div class="derecha">
-    <a *ngIf="this.global.usuario!=''" routerLink="home">Home</a>
+    <a routerLink="home">Home</a>
     <a *ngIf="this.global.tipo =='admin'" routerLink="usuario">Usuarios</a>
   </div>
   <div class="izquierda" *ngIf="this.global.usuario!=''; else elseBlock">

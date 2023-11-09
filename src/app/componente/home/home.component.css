@@ -1,13 +1,13 @@
 .descripcion
 {
-    margin: 10px 10px 0px 10px;
-    display: flex;
-    justify-content: space-between;
+   height: 900px;
 }
-.tablas
+
+.centro
 {
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.493);
-    overflow-x: scroll;
-    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }

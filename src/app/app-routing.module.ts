@@ -13,7 +13,6 @@ const routes: Routes =
   {path: "registro", component: RegistroComponent},
   {path: "validacionPas", component: VeriPasieteComponent},  
   {path: "validacionEsp", component: VeriEspecilistaComponent},  
-  {path: "tablaUsuarios", component: UsuariosComponent},  
   {path: "home", component: HomeComponent},  
   {path: "usuario", component: UsuariosComponent},  
   {path: '', redirectTo: "login", pathMatch: "full"}

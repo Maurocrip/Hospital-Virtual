@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Especialista } from 'src/app/Clases/Especialista';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
-import { Especialista, GlobalService, Paciente } from 'src/app/servicios/global.service';
+import { GlobalService } from 'src/app/servicios/global.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -26,7 +27,7 @@ export class UsuariosComponent
 
   NuevosUsuarios()
   {
+    console.log(this.firebase.auth);
     this.router.navigate(['registro']);
   }
-
 }

@@ -1,23 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ErroresService } from 'src/app/servicios/errores.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
-import { Admin, Especialista, GlobalService } from 'src/app/servicios/global.service';
-import { sendEmailVerification } from '@angular/fire/auth';
+import { GlobalService } from 'src/app/servicios/global.service';
 import { getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import { Storage } from '@angular/fire/storage';
-import { timeout } from 'rxjs';
-import Swal from 'sweetalert2';
+import { Admin } from 'src/app/Clases/Admin';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit
+export class AdminComponent
 {
-  public user : any = [];
   public admin : Admin = new Admin;
   public file : File | undefined;
   public formGroup : FormGroup;
@@ -33,25 +29,18 @@ export class AdminComponent implements OnInit
       foto :["",[Validators.required]]
     });
   }
-  ngOnInit(): void 
-  {
-    this.user = this.firebase.auth.currentUser;
-  }
-;
 
-  async Registrarse()
+  Registrarse()
   {
     if(this.formGroup.status == "VALID")
     {
-      await this.firebase.RegistrarUsuario(this.admin.email, this.admin.contra)
+      let user : any = this.firebase.auth.currentUser;
+      this.firebase.RegistrarUsuario(this.admin.email, this.admin.contra)
       .then(async()=> 
       {
         this.admin.foto = await this.GuardarImagen(this.file);
-        this.firebase.GuardarAdministrador(this.admin);
-        setTimeout(()=> 
-        {
-          this.global.RestaurarAdmin("Administrador creado");
-        }, 350);
+        await this.firebase.GuardarAdministrador(this.admin);
+        this.global.RestaurarAdmin("Administrador creado", user);
       })
       .catch((error)=> 
       { 

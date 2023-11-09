@@ -5,9 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService  } from 'src/app/servicios/firebase.service';
 import { sendEmailVerification } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { GlobalService, Paciente } from 'src/app/servicios/global.service';
+import { GlobalService } from 'src/app/servicios/global.service';
 import { ErroresService } from 'src/app/servicios/errores.service';
 import Swal from 'sweetalert2';
+import { Paciente } from 'src/app/Clases/Paciente';
 
 @Component({
   selector: 'app-pasientes',
@@ -39,6 +40,7 @@ export class PasientesComponent
   {
     if(this.grupo.status == "VALID")
     {
+      let user : any = this.firebase.auth.currentUser;
       this.firebase.RegistrarUsuario(this.paciente.email, this.paciente.contra)
       .then(async(res)=> 
       {
@@ -54,7 +56,7 @@ export class PasientesComponent
           }
           else
           {
-            this.global.RestaurarAdmin("Paciente creado, tiene que verificar el mail");
+            this.global.RestaurarAdmin("Paciente creado, tiene que verificar el mail", user);
           }
 
         })

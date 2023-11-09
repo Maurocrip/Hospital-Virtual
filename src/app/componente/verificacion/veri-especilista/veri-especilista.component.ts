@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
-import {  GlobalService } from 'src/app/servicios/global.service';
+import { GlobalService } from 'src/app/servicios/global.service';
 import { Router } from '@angular/router';
 import { ErroresService } from 'src/app/servicios/errores.service';
 

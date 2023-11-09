@@ -3,6 +3,10 @@ import { FirebaseService } from './firebase.service';
 import { Router } from '@angular/router';
 import { ErroresService } from './errores.service';
 import Swal from 'sweetalert2';
+import { User } from '@angular/fire/auth';
+import { Admin } from '../Clases/Admin';
+import { Especialista } from '../Clases/Especialista';
+import { Paciente } from '../Clases/Paciente';
 
 @Injectable({
   providedIn: 'root'
@@ -93,94 +97,15 @@ export class GlobalService {
       }
     }
   }
-
-  RestaurarAdmin(texto :string)
+ 
+  RestaurarAdmin(texto :string, user :User)
   {
-    this.firebase.DesLogueo(this.firebase.auth)
-    .then(()=>
+
+    this.firebase.auth.updateCurrentUser(user)
+    .then
     {
-      this.firebase.LogIn(this.usuario.email,this.usuario.contra);
       Swal.fire({text :texto, icon:"success", title: "EXITO"});
-    })
-    .catch((error)=> 
-    { 
-      this.errores.MostrarError(error.code); 
-    });
-  }
-}
-
-export class Paciente 
-{
-  public nombre : string = "";
-  public apellido : string = "";
-  public email : string = "";
-  public edad : number = 0;
-  public dni : number = 0;
-  public obraSocial : string = "";
-  public contra : string = "";
-  public foto2 : string | void;
-  public foto1 :  string | void;
-
-  constructor(nombre : string = "", apellido : string = "", email : string = "", edad : number = 0, dni : number = 0, obraSocial : string = "", contra : string = "", foto2 : string = "", foto1 : string = "")
-  {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.email = email;
-    this.edad = edad;
-    this.dni = dni;
-    this.obraSocial = obraSocial;
-    this.contra = contra;
-    this.foto2 = foto2;
-    this.foto1 = foto1;
-  }
-}
-
-export class Admin 
-{
-  public nombre : string = "";
-  public apellido : string = "";
-  public email : string = "";
-  public edad : number = 0;
-  public dni : number = 0;
-  public contra : string = "";
-  public foto : string | void;
-
-  constructor(nombre : string = "", apellido : string = "", email : string = "", edad : number = 0, dni : number = 0, contra : string = "", foto : string = "")
-  {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.email = email;
-    this.edad = edad;
-    this.dni = dni;
-    this.contra = contra;
-    this.foto = foto;
-  }
-}
-
-export class Especialista 
-{
-  public id : string;
-  public nombre : string ;
-  public apellido : string ;
-  public email : string;
-  public edad : number ;
-  public dni : number;
-  public contra : string;
-  public especialiadad : string;
-  public foto : string | void;
-  public estado : string;
-
-  constructor(nombre : string = "", apellido : string = "", email : string = "", edad : number = 0, dni : number = 0, especialiadad : string = "", contra : string = "", foto : string = "", estado : string = "desahabilitado", id = "")
-  {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.email = email;
-    this.edad = edad;
-    this.dni = dni;
-    this.especialiadad = especialiadad;
-    this.contra = contra;
-    this.foto = foto;
-    this.estado = estado;
-    this.id = id;
+    };
+    
   }
 }

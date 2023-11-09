@@ -1,13 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErroresService } from 'src/app/servicios/errores.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
-import { Especialista, GlobalService } from 'src/app/servicios/global.service';
+import { GlobalService } from 'src/app/servicios/global.service';
 import { sendEmailVerification } from '@angular/fire/auth';
 import { getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import { Storage } from '@angular/fire/storage';
-import Swal from 'sweetalert2';
+import { Especialista } from 'src/app/Clases/Especialista';
 
 @Component({
   selector: 'app-especialistas',
@@ -15,8 +15,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./especialistas.component.css']
 })
 
-export class EspecialistasComponent 
-{
+export class EspecialistasComponent implements OnInit
+{ 
+  public arrayEspecialidades : any = [] ;
   public especialista : Especialista = new Especialista;
   public file : File | undefined;
   @ViewChild('select') select: any;
@@ -31,33 +32,35 @@ export class EspecialistasComponent
       edad :["",[Validators.required, Validators.max(99), Validators.min(0)]],
       dni :["",[Validators.required, Validators.max(99999999), Validators.min(10000000)]],
       contraseña :["",[Validators.required]],
+      //especial :["",[this.noTieneNumeros]],
       foto :["",[Validators.required]]
+    });
+  }
+
+  ngOnInit(): void 
+  {
+    this.firebase.TraerEspecialidades()
+    .subscribe((respuesta)=>
+    {
+      this.arrayEspecialidades =[];
+      for(let element of respuesta)
+      {
+        this.arrayEspecialidades.push(element["Especialidad"]);         
+      }
     });
   };
 
   Selecion()
   {
-    if(this.select.nativeElement.value != "")
-    {
-      this.especialidad.nativeElement.value = "";
-      this.especialista.especialiadad = this.select.nativeElement.value;
-    }
-    else if(this.especialidad.nativeElement.value == "")
-    {
-      this.especialista.especialiadad = "";
-    }
+    this.especialista.especialiadad = this.select.nativeElement.value;
   }
 
-  Especialidad()
+  AgregarEspecialidad()
   {
-    if(this.especialidad.nativeElement.value != "")
+    if(this.especialidad.nativeElement.value.replaceAll(" ", "")!="")
     {
-      this.select.nativeElement.value = "";
-      this.especialista.especialiadad = this.especialidad.nativeElement.value;
-    }
-    else if(this.select.nativeElement.value == "")
-    {
-      this.especialista.especialiadad = "";
+      this.firebase.GuardarEspecialidades(this.especialidad.nativeElement.value);
+      this.especialidad.nativeElement.value = "";
     }
   }
 
@@ -67,6 +70,7 @@ export class EspecialistasComponent
     {
       if(this.especialista.especialiadad != "")
       {
+        let user : any = this.firebase.auth.currentUser;
         this.firebase.RegistrarUsuario(this.especialista.email, this.especialista.contra)
         .then(async(res)=> 
         {
@@ -81,7 +85,7 @@ export class EspecialistasComponent
             }
             else
             {
-              this.global.RestaurarAdmin("Especialista creado, tiene que verificar el mail");
+              this.global.RestaurarAdmin("Especialista creado, tiene que verificar el mail", user);
             }
           })
           .catch((err)=> 
@@ -125,4 +129,20 @@ export class EspecialistasComponent
     const auxFile: File = event.target.files[0];
     this.file = auxFile;
   }
+
+  /*private noTieneNumeros(control : AbstractControl): null | object
+  {
+    let nombre : string = control.value;
+    const regex = /^[0-9]*$/;
+    const onlyNumbers = regex.test(nombre); 
+    console.log(onlyNumbers)// true
+    if(onlyNumbers)
+    {
+      return {contieneNumeros:true}
+    }
+    else
+    {
+      return null
+    }
+  }*/
 }

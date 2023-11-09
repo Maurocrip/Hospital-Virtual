@@ -20,6 +20,13 @@ export class RegistroComponent
 
   Volver()
   {
-    this.router.navigate(['usuario']);
+    if(this.tipo!=0)
+    {
+      this.Cambiar(0);
+    }
+    else
+    {
+      this.router.navigate(['usuario']);
+    }
   }
 }
