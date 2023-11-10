@@ -1,0 +1,58 @@
+<div class="fondo">
+    <div class="centro">
+        <form class="formulario">
+            <div class="titulo">
+                <label>SOLICITAR TURNO</label>
+            </div>
+            <div class="interior">
+                <div class="opcion">
+                    <label>Selecciona Especialidad</label>
+                    <select #especialidad (change)="SelecionEspecialidad()">
+                        <option value="">-----</option>
+                        <option *ngFor="let paciente of global.arrayEspecialidades" value={{paciente}}>{{paciente}}</option>
+                    </select>
+                </div>
+        
+                <div class="opcion">
+                    <label>Selecciona Especialista</label>
+                    <select #especialista (change)="Selecion()">
+                        <option value="">-----</option>
+                        <option *ngFor="let especialista of arrayEspecialista" value={{especialista.email}}>{{especialista.nombre}}</option>
+                    </select>
+                    <small 
+                    *ngIf="this.turno.emailEsp ==''">
+                        falta especialista
+                    </small>
+                </div>
+        
+                <div class="opcion">
+                    <label>Selecciona Fecha</label>
+                    <select #select (change)="SelecDia()">
+                        <option value="">-----</option>
+                        <option *ngFor="let dia of arrayFechasHabiles" value={{dia.dia}}>{{dia.dia}}/{{dia.mes}}/{{dia.year}}</option>
+                    </select>
+                    <small 
+                    *ngIf="this.turno.fecha == null">
+                        falta fecha
+                    </small>
+                </div>
+        
+                <div class="opcion" *ngIf="global.tipo == 'admin'">
+                    <label>Selecciona Paciente</label>
+                    <select #paciente (change)="SelecionPas()">
+                        <option value="">-----</option>
+                        <option *ngFor="let paciente of global.arrayPasietes" value={{paciente.email}}>{{paciente.nombre}}</option>
+                    </select>
+                    <small 
+                    *ngIf="this.turno.nombrePas == ''">
+                        falta paciente
+                    </small>
+                </div>
+                <div class="opcion--botoness">
+                    <button (click)="Registrar()">Crear</button>
+                    <button *ngIf="global.tipo == 'admin'" (click)="Volver()">Volver</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

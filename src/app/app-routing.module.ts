@@ -6,6 +6,7 @@ import { HomeComponent } from './componente/home/home.component';
 import { VeriPasieteComponent } from './componente/verificacion/veri-pasiete/veri-pasiete.component';
 import { VeriEspecilistaComponent } from './componente/verificacion/veri-especilista/veri-especilista.component';
 import { UsuariosComponent } from './componente/usuarios/usuarios.component';
+import { SolicitarTurnosComponent } from './componente/turnos/solicitar-turnos/solicitar-turnos.component';
 
 const routes: Routes = 
 [
@@ -15,6 +16,7 @@ const routes: Routes =
   {path: "validacionEsp", component: VeriEspecilistaComponent},  
   {path: "home", component: HomeComponent},  
   {path: "usuario", component: UsuariosComponent},  
+  {path: "solicitar", component: SolicitarTurnosComponent},  
   {path: '', redirectTo: "login", pathMatch: "full"}
 ];
 

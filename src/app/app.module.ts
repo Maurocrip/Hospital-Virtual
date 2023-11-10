@@ -18,6 +18,8 @@ import { HomeComponent } from './componente/home/home.component';
 import { VeriEspecilistaComponent } from './componente/verificacion/veri-especilista/veri-especilista.component';
 import { VeriPasieteComponent } from './componente/verificacion/veri-pasiete/veri-pasiete.component';
 import { UsuariosComponent } from './componente/usuarios/usuarios.component';
+import { SolicitarTurnosComponent } from './componente/turnos/solicitar-turnos/solicitar-turnos.component';
+import { MisTurnosComponent } from './componente/turnos/mis-turnos/mis-turnos.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { UsuariosComponent } from './componente/usuarios/usuarios.component';
     HomeComponent,
     VeriEspecilistaComponent,
     VeriPasieteComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    SolicitarTurnosComponent,
+    MisTurnosComponent
   ],
   imports: [
     BrowserModule,

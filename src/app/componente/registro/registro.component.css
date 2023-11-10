@@ -43,6 +43,7 @@ button:hover
     flex-direction: column;
     max-width: 720px;
 }
+
 .titulo
 {
     background-color: #007b7b;

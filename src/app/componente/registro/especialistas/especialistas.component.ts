@@ -15,15 +15,14 @@ import { Especialista } from 'src/app/Clases/Especialista';
   styleUrls: ['./especialistas.component.css']
 })
 
-export class EspecialistasComponent implements OnInit
+export class EspecialistasComponent
 { 
-  public arrayEspecialidades : any = [] ;
   public especialista : Especialista = new Especialista;
   public file : File | undefined;
   @ViewChild('select') select: any;
   @ViewChild('especialidad') especialidad: any;
   public formGroup : FormGroup;
-  constructor(private global: GlobalService, private router: Router, private fb : FormBuilder, private firebase : FirebaseService, private errores : ErroresService, private storage : Storage)
+  constructor(public global: GlobalService, private router: Router, private fb : FormBuilder, private firebase : FirebaseService, private errores : ErroresService, private storage : Storage)
   {
     this.formGroup = this.fb.group({
       nombre : ["",[Validators.required]],
@@ -36,19 +35,6 @@ export class EspecialistasComponent implements OnInit
       foto :["",[Validators.required]]
     });
   }
-
-  ngOnInit(): void 
-  {
-    this.firebase.TraerEspecialidades()
-    .subscribe((respuesta)=>
-    {
-      this.arrayEspecialidades =[];
-      for(let element of respuesta)
-      {
-        this.arrayEspecialidades.push(element["Especialidad"]);         
-      }
-    });
-  };
 
   Selecion()
   {

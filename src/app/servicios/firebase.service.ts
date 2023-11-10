@@ -4,6 +4,7 @@ import { Firestore, collection, collectionData, doc, setDoc, updateDoc } from '@
 import { Admin } from '../Clases/Admin';
 import { Paciente } from '../Clases/Paciente';
 import { Especialista } from '../Clases/Especialista';
+import { Turno } from '../Clases/Turno';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,18 @@ export class FirebaseService {
   readonly colUsuarios = collection(this.firestore, 'usuario');
   readonly colEspecialistas = collection(this.firestore, 'especialistas');
   readonly colAdmin = collection(this.firestore, 'admin');
+  readonly colTurnos = collection(this.firestore, 'turnos');
   constructor(public firestore: Firestore) { }
   
   //-----------------------------------------------TRAER------------------------------------------------------------------------------------------
   TraerPacientes()
   { 
     return collectionData(this.colPacientes);
+  }
+
+  TraerTurnos()
+  { 
+    return collectionData(this.colTurnos);
   }
 
   TraerEspecialidades()
@@ -98,10 +105,23 @@ export class FirebaseService {
     const id = documento.id;
     setDoc(documento,{ Especialidad: especialiadad });
   }
+
+  GuardarTurnos(turno : Turno) : void
+  {
+    const documento = doc(this.colTurnos);
+    const id = documento.id;
+    setDoc(documento,{ Año: turno.fecha?.year, Mes: turno.fecha?.mes, Dia: turno.fecha?.dia, Id: id, Especialista : turno.nombreEsp, Paciente : turno.nombrePas, Especialidad : turno.especialidad, EmailEspecialista : turno.emailEsp, EmailPaciente: turno.emailPas, Estado : turno.estado});
+  }
 //-----------------------------------------------MODIFICAR----------------------------------------------------------------------------------------
   ModificarEspecialista( docId: string, estado : string) 
   {
     const docRef = doc(this.firestore, 'especialistas', docId);
+    return updateDoc(docRef, {Estado : estado });
+  }
+  
+  ModificarTurno( docId: string, estado : string) 
+  {
+    const docRef = doc(this.firestore, 'turnos', docId);
     return updateDoc(docRef, {Estado : estado });
   }
 }

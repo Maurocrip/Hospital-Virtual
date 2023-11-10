@@ -7,6 +7,8 @@ import { User } from '@angular/fire/auth';
 import { Admin } from '../Clases/Admin';
 import { Especialista } from '../Clases/Especialista';
 import { Paciente } from '../Clases/Paciente';
+import { Turno } from '../Clases/Turno';
+import { Fecha } from '../Clases/Fecha';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,8 @@ import { Paciente } from '../Clases/Paciente';
 export class GlobalService {
 
   public arrayPasietes : any =[];
+  public arrayTurnos : any =[];
+  public arrayEspecialidades : any =[];
   public arrayEspecialista : any =[];
   public arrayUsuario : any =[];
   public arrayAdmin : any =[];
@@ -63,6 +67,25 @@ export class GlobalService {
         element["Dni"],element["Contra"],element["Foto"]));   
       }
     })
+
+    this.firebase.TraerTurnos()
+    .subscribe((res)=>
+    {
+      this.arrayTurnos =[];
+      for(let element of res)
+      {     
+        this.arrayTurnos.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"]),element["Especialista"],element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"] ));   
+      }
+    })
+    this.firebase.TraerEspecialidades()
+    .subscribe((respuesta)=>
+    {
+      this.arrayEspecialidades =[];
+      for(let element of respuesta)
+      {
+        this.arrayEspecialidades.push(element["Especialidad"]);         
+      }
+    });
   }
 
   UsuarioLogueado(tipo : string, element : any)
@@ -100,12 +123,10 @@ export class GlobalService {
  
   RestaurarAdmin(texto :string, user :User)
   {
-
     this.firebase.auth.updateCurrentUser(user)
     .then
     {
       Swal.fire({text :texto, icon:"success", title: "EXITO"});
     };
-    
   }
 }

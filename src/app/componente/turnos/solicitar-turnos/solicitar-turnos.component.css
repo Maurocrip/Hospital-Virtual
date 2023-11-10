@@ -1,0 +1,61 @@
+.fondo
+{
+    height: 900px;
+    background-color: rgb(246, 197, 18);
+}
+
+.centro
+{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.interior
+{
+    border: solid;
+    background-color: #7aaacc;
+}
+
+.opcion
+{
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    & small
+    {
+        color: #921e1e;
+        font-size: large;
+    };
+}
+
+.titulo
+{
+    border: solid;
+    background-color: #007b7b;
+    border-radius: 15px 15px 0px 0px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    & label
+    {
+        margin: 10px;
+    }
+}
+
+.opcion--botoness
+{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    justify-content: space-between;
+}
+
+button
+{
+    border-radius: 30px;
+    background-color: #007b7b;
+}
