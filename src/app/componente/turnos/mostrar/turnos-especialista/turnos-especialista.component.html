@@ -25,7 +25,7 @@
             <td>{{turno.fecha.dia}}/{{turno.fecha.mes}}/{{turno.fecha.year}}</td>
             <td>{{turno.fecha.hora}}</td>
             <td>
-                <button class="denegar" *ngIf="turno.estado == 'Esperando'" (click)="Cancelar(turno)">Cancelar</button>
+                <button class="denegar" *ngIf="turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
                 <button *ngIf="turno.estado == 'Esperando'" (click)="Aceptar(turno.id)">Aceptar</button>
                 <button class="rechazar" *ngIf="turno.estado == 'Esperando'" (click)="Rechazar(turno)">Rechazar</button>
                 <button class="finalizar" *ngIf="turno.estado == 'aceptado'" (click)="Finalizar(turno)">Finalizar</button>

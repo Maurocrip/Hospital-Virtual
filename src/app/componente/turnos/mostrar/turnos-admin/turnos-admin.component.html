@@ -26,8 +26,51 @@
             <td>{{turno.fecha.hora}}</td>
             <td>
                 <button *ngIf="turno.estado == 'Esperando'" (click)="Cancelar(turno)">Cancelar</button>
-                <label class="nd" *ngIf="turno.estado != 'Esperando'">No tiene opciones</label>
+                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Comentario(turno)">Ver reseña</button>
+                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Diagnostico(turno)">Ver Diagnostico</button>
+                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion != '' " (click)="Calificar(turno.calificacion)">Calificacion</button>
+                <button class="encuesta" *ngIf="turno.comentario != '' && turno.estado == 'fializado'" (click)="Encuesta(turno.emailPas)">Ver encuesta</button>
             </td>
         </tr>
     </table>
+
+    <div class="fondo" *ngIf="comentario">
+      <div class="centro">
+          <div class="titulo">
+              <label>Cometario/Reseña</label>
+          </div>
+          <div class="formulario">
+              <label >{{escritura}}</label>
+              <button class="Volver" (click)="VolverCom()">Volver</button>
+          </div>
+      </div>
+  </div>
+
+  <div class="fondo" *ngIf="mostrarDiag">
+      <div class="centro">
+          <div class="titulo">
+              <label>DIAGOSTICO</label>
+          </div>
+          <div class="formulario">
+              <label>Peso: {{diagnostico.peso}}</label>
+              <label> Altura: {{diagnostico.altura}}</label>
+              <label> Temperatura: {{diagnostico.temperatura}}</label>
+              <label> Presion: {{diagnostico.presion}}</label>
+              <label> Diagnostico: {{diagnostico.diagnostico}}</label>
+              <button class="Volver" (click)="VolverDiagMos()">Volver</button>
+          </div>
+      </div>
+  </div>
+
+  <div class="fondo" *ngIf="calificacion">
+    <div class="centro">
+        <div class="titulo">
+            <label>Calificacion</label>
+        </div>
+        <div class="formulario">
+            <label >{{califText}}</label>
+            <button class="Volver" (click)="VolverCalif()">Volver</button>
+        </div>
+    </div>
+</div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Diagnostico } from 'src/app/Clases/Diagnostico';
 import { Encuesta } from 'src/app/Clases/Encuesta';
+import { Fecha } from 'src/app/Clases/Fecha';
 import { Turno } from 'src/app/Clases/Turno';
 import { ErroresService } from 'src/app/servicios/errores.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
@@ -30,26 +31,29 @@ export class TurnosPacienteComponent implements OnInit
 
   constructor( public global : GlobalService, private firebase : FirebaseService, private error : ErroresService){}
 
-  ngOnInit(): void 
+  ngOnInit(): void
   {
-    this.global.miArrayObs.subscribe(array => 
+    this.firebase.TraerTurnos()
+    .subscribe((res)=>
     {
       this.arrrayTurosPaciente =[];
-      for(let element of array)
-      {     
-        if(element.emailPas == this.global.usuario.email)
+      for(let element of res)
+      {
+        if(element["EmailPaciente"] == this.global.usuario.email)
         {
-          this.arrrayTurosPaciente.push(element);   
+          this.arrrayTurosPaciente.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"],element["Hora"]),element["Especialista"],
+          element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"], element["Id"],
+          element["Comentario"], new Diagnostico(element["Diagnostico"].peso,element["Diagnostico"].altura,element["Diagnostico"].diagnostico,
+          element["Diagnostico"].temperatura,element["Diagnostico"].presion), element["Calificacion"]));
         }
       }
-    });
-    this.encuesta.emailPaciente = this.global.usuario.email;
-    this.arrayTurnos = [...this.arrrayTurosPaciente];
+      this.arrayTurnos = [...this.arrrayTurosPaciente];
+    })
   }
 
   Cancelar(turno : Turno)
   {
-    this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cancelar", Id :turno.id});     
+    this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cancelar", Id :turno.id, Estado : "cancelado"});
   }
 
   Comentario(reseña : string)
@@ -128,7 +132,7 @@ export class TurnosPacienteComponent implements OnInit
     }
     else
     {
-      for (let turno of this.arrrayTurosPaciente) 
+      for (let turno of this.arrrayTurosPaciente)
       {
         if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombreEsp.toLocaleLowerCase().includes(busqueda))
         {

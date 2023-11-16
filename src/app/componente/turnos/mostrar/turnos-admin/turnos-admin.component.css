@@ -37,7 +37,7 @@ button
     margin: 10px;
     &:hover
     {
-        background-color: #c70505; 
+        background-color: #c70505;
     }
 }
 
@@ -54,7 +54,7 @@ button
     display: flex;
     flex-direction: column;
     align-items: center;
-    & input 
+    & input
     {
         margin-bottom: 15px;
         font-family: inherit;
@@ -85,5 +85,65 @@ td
     &.denegar,.rechazar
     {
         color: #da0f0f;
+    }
+}
+
+.fondo
+{
+    position: absolute;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    background: #000000a6;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 1px;
+}
+
+.centro
+{
+    background: #77c0ff;
+    border: solid 2px;
+}
+
+.titulo
+{
+    display: flex;
+    background-color: #337107;
+    justify-content: center;
+    border-bottom: solid;
+    padding: 3px;
+}
+
+.formulario
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    align-items: stretch;
+    & label
+    {
+        padding: 5px;
+        background-color: white;
+    }
+}
+
+.diagnostico
+{
+    background-color: #520684;
+    &:hover
+    {
+        background-color: #b4139c;
+    }
+}
+
+.comentario
+{
+    background-color: #a09805;
+    &:hover
+    {
+        background-color: #e0d857;
     }
 }

@@ -7,7 +7,7 @@ import { GlobalService } from 'src/app/servicios/global.service';
   templateUrl: './mostrar.component.html',
   styleUrls: ['./mostrar.component.css']
 })
-export class MostrarComponent 
+export class MostrarComponent
 {
   @ViewChild('texto') texto: any;
   public escritura : string = "";
@@ -15,10 +15,10 @@ export class MostrarComponent
   private estado : string ="";
   public mostrar : boolean = false;
   constructor( public global : GlobalService, public firebase : FirebaseService){}
-  
+
   Cargar()
   {
-    this.firebase.ModificarTurnoReseña(this.id, {estado:this.estado, reseña :this.texto.nativeElement.value});
+    this.firebase.ModificarTurnoReseña(this.id, { estado: this.estado, reseña :this.texto.nativeElement.value});
     this.mostrar=false;
   }
 
