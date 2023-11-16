@@ -7,11 +7,12 @@ export class Especialista
   public edad : number ;
   public dni : number;
   public contra : string;
-  public especialiadad : string;
+  public especialiadad : Array<string>;
+  public diasHabiles : Array<any>;
   public foto : string | void;
   public estado : string;
 
-  constructor(nombre : string = "", apellido : string = "", email : string = "", edad : number = 0, dni : number = 0, especialiadad : string = "", contra : string = "", foto : string = "", estado : string = "denegado", id = "")
+  constructor(nombre : string = "", apellido : string = "", email : string = "", edad : number = 0, dni : number = 0, especialiadad : Array<string> = [], contra : string = "", foto : string = "", estado : string = "denegado", id = "", diasHabiles : Array<any> = [])
   {
     this.nombre = nombre;
     this.apellido = apellido;
@@ -23,5 +24,6 @@ export class Especialista
     this.foto = foto;
     this.estado = estado;
     this.id = id;
+    this.diasHabiles = diasHabiles;
   }
 }

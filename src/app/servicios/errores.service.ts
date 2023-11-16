@@ -44,12 +44,20 @@ export class ErroresService {
         this.GenerarAlerta("Hay algun campo incompleto o con algún error","warning","CUIDADO!!");
       break;
 
+      case "CID": 
+        this.GenerarAlerta("Debe de completar todo los campos, si no tiene nada que diagnosticar o comentar escriba 'nada'","warning","CUIDADO!!");
+      break;
+
+      case "CIE": 
+        this.GenerarAlerta("Digamos su opinión con respecto a la higiene y atecion por favor, gracias.","warning","CUIDADO!!");
+      break;
+
       case "DE": 
-      this.GenerarAlerta("Un administrador te denego al entrada","warning","DENEGADO!!");
+        this.GenerarAlerta("Un administrador te denego al entrada","warning","DENEGADO!!");
       break;
 
       case "FE": 
-      this.GenerarAlerta("Falta la especialidad","warning","CUIDADO!!");
+      this.GenerarAlerta("Falta la especialidad, o tiene selecionada una especialidad vacia","warning","CUIDADO!!");
       break;
 
       default:

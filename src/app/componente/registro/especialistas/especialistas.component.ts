@@ -22,6 +22,7 @@ export class EspecialistasComponent
   @ViewChild('select') select: any;
   @ViewChild('especialidad') especialidad: any;
   public formGroup : FormGroup;
+  private recaptcha: string = '';
   constructor(public global: GlobalService, private router: Router, private fb : FormBuilder, private firebase : FirebaseService, private errores : ErroresService, private storage : Storage)
   {
     this.formGroup = this.fb.group({
@@ -38,7 +39,15 @@ export class EspecialistasComponent
 
   Selecion()
   {
-    this.especialista.especialiadad = this.select.nativeElement.value;
+    this.especialista.especialiadad = [];
+    let especialidades :  any = document.getElementById("especialidades")
+    for(let i = 0 ; i<especialidades.length; i++)
+    {
+      if(especialidades.options[i].selected)
+      {
+        this.especialista.especialiadad.push(especialidades.options[i].value)
+      }
+    }
   }
 
   AgregarEspecialidad()
@@ -52,9 +61,9 @@ export class EspecialistasComponent
 
   Registrarse()
   {
-    if(this.formGroup.status == "VALID")
+    if(this.formGroup.status == "VALID" && this.recaptcha !="")
     {
-      if(this.especialista.especialiadad != "")
+      if(!this.especialista.especialiadad.includes(""))
       {
         let user : any = this.firebase.auth.currentUser;
         this.firebase.RegistrarUsuario(this.especialista.email, this.especialista.contra)
@@ -114,6 +123,11 @@ export class EspecialistasComponent
   {
     const auxFile: File = event.target.files[0];
     this.file = auxFile;
+  }
+
+  funcion(response: string) 
+  {
+    this.recaptcha = response;
   }
 
   /*private noTieneNumeros(control : AbstractControl): null | object

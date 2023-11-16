@@ -95,19 +95,19 @@
             <div class="opcion">
                <div>
                    <label>Selecciona Especialidad</label>
-                   <select #select (change)="Selecion()">
+                   <select id="especialidades" multiple (change)="Selecion()">
                       <option value="">-----</option>
                       <option *ngFor="let especialidad of global.arrayEspecialidades" value={{especialidad}}>{{especialidad}}</option>
                    </select>
+                   <small 
+                    *ngIf="this.especialista.especialiadad.includes('')">
+                      falta especialidad
+                    </small>
                </div>
                <div>
                     <label>Nueva Especialidad</label>
                     <input type="text" #especialidad>
                     <button (click)="AgregarEspecialidad()">Agregar</button>
-                    <small 
-                    *ngIf="this.especialista.especialiadad == ''">
-                      falta especialidad
-                    </small>
                </div>
             </div>
 
@@ -123,6 +123,10 @@
                 </small>
             </div>
 
+            <div>
+              <re-captcha (resolved)="funcion($event)"></re-captcha>
+            </div>
+            
         </form>
         <div>
             <div class="boton">

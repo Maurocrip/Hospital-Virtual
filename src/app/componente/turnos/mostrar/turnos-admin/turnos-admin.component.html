@@ -1,0 +1,33 @@
+<div class="total">
+    <div class="buscador">
+        <label>BUSCADOR</label>
+        <input #busqueda type="text" (keyup)="Buscar()">
+    </div>
+    <table class="table">
+        <tr>
+            <th class="a"colspan="100%">Turnos</th>
+        </tr>
+        <tr>
+            <th>Especialista</th>
+            <th>Especialidad</th>
+            <th>Paciete</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Opciones</th>
+        </tr>
+        <tr *ngFor="let turno of arrayTurnos">
+            <td>{{turno.nombreEsp}}</td>
+            <td>{{turno.especialidad}}</td>
+            <td>{{turno.nombrePas}}</td>
+            <td [ngClass]="{denegar: turno.estado=='cancelado', rechazar: turno.estado=='rechazado',finalizar: turno.estado=='fializado',
+            aceptar: turno.estado=='aceptado'}">{{turno.estado}}</td>
+            <td>{{turno.fecha.dia}}/{{turno.fecha.mes}}/{{turno.fecha.year}}</td>
+            <td>{{turno.fecha.hora}}</td>
+            <td>
+                <button *ngIf="turno.estado == 'Esperando'" (click)="Cancelar(turno)">Cancelar</button>
+                <label class="nd" *ngIf="turno.estado != 'Esperando'">No tiene opciones</label>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -26,7 +26,7 @@ export class LoginComponent
       {imagen : "https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/pasientes%2F784569521699554620339.jpg?alt=media&token=c0e890fa-a1a7-4aac-9fc9-40f034456f52",email : "vejax96154@mkurg.com",contra : "misegundopaciete"},
       {imagen : "https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/pasientes%2F965874231699554862221.jpeg?alt=media&token=8f43d64e-532b-4fc0-987b-86181e45b2e7",email : "yemarev772@rdluxe.com",contra : "cantrapasientetres"},
       {imagen : "https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/especialista%2F965874521699555024053.png?alt=media&token=6fc5919d-737e-4f0f-96a7-e3658d8bea20",email : "gocegib156@othao.com",contra : "doctoraespecialista"},
-      {imagen : "https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/especialista%2F444444441699535860040.png?alt=media&token=4783f3b1-32c5-4b71-b660-38c87201ee2c",email : "agustinfrich@gmail.com",contra : "123456"},
+      {imagen : "https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/especialista%2F326985471699888763231.png?alt=media&token=2d3e8445-3392-4b0a-8468-86ba0c1ae45b",email : "xoliran115@newnime.com",contra : "contraseñapersonalisada"},
       {imagen : "https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/admistrador%2F857459621699555279783.png?alt=media&token=48860e8a-4e86-4f0b-96e4-c70d70de0c88",email : "wavosa9604@othao.com",contra : "adminnuevo"}
     ]
 

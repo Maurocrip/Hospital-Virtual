@@ -1,0 +1,17 @@
+
+<div class="fondo" *ngIf="mostrar">
+    <div class="centro">
+        <div class="formulario">
+            <label >{{escritura}}</label>
+            <textarea #texto class="texto"></textarea>
+            <div class="botones">
+                <button (click)="Cargar()">cargar</button>
+                <button (click)="Volver()">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-turnos-admin (newItemEvent)="Mostrar($event)" *ngIf="global.tipo=='admin'"></app-turnos-admin>
+<app-turnos-especialista (newItemEvent)="Mostrar($event)" *ngIf="global.tipo=='especialista'"></app-turnos-especialista>
+<app-turnos-paciente (newItemEvent)="Mostrar($event)" *ngIf="global.tipo=='paciente'"></app-turnos-paciente>

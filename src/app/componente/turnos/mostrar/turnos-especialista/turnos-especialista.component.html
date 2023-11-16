@@ -1,0 +1,94 @@
+<div class="total">
+    <div class="buscador">
+        <label>BUSCADOR</label>
+        <input #busqueda type="text" (keyup)="Buscar()">
+    </div>
+    <table class="table">
+        <tr>
+            <th class="a"colspan="100%">Turnos</th>
+        </tr>
+        <tr>
+            <th>Especialista</th>
+            <th>Especialidad</th>
+            <th>Paciete</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Opciones</th>
+        </tr>
+        <tr *ngFor="let turno of arrayTurnos">
+            <td>{{turno.nombreEsp}}</td>
+            <td>{{turno.especialidad}}</td>
+            <td>{{turno.nombrePas}}</td>
+            <td [ngClass]="{denegar: turno.estado=='cancelado', rechazar: turno.estado=='rechazado',finalizar: turno.estado=='fializado',
+            aceptar: turno.estado=='aceptado'}">{{turno.estado}}</td>
+            <td>{{turno.fecha.dia}}/{{turno.fecha.mes}}/{{turno.fecha.year}}</td>
+            <td>{{turno.fecha.hora}}</td>
+            <td>
+                <button class="denegar" *ngIf="turno.estado == 'Esperando'" (click)="Cancelar(turno)">Cancelar</button>
+                <button *ngIf="turno.estado == 'Esperando'" (click)="Aceptar(turno.id)">Aceptar</button>
+                <button class="rechazar" *ngIf="turno.estado == 'Esperando'" (click)="Rechazar(turno)">Rechazar</button>
+                <button class="finalizar" *ngIf="turno.estado == 'aceptado'" (click)="Finalizar(turno)">Finalizar</button>
+                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Comentario(turno)">Ver reseña</button>
+                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Diagnostico(turno)">Ver Diagnostico</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="fondo" *ngIf="comentario">
+    <div class="centro">
+        <div class="titulo">
+            <label>Cometario/Reseña</label>
+        </div>
+        <div class="formulario">
+            <label >{{escritura}}</label>
+            <button class="Volver" (click)="VolverCom()">Volver</button>
+        </div>
+    </div>
+</div>
+
+<div class="fondo" *ngIf="mostrarDiag">
+    <div class="centro">
+        <div class="titulo">
+            <label>DIAGOSTICO</label>
+        </div>
+        <div class="formulario">
+            <label>Peso: {{diagnostico.peso}}</label>
+            <label> Altura: {{diagnostico.altura}}</label>
+            <label> Temperatura: {{diagnostico.temperatura}}</label>
+            <label> Presion: {{diagnostico.presion}}</label>
+            <label> Diagnostico: {{diagnostico.diagnostico}}</label>
+            <button class="Volver" (click)="VolverDiagMos()">Volver</button>
+        </div>
+    </div>
+</div>
+
+<div class="fondo" *ngIf="crearDiag">
+    <div class="centro">
+        <div class="titulo">
+            <label>DIAGOSTICO</label>
+        </div>
+        <div class="formulario">
+            <label class="nd"> Peso</label>
+            <input type="number" [(ngModel)]="diagnostico.peso">
+            <label class="nd"> Altura</label>
+            <input type="number" [(ngModel)]="diagnostico.altura">
+            <label class="nd"> Temperatura</label>
+            <input type="number" [(ngModel)]="diagnostico.temperatura">
+            <label class="nd"> Presion</label>
+            <input type="number" [(ngModel)]="diagnostico.presion">
+            <label class="nd"> Diagnostico</label>
+            <input type="text" [(ngModel)]="diagnostico.diagnostico">
+        </div>
+        <div class="formulario">
+            <label class="nd">Reseña del turno</label>
+            <textarea #texto class="texto"></textarea>
+        </div>
+        <div class="botones">
+            <button class="Volver" (click)="VolverDiag()">Volver</button>
+            <button (click)="Guardar()">Confirmar</button>
+        </div>
+    </div>
+</div>
+

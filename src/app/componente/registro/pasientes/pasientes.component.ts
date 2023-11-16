@@ -21,6 +21,7 @@ export class PasientesComponent
   public file1 : File | undefined;
   public file2 : File | undefined;
   public grupo : FormGroup;
+  private recaptcha: string = '';
   constructor(private global: GlobalService, private router: Router,private fb : FormBuilder, private firebase : FirebaseService, private storage : Storage, private errores : ErroresService)
   {
     this.grupo = this.fb.group({
@@ -38,7 +39,7 @@ export class PasientesComponent
 
   Registrarse()
   {
-    if(this.grupo.status == "VALID")
+    if(this.grupo.status == "VALID" && this.recaptcha !="")
     {
       let user : any = this.firebase.auth.currentUser;
       this.firebase.RegistrarUsuario(this.paciente.email, this.paciente.contra)
@@ -99,6 +100,11 @@ export class PasientesComponent
     {
       this.file2 = auxFile;     
     }
+  }
+
+  funcion(response: string) 
+  {
+    this.recaptcha = response;
   }
 }
 

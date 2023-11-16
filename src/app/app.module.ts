@@ -19,7 +19,12 @@ import { VeriEspecilistaComponent } from './componente/verificacion/veri-especil
 import { VeriPasieteComponent } from './componente/verificacion/veri-pasiete/veri-pasiete.component';
 import { UsuariosComponent } from './componente/usuarios/usuarios.component';
 import { SolicitarTurnosComponent } from './componente/turnos/solicitar-turnos/solicitar-turnos.component';
-import { MisTurnosComponent } from './componente/turnos/mis-turnos/mis-turnos.component';
+import { TurnosPacienteComponent } from './componente/turnos/mostrar/turnos-paciente/turnos-paciente.component';
+import { TurnosAdminComponent } from './componente/turnos/mostrar/turnos-admin/turnos-admin.component';
+import { TurnosEspecialistaComponent } from './componente/turnos/mostrar/turnos-especialista/turnos-especialista.component';
+import { PerfilComponent } from './componente/perfil/perfil.component';
+import { MostrarComponent } from './componente/turnos/mostrar/mostrar.component';
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,13 @@ import { MisTurnosComponent } from './componente/turnos/mis-turnos/mis-turnos.co
     VeriPasieteComponent,
     UsuariosComponent,
     SolicitarTurnosComponent,
-    MisTurnosComponent
+    UsuariosComponent,
+    TurnosPacienteComponent,
+    TurnosAdminComponent,
+    TurnosEspecialistaComponent,
+    PerfilComponent,
+    MostrarComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -45,9 +56,17 @@ import { MisTurnosComponent } from './componente/turnos/mis-turnos/mis-turnos.co
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    RecaptchaModule
   ],
-  providers: [],
+  providers: [
+    {
+			provide: RECAPTCHA_SETTINGS,
+			useValue: {
+				siteKey: '6LeW9hApAAAAAI9hq9UoSMgfbvHsHgSltie1JcVQ',
+			} as RecaptchaSettings,
+		}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

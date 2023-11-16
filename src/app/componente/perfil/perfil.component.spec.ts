@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MisTurnosComponent } from './mis-turnos.component';
+import { PerfilComponent } from './perfil.component';
 
-describe('MisTurnosComponent', () => {
-  let component: MisTurnosComponent;
-  let fixture: ComponentFixture<MisTurnosComponent>;
+describe('PerfilComponent', () => {
+  let component: PerfilComponent;
+  let fixture: ComponentFixture<PerfilComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MisTurnosComponent]
+      declarations: [PerfilComponent]
     });
-    fixture = TestBed.createComponent(MisTurnosComponent);
+    fixture = TestBed.createComponent(PerfilComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

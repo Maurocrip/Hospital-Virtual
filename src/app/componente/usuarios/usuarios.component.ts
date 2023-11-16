@@ -16,18 +16,17 @@ export class UsuariosComponent
   Denegar(especialista : Especialista)
   {
     especialista.estado = "denegado";
-    this.firebase.ModificarEspecialista(especialista.id,especialista.estado);
+    this.firebase.ModificarEspecialistaEstado(especialista.id,especialista.estado);
   }
 
   Aceptar(especialista : Especialista)
   {
     especialista.estado = "habilitado";
-   this.firebase.ModificarEspecialista(especialista.id,especialista.estado);
+   this.firebase.ModificarEspecialistaEstado(especialista.id,especialista.estado);
   }
 
   NuevosUsuarios()
   {
-    console.log(this.firebase.auth);
     this.router.navigate(['registro']);
   }
 }

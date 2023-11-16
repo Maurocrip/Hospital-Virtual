@@ -7,6 +7,11 @@ import { VeriPasieteComponent } from './componente/verificacion/veri-pasiete/ver
 import { VeriEspecilistaComponent } from './componente/verificacion/veri-especilista/veri-especilista.component';
 import { UsuariosComponent } from './componente/usuarios/usuarios.component';
 import { SolicitarTurnosComponent } from './componente/turnos/solicitar-turnos/solicitar-turnos.component';
+import { TurnosPacienteComponent } from './componente/turnos/mostrar/turnos-paciente/turnos-paciente.component';
+import { TurnosEspecialistaComponent } from './componente/turnos/mostrar/turnos-especialista/turnos-especialista.component';
+import { TurnosAdminComponent } from './componente/turnos/mostrar/turnos-admin/turnos-admin.component';
+import { PerfilComponent } from './componente/perfil/perfil.component';
+import { MostrarComponent } from './componente/turnos/mostrar/mostrar.component';
 
 const routes: Routes = 
 [
@@ -17,6 +22,8 @@ const routes: Routes =
   {path: "home", component: HomeComponent},  
   {path: "usuario", component: UsuariosComponent},  
   {path: "solicitar", component: SolicitarTurnosComponent},  
+  {path: "mostrarTurnos", component: MostrarComponent},   
+  {path: "perfil", component: PerfilComponent},   
   {path: '', redirectTo: "login", pathMatch: "full"}
 ];
 

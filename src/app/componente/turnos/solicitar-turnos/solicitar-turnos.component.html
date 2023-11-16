@@ -15,7 +15,7 @@
         
                 <div class="opcion">
                     <label>Selecciona Especialista</label>
-                    <select #especialista (change)="Selecion()">
+                    <select #especialista (change)="SelecEspecialista()">
                         <option value="">-----</option>
                         <option *ngFor="let especialista of arrayEspecialista" value={{especialista.email}}>{{especialista.nombre}}</option>
                     </select>
@@ -27,16 +27,28 @@
         
                 <div class="opcion">
                     <label>Selecciona Fecha</label>
-                    <select #select (change)="SelecDia()">
+                    <select #fecha (change)="SelecFecha()">
                         <option value="">-----</option>
                         <option *ngFor="let dia of arrayFechasHabiles" value={{dia.dia}}>{{dia.dia}}/{{dia.mes}}/{{dia.year}}</option>
                     </select>
                     <small 
-                    *ngIf="this.turno.fecha == null">
+                    *ngIf="this.turno.fecha.dia == -1">
                         falta fecha
                     </small>
                 </div>
         
+                <div class="opcion">
+                    <label>Selecciona Horario</label>
+                    <select #hora (change)="SelecHorario()">
+                        <option value="0">-----</option>
+                        <option *ngFor="let horario of arrayHorarios" value={{horario}}>{{horario}}</option>
+                    </select>
+                    <small 
+                    *ngIf="this.turno.fecha.hora == '0'">
+                        falta hora
+                    </small>
+                </div>
+
                 <div class="opcion" *ngIf="global.tipo == 'admin'">
                     <label>Selecciona Paciente</label>
                     <select #paciente (change)="SelecionPas()">
@@ -50,7 +62,6 @@
                 </div>
                 <div class="opcion--botoness">
                     <button (click)="Registrar()">Crear</button>
-                    <button *ngIf="global.tipo == 'admin'" (click)="Volver()">Volver</button>
                 </div>
             </div>
         </form>

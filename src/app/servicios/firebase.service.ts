@@ -5,6 +5,7 @@ import { Admin } from '../Clases/Admin';
 import { Paciente } from '../Clases/Paciente';
 import { Especialista } from '../Clases/Especialista';
 import { Turno } from '../Clases/Turno';
+import { Encuesta } from '../Clases/Encuesta';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class FirebaseService {
 
   readonly auth = getAuth();
   readonly colPacientes = collection(this.firestore, 'pacientes');
+  readonly colEncuesta = collection(this.firestore, 'encuesta');
   readonly colEspecialidades = collection(this.firestore, 'especialidades');
   readonly colUsuarios = collection(this.firestore, 'usuario');
   readonly colEspecialistas = collection(this.firestore, 'especialistas');
@@ -99,6 +101,13 @@ export class FirebaseService {
     await setDoc(documento,{ Email: email, Id: id, Tipo: tipo});
   }
 
+  async GuardarEncuesta(encuesta : Encuesta)
+  {
+    const documento = doc(this.colEncuesta);
+    const id = documento.id;
+    await setDoc(documento,{ Paciente: encuesta.emailPaciente, Id: id, Recomendacion : encuesta.recomendacion, Atencion : encuesta.atencion , Higiene :  encuesta.higiene, HorarioRespetado : encuesta.horarioRespetado});
+  }
+
   GuardarEspecialidades(especialiadad : String) : void
   {
     const documento = doc(this.colEspecialidades);
@@ -110,19 +119,46 @@ export class FirebaseService {
   {
     const documento = doc(this.colTurnos);
     const id = documento.id;
-    setDoc(documento,{ Año: turno.fecha?.year, Mes: turno.fecha?.mes, Dia: turno.fecha?.dia, Id: id, Especialista : turno.nombreEsp, Paciente : turno.nombrePas, Especialidad : turno.especialidad, EmailEspecialista : turno.emailEsp, EmailPaciente: turno.emailPas, Estado : turno.estado});
+    setDoc(documento,{ Año: turno.fecha?.year, Mes: turno.fecha?.mes, Dia: turno.fecha?.dia, Hora: turno.fecha?.hora, Id: id, 
+      Especialista : turno.nombreEsp, Paciente : turno.nombrePas, Especialidad : turno.especialidad, EmailEspecialista : turno.emailEsp, 
+      EmailPaciente: turno.emailPas, Estado : turno.estado, Comentario: turno.comentario, 
+      Diagnostico: {peso : turno.diagnostico.peso, altura : turno.diagnostico.altura, diagnostico : turno.diagnostico.diagnostico}, Calificacion : turno.calificacion});
   }
 //-----------------------------------------------MODIFICAR----------------------------------------------------------------------------------------
-  ModificarEspecialista( docId: string, estado : string) 
+  ModificarEspecialistaEstado( docId: string, estado : string) 
   {
     const docRef = doc(this.firestore, 'especialistas', docId);
     return updateDoc(docRef, {Estado : estado });
   }
+
+  ModificarEspecialistaDias( docId: string, dias : Array<any>) 
+  {
+    const docRef = doc(this.firestore, 'especialistas', docId);
+    return updateDoc(docRef, {Trabaja : dias });
+  }
   
-  ModificarTurno( docId: string, estado : string) 
+  ModificarTurnoReseña( docId: string, turno : any) 
   {
     const docRef = doc(this.firestore, 'turnos', docId);
-    return updateDoc(docRef, {Estado : estado });
+    return updateDoc(docRef, {Estado : turno.estado, Comentario: turno.reseña});
+  }
+
+  ModificarTurnoEstado( docId: string, estado : string) 
+  {
+    const docRef = doc(this.firestore, 'turnos', docId);
+    return updateDoc(docRef, {Estado : estado});
+  }
+
+  ModificarTurnoDiagnostico( docId: string, turno : any) 
+  {
+    const docRef = doc(this.firestore, 'turnos', docId);
+    return updateDoc(docRef, {Estado : turno.estado, Comentario: turno.reseña, Diagnostico: turno.diagnostico});
+  }
+
+  ModificarTurnoCalificacion( docId: string, calificacion : string) 
+  {
+    const docRef = doc(this.firestore, 'turnos', docId);
+    return updateDoc(docRef, {Calificacion : calificacion});
   }
 }
 

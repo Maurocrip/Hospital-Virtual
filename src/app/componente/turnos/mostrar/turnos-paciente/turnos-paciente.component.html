@@ -1,0 +1,119 @@
+<div class="total">
+    <div class="buscador">
+        <label>BUSCADOR</label>
+        <input #busqueda type="text" (keyup)="Buscar()">
+    </div>
+    <table class="table">
+        <tr>
+            <th class="a"colspan="100%">Turnos</th>
+        </tr>
+        <tr>
+            <th>Especialista</th>
+            <th>Especialidad</th>
+            <th>Paciete</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Opciones</th>
+        </tr>
+        <tr *ngFor="let turno of arrayTurnos">
+            <td>{{turno.nombreEsp}}</td>
+            <td>{{turno.especialidad}}</td>
+            <td>{{turno.nombrePas}}</td>
+            <td [ngClass]="{denegar: turno.estado=='cancelado', rechazar: turno.estado=='rechazado',finalizar: turno.estado=='fializado',
+            aceptar: turno.estado=='aceptado'}">{{turno.estado}}</td>
+            <td>{{turno.fecha.dia}}/{{turno.fecha.mes}}/{{turno.fecha.year}}</td>
+            <td>{{turno.fecha.hora}}</td>
+            <td>
+                <button class="denegar" *ngIf="turno.estado == 'Esperando' || turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
+                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Comentario(turno.comentario)">Ver reseña</button>
+                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Diagnostico(turno)">Ver Diagnostico</button>
+                <button class="encuesta" *ngIf="turno.comentario != '' && turno.estado == 'fializado'" (click)="Encuesta()">Completar encuesta</button>
+                <button class="calificar" *ngIf="turno.estado == 'fializado'" (click)="Calificar(turno.id)">Calificar</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="fondo" *ngIf="mostrarDiag">
+    <div class="centro">
+        <div class="titulo">
+            <label>DIAGOSTICO</label>
+        </div>
+        <div class="formulario">
+            <label>Peso: {{diagnostico.peso}}</label>
+            <label> Altura: {{diagnostico.altura}}</label>
+            <label> Temperatura: {{diagnostico.temperatura}}</label>
+            <label> Presion: {{diagnostico.presion}}</label>
+            <label> Diagnostico: {{diagnostico.diagnostico}}</label>
+            <button class="Volver" (click)="VolverDiagMos()">Volver</button>
+        </div>
+    </div>
+</div>
+
+<div class="fondo" *ngIf="mostrar">
+    <div class="centro">
+        <div class="titulo">
+            <label>COMENTARIO/RESEÑA</label>
+        </div>
+        <div class="formulario">
+            <label>{{escritura}}</label>
+            <button class="Volver" (click)="Volver()">Volver</button>
+        </div>
+    </div>
+</div>
+
+<div class="fondo" *ngIf="calificacion">
+    <div class="centro">
+        <div class="titulo">
+            <label>CALIFICACION</label>
+        </div>
+        <div class="formulario">
+            <div class="opcion">
+                <label class="nd">Descriva como fue la atención del especialista</label>
+                <textarea [(ngModel)]="califiText"></textarea>
+            </div>
+            <div class="botones">
+                <button class="Volver" (click)="VolverCalif()">Volver</button>
+                <button (click)="GuardarCalif()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fondo" *ngIf="mosEncu">
+    <div class="centro">
+        <div class="titulo">
+            <label>ENCUESTA</label>
+        </div>
+        <div class="formulario">
+            <div class="opcion">
+                <label class="nd">Del 1 al 10 como fue la atencion del hospital?</label>
+                <input type="number" min="1" max="10" [(ngModel)]="encuesta.atencion">
+            </div>
+            <div class="opcion">
+                <label  class="nd">Como le parecio la higiene del hospital</label>
+                <select #higiene (change)="Higiene()">
+                    <option value="">-----</option>
+                    <option value="Muy higienico">Muy higienico</option>
+                    <option value="Esta bien">Esta bien</option>
+                    <option value="Podria ser mejor">Podria ser mejor</option>
+                    <option value="Nada higienico">Nada higienico</option>
+                </select>
+            </div>
+            <div class="opcion check">
+                <label class="nd">Se respeto el horario?</label>
+                <input type="checkbox" [(ngModel)]="encuesta.horarioRespetado">
+            </div>
+            <div class="opcion">
+                <label class="nd">Recomendaciones que quieras hacer</label>
+                <input type="text" [(ngModel)]="encuesta.recomendacion">
+            </div>
+            <div class="botones">
+                <button class="Volver" (click)="VolverEncu()">Volver</button>
+                <button (click)="GuardarEncu()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

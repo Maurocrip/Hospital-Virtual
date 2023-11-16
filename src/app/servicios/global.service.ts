@@ -9,18 +9,24 @@ import { Especialista } from '../Clases/Especialista';
 import { Paciente } from '../Clases/Paciente';
 import { Turno } from '../Clases/Turno';
 import { Fecha } from '../Clases/Fecha';
+import { Diagnostico } from '../Clases/Diagnostico';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
 
-  public arrayPasietes : any =[];
-  public arrayTurnos : any =[];
-  public arrayEspecialidades : any =[];
-  public arrayEspecialista : any =[];
+
+  private _miArraySub = new BehaviorSubject<any[]>([]);
+  public miArrayObs = this._miArraySub.asObservable();
+
+  public arrayPasietes : Array<Paciente> =[];
+  public arrayTurnos : Array<Turno> =[];
+  public arrayEspecialidades : Array<string> =[];
+  public arrayEspecialista : Array<Especialista> =[];
   public arrayUsuario : any =[];
-  public arrayAdmin : any =[];
+  public arrayAdmin : Array<Admin> =[];
   public usuario : any = "";
   public tipo : string = "";
   constructor(private firebase : FirebaseService, private router: Router, private errores : ErroresService) 
@@ -43,7 +49,7 @@ export class GlobalService {
       for(let element of respuesta)
       {
         this.arrayEspecialista.push(new Especialista(element["Nombre"],element["Apellido"],element["Email"],element["Edad"],
-        element["Dni"],element["Especialidad"],element["Contra"],element["Foto"], element["Estado"], element["Id"]));         
+        element["Dni"],element["Especialidad"],element["Contra"],element["Foto"], element["Estado"], element["Id"], element["Trabaja"]));         
       }
     });
 
@@ -74,9 +80,14 @@ export class GlobalService {
       this.arrayTurnos =[];
       for(let element of res)
       {     
-        this.arrayTurnos.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"]),element["Especialista"],element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"] ));   
+        this.arrayTurnos.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"],element["Hora"]),element["Especialista"],
+        element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"], element["Id"], 
+        element["Comentario"], new Diagnostico(element["Diagnostico"].peso,element["Diagnostico"].altura,element["Diagnostico"].diagnostico,
+        element["Diagnostico"].temperatura,element["Diagnostico"].presion), element["Calificacion"]));   
       }
+      this._miArraySub.next(this.arrayTurnos);
     })
+    
     this.firebase.TraerEspecialidades()
     .subscribe((respuesta)=>
     {

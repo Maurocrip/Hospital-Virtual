@@ -1,0 +1,42 @@
+.fondo
+{
+    position: absolute;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    background: #000000a6;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.centro
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: aqua;
+    align-items: center;
+}
+
+.formulario
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+}
+
+textarea
+{
+    height: 500px;
+    width: 500px;
+}
+
+.botones
+{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px;
+}

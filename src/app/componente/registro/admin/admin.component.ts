@@ -17,6 +17,7 @@ export class AdminComponent
   public admin : Admin = new Admin;
   public file : File | undefined;
   public formGroup : FormGroup;
+  private recaptcha: string = '';
   constructor( private fb : FormBuilder, private firebase : FirebaseService, private errores : ErroresService, private storage : Storage, private global: GlobalService)
   {
     this.formGroup = this.fb.group({
@@ -32,7 +33,7 @@ export class AdminComponent
 
   Registrarse()
   {
-    if(this.formGroup.status == "VALID")
+    if(this.formGroup.status == "VALID" && this.recaptcha !="")
     {
       let user : any = this.firebase.auth.currentUser;
       this.firebase.RegistrarUsuario(this.admin.email, this.admin.contra)
@@ -72,5 +73,10 @@ export class AdminComponent
   {
     const auxFile: File = event.target.files[0];
     this.file = auxFile;
+  }
+
+  funcion(response: string) 
+  {
+    this.recaptcha = response;
   }
 }

@@ -95,6 +95,7 @@ button:hover
 
 .fab
 {
+    padding: 2px;
     height: 90px;
     width: 90px;
     display: flex;
