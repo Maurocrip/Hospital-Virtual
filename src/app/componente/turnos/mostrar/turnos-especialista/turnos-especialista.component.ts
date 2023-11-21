@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Diagnostico } from 'src/app/Clases/Diagnostico';
+import { Fecha } from 'src/app/Clases/Fecha';
 import { Turno } from 'src/app/Clases/Turno';
 import { ErroresService } from 'src/app/servicios/errores.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
@@ -28,25 +29,29 @@ export class TurnosEspecialistaComponent implements OnInit
 
   constructor( public global : GlobalService, private firebase : FirebaseService, private error : ErroresService){}
 
-  ngOnInit(): void 
+  ngOnInit(): void
   {
-    this.global.miArrayObs.subscribe(array => 
+    this.firebase.TraerTurnos()
+    .subscribe((res)=>
     {
       this.arrrayTurosEspecialista =[];
-      for(let element of array)
-      {     
-        if(element.emailEsp == this.global.usuario.email)
+      for(let element of res)
+      {
+        if(element["EmailEspecialista"] == this.global.usuario.email)
         {
-          this.arrrayTurosEspecialista.push(element);   
+          this.arrrayTurosEspecialista.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"],element["Hora"]),element["Especialista"],
+          element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"], element["Id"],
+          element["Comentario"], new Diagnostico(element["Diagnostico"].peso,element["Diagnostico"].altura,element["Diagnostico"].diagnostico,
+          element["Diagnostico"].temperatura,element["Diagnostico"].presion), element["Calificacion"]));
         }
       }
-    });
-    this.arrayTurnos = [...this.arrrayTurosEspecialista];
+      this.arrayTurnos = [...this.arrrayTurosEspecialista];
+    })
   }
-  
+
   Cancelar(turno : Turno)
   {
-    this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cacelarlo", Id :turno.id, Estado: "cancelado"});     
+    this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cacelarlo", Id :turno.id, Estado: "cancelado"});
   }
 
   Aceptar(id : string)
@@ -56,9 +61,9 @@ export class TurnosEspecialistaComponent implements OnInit
 
   Rechazar(turno : Turno)
   {
-    this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres rechazarlo", Id :turno.id, Estado: "rechazado"});  
+    this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres rechazarlo", Id :turno.id, Estado: "rechazado"});
   }
-  
+
   Finalizar(turno : Turno)
   {
     this.obj = turno;
@@ -86,13 +91,13 @@ export class TurnosEspecialistaComponent implements OnInit
   {
     this.mostrarDiag = false;
   }
-  
+
   Guardar()
   {
     if(this.diagnostico.peso !=0 && this.diagnostico.altura !=0 && this.diagnostico.diagnostico !="" && this.diagnostico.presion !=0 && this.diagnostico.temperatura !=0 && this.texto.nativeElement.value !="")
     {
-      this.firebase.ModificarTurnoDiagnostico(this.obj.id, {estado: "fializado", reseña : this.texto.nativeElement.value, 
-      diagnostico: {peso : this.diagnostico.peso, altura : this.diagnostico.altura, diagnostico :this.diagnostico.diagnostico}});
+      this.firebase.ModificarTurnoDiagnostico(this.obj.id, {estado: "fializado", reseña : this.texto.nativeElement.value,
+      diagnostico: {peso : this.diagnostico.peso, altura : this.diagnostico.altura, diagnostico :this.diagnostico.diagnostico, temperatura : this.diagnostico.temperatura, presion : this.diagnostico.presion}});
       this.crearDiag = false;
     }
     else
@@ -103,7 +108,6 @@ export class TurnosEspecialistaComponent implements OnInit
 
   Diagnostico(turno : Turno)
   {
-    console.log(turno);
     this.diagnostico = turno.diagnostico;
     this.mostrarDiag = true;
   }
@@ -118,7 +122,7 @@ export class TurnosEspecialistaComponent implements OnInit
     }
     else
     {
-      for (let turno of this.arrrayTurosEspecialista) 
+      for (let turno of this.arrrayTurosEspecialista)
       {
         if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombrePas.toLocaleLowerCase().includes(busqueda))
         {

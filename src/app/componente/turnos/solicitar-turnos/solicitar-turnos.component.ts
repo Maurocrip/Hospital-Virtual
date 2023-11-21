@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { Especialista } from 'src/app/Clases/Especialista';
 import { Fecha } from 'src/app/Clases/Fecha';
 import { Turno } from 'src/app/Clases/Turno';
 import { ErroresService } from 'src/app/servicios/errores.service';
@@ -13,12 +14,9 @@ import Swal from 'sweetalert2';
 })
 export class SolicitarTurnosComponent 
 {
-  @ViewChild('fecha') fecha: any;
-  @ViewChild('hora') hora: any;
-  @ViewChild('especialidad') especialidad: any;
+  public pureba : number = 0
   @ViewChild('paciente') paciente: any;
-  @ViewChild('especialista') especialista: any;
-  public arrayEspecialista : Array<any> =[];
+  public arrayEspeccialidades : Array<any> =[];
   public arrayFechasHabiles : Array<any> =[];
   public arrayHorarios : Array<any> =[];
   public arrayTurnos : Array<any> =[];
@@ -38,7 +36,7 @@ export class SolicitarTurnosComponent
   {
     let currentDate : Date = new Date();
     let dia : number = currentDate.getDate();
-    let mes : number = currentDate.getMonth();
+    let mes : number = currentDate.getMonth() +1;
     let year : number = currentDate.getFullYear();
 
     this.arrayFechasDesHabiles = [];
@@ -98,7 +96,7 @@ export class SolicitarTurnosComponent
 
       for (let i = 0; i < this.arrayTurnos.length; i++) 
       {
-        if(new Date(year,mes,dia).getDay() == this.arrayTurnos[i].Value)
+        if(new Date(year,mes-1,dia).getDay() == this.arrayTurnos[i].Value)
         {
           this.arrayFechasHabiles.push(new Fecha(dia,mes,year));
           break;
@@ -107,68 +105,6 @@ export class SolicitarTurnosComponent
 
       dia++;
       diasSubidos++;
-    }
-  }
-
-  SelecEspecialista()
-  {
-    this.arrayHorarios = [];
-    this.arrayFechasHabiles =[];
-    this.arrayTurnos = [];
-    this.turno.fecha= new Fecha;
-    this.turno.emailEsp="";
-    this.turno.nombreEsp="";
-    let email = this.especialista.nativeElement.value;
-    for(let especialista of this.arrayEspecialista)
-    {
-      if(especialista.email == email)
-      {
-        this.turno.nombreEsp = especialista.nombre;
-        this.turno.emailEsp = especialista.email;
-        this.turno.especialidad = this.especialidad.nativeElement.value;
-        this.arrayTurnos = especialista.diasHabiles;
-        this.CargarArrayFechas()
-        break;
-      }
-    }
-  }
-
-  SelecFecha()
-  {
-    this.turno.fecha=new Fecha;
-    this.arrayHorarios = [];
-    let dia = this.fecha.nativeElement.value;
-    if(dia !="")
-    {
-      for(let fecha of this.arrayFechasHabiles)
-      {
-        if(fecha.dia == dia)
-        {
-          this.turno.fecha = fecha;
-          this.CargarHorarios();
-        }
-      }
-    }
-  }
-  
-  SelecionEspecialidad()
-  {
-    this.arrayHorarios = [];
-    this.arrayEspecialista = [];
-    this.arrayFechasHabiles = [];
-    this.turno.fecha=new Fecha;
-    this.turno.emailEsp="";
-    this.turno.nombreEsp="";
-    let especialidad = this.especialidad.nativeElement.value;
-    if(especialidad != "")
-    {
-      for(let especialista of this.global.arrayEspecialista)
-      {
-        if(especialista.especialiadad.includes(especialidad))
-        {
-          this.arrayEspecialista.push(especialista);
-        }
-      }
     }
   }
 
@@ -188,23 +124,17 @@ export class SolicitarTurnosComponent
     }
   }
 
-  SelecHorario()
-  {
-    this.turno.fecha.hora = this.hora.nativeElement.value;
-  }
-
   Registrar()
   {
     if(this.turno.emailEsp!=""&&this.turno.emailPas!=""&&this.turno.fecha.dia != -1&& this.turno.especialidad!="" &&this.turno.fecha.hora!="0")
     {
       this.firebase.GuardarTurnos(this.turno);
       Swal.fire({text :"Nos vemos pronto", icon:"success", title: "Turno Creado"});
-      this.especialidad.nativeElement.value = "";
-      this.arrayEspecialista = [];
+      this.turno = new Turno();
       this.arrayFechasHabiles = [];
       this.arrayHorarios=[];
       this.paciente.nativeElement.value = "";
-      this.turno = new Turno();
+      this.pureba =0;
     }
     else
     {
@@ -260,5 +190,81 @@ export class SolicitarTurnosComponent
       hora1 = "";
       hora2 = "";
     }
+  }
+
+  PruebaEspecialista(especialista : Especialista)
+  {
+    this.pureba =1;
+    this.turno.emailEsp = especialista.email;
+    this.turno.nombreEsp = especialista.nombre;
+    this.arrayTurnos = especialista.diasHabiles;
+    if(typeof especialista.especialiadad !== "string")
+    {
+      for(let epecialidad of especialista.especialiadad)
+      {
+        this.arrayEspeccialidades.push(epecialidad);
+      }
+    }
+    else
+    {
+      this.arrayEspeccialidades.push(especialista.especialiadad);
+    }
+  }
+
+  PruebaEspecialidad(especialidad : string)
+  {
+    this.pureba =2;
+    this.turno.especialidad = especialidad;
+    this.CargarArrayFechas();
+  }
+
+  PruebaFecha(dia:Fecha)
+  {
+    this.pureba =3;
+    this.turno.fecha = dia;
+    this.CargarHorarios();
+  }
+
+  PruebaHorario(horario:string)
+  {
+    this.turno.fecha.hora=horario;
+    Swal.fire({
+      title: "Registrar turno",
+      text: "Estas seguro que quieres resgristrar el tueno?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => 
+    {
+      if (result.isConfirmed) 
+      {
+        this.Registrar();
+      }
+    });
+  }
+
+  VolverPrueba(numero : number)
+  {
+    switch(numero)
+    {
+      case 0:
+        this.turno.emailEsp = "";
+        this.turno.nombreEsp = "";
+        this.arrayEspeccialidades=[];
+        this.arrayTurnos=[];
+      break;
+      case 1:
+        this.turno.especialidad = "";
+        this.arrayFechasDesHabiles = [];
+        this.arrayFechasHabiles = [];
+      break;
+      case 2:
+        this.turno.fecha = new Fecha;
+        this.arrayHorarios = [];
+      break;
+    }
+    this.pureba =numero;
   }
 }

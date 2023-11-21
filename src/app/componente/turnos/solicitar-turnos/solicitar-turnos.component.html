@@ -5,48 +5,45 @@
                 <label>SOLICITAR TURNO</label>
             </div>
             <div class="interior">
-                <div class="opcion">
-                    <label>Selecciona Especialidad</label>
-                    <select #especialidad (change)="SelecionEspecialidad()">
-                        <option value="">-----</option>
-                        <option *ngFor="let paciente of global.arrayEspecialidades" value={{paciente}}>{{paciente}}</option>
-                    </select>
-                </div>
-        
-                <div class="opcion">
+                
+                <div class="opcion" *ngIf="pureba == 0">
                     <label>Selecciona Especialista</label>
-                    <select #especialista (change)="SelecEspecialista()">
-                        <option value="">-----</option>
-                        <option *ngFor="let especialista of arrayEspecialista" value={{especialista.email}}>{{especialista.nombre}}</option>
-                    </select>
-                    <small 
-                    *ngIf="this.turno.emailEsp ==''">
-                        falta especialista
-                    </small>
+                    <div class="prueba1">
+                        <div class="imagenes" *ngFor="let especialista of global.arrayEspecialista">
+                            <label>{{especialista.nombre}}</label>
+                            <img src={{especialista.foto}} (click)="PruebaEspecialista(especialista)">
+                        </div>
+                    </div>
                 </div>
-        
-                <div class="opcion">
+
+                <div *ngIf="pureba == 1" class="opcion">
+                    <label>Selecciona Especialidad</label>
+                    <div class="prueba1">
+                        <div class="imagenes" *ngFor="let especialidad of arrayEspeccialidades">
+                            <button (click)="PruebaEspecialidad(especialidad)">{{especialidad}} </button>
+                        </div>
+                    </div>
+                    <button (click)="VolverPrueba(0)">Volver</button>
+                </div>
+
+                <div *ngIf="pureba == 2" class="opcion">
                     <label>Selecciona Fecha</label>
-                    <select #fecha (change)="SelecFecha()">
-                        <option value="">-----</option>
-                        <option *ngFor="let dia of arrayFechasHabiles" value={{dia.dia}}>{{dia.dia}}/{{dia.mes}}/{{dia.year}}</option>
-                    </select>
-                    <small 
-                    *ngIf="this.turno.fecha.dia == -1">
-                        falta fecha
-                    </small>
+                    <div class="prueba1">
+                        <div class="imagenes" *ngFor="let dia of arrayFechasHabiles">
+                            <button (click)="PruebaFecha(dia)">{{dia.dia}}/{{dia.mes}}/{{dia.year}}</button>
+                        </div>
+                    </div>
+                    <button (click)="VolverPrueba(1)">Volver</button>
                 </div>
-        
-                <div class="opcion">
+
+                <div *ngIf="pureba == 3" class="opcion">
                     <label>Selecciona Horario</label>
-                    <select #hora (change)="SelecHorario()">
-                        <option value="0">-----</option>
-                        <option *ngFor="let horario of arrayHorarios" value={{horario}}>{{horario}}</option>
-                    </select>
-                    <small 
-                    *ngIf="this.turno.fecha.hora == '0'">
-                        falta hora
-                    </small>
+                    <div class="prueba1">
+                        <div class="imagenes" *ngFor="let horario of arrayHorarios">
+                            <button (click)="PruebaHorario(horario)">{{horario}}</button>
+                        </div>
+                    </div>
+                    <button (click)="VolverPrueba(2)">Volver</button>
                 </div>
 
                 <div class="opcion" *ngIf="global.tipo == 'admin'">
@@ -59,9 +56,6 @@
                     *ngIf="this.turno.nombrePas == ''">
                         falta paciente
                     </small>
-                </div>
-                <div class="opcion--botoness">
-                    <button (click)="Registrar()">Crear</button>
                 </div>
             </div>
         </form>

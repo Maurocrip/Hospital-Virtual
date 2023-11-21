@@ -21,36 +21,41 @@ export class FirebaseService {
   readonly colAdmin = collection(this.firestore, 'admin');
   readonly colTurnos = collection(this.firestore, 'turnos');
   constructor(public firestore: Firestore) { }
-  
+
   //-----------------------------------------------TRAER------------------------------------------------------------------------------------------
   TraerPacientes()
-  { 
+  {
     return collectionData(this.colPacientes);
   }
 
   TraerTurnos()
-  { 
+  {
     return collectionData(this.colTurnos);
   }
 
   TraerEspecialidades()
-  { 
+  {
     return collectionData(this.colEspecialidades);
   }
 
   TraerAdmin()
-  { 
+  {
     return collectionData(this.colAdmin);
   }
 
   TraerEspecialista()
-  { 
+  {
     return collectionData(this.colEspecialistas);
   }
 
   TraerUsuarios()
-  { 
+  {
     return collectionData(this.colUsuarios);
+  }
+
+  TraerEncuesta()
+  {
+    return collectionData(this.colEncuesta);
   }
 
   //-----------------------------------------------LOGINS-----------------------------------------------------------------------------------------
@@ -58,12 +63,12 @@ export class FirebaseService {
   {
     return createUserWithEmailAndPassword(this.auth, email, pasword);
   }
-  
+
   LogIn(email : string, pasword: string)
   {
     return signInWithEmailAndPassword(this.auth, email, pasword);
   }
-  
+
   DesLogueo(auth : Auth)
   {
     return signOut(auth);
@@ -86,7 +91,7 @@ export class FirebaseService {
     this.GuardarUsuario(especialista.email, "especialista");
   }
 
-  async GuardarAdministrador(admin : Admin) 
+  async GuardarAdministrador(admin : Admin)
   {
     const documento = doc(this.colAdmin);
     const id = documento.id;
@@ -119,43 +124,44 @@ export class FirebaseService {
   {
     const documento = doc(this.colTurnos);
     const id = documento.id;
-    setDoc(documento,{ Año: turno.fecha?.year, Mes: turno.fecha?.mes, Dia: turno.fecha?.dia, Hora: turno.fecha?.hora, Id: id, 
-      Especialista : turno.nombreEsp, Paciente : turno.nombrePas, Especialidad : turno.especialidad, EmailEspecialista : turno.emailEsp, 
-      EmailPaciente: turno.emailPas, Estado : turno.estado, Comentario: turno.comentario, 
+    setDoc(documento,{ Año: turno.fecha?.year, Mes: turno.fecha?.mes, Dia: turno.fecha?.dia, Hora: turno.fecha?.hora, Id: id,
+      Especialista : turno.nombreEsp, Paciente : turno.nombrePas, Especialidad : turno.especialidad, EmailEspecialista : turno.emailEsp,
+      EmailPaciente: turno.emailPas, Estado : turno.estado, Comentario: turno.comentario,
       Diagnostico: {peso : turno.diagnostico.peso, altura : turno.diagnostico.altura, diagnostico : turno.diagnostico.diagnostico}, Calificacion : turno.calificacion});
   }
 //-----------------------------------------------MODIFICAR----------------------------------------------------------------------------------------
-  ModificarEspecialistaEstado( docId: string, estado : string) 
+  ModificarEspecialistaEstado( docId: string, estado : string)
   {
     const docRef = doc(this.firestore, 'especialistas', docId);
     return updateDoc(docRef, {Estado : estado });
   }
 
-  ModificarEspecialistaDias( docId: string, dias : Array<any>) 
+  ModificarEspecialistaDias( docId: string, dias : Array<any>)
   {
     const docRef = doc(this.firestore, 'especialistas', docId);
     return updateDoc(docRef, {Trabaja : dias });
   }
-  
-  ModificarTurnoReseña( docId: string, turno : any) 
+
+  ModificarTurnoReseña( docId: string, turno : any)
   {
+    console.log(turno);
     const docRef = doc(this.firestore, 'turnos', docId);
     return updateDoc(docRef, {Estado : turno.estado, Comentario: turno.reseña});
   }
 
-  ModificarTurnoEstado( docId: string, estado : string) 
+  ModificarTurnoEstado( docId: string, estado : string)
   {
     const docRef = doc(this.firestore, 'turnos', docId);
     return updateDoc(docRef, {Estado : estado});
   }
 
-  ModificarTurnoDiagnostico( docId: string, turno : any) 
+  ModificarTurnoDiagnostico( docId: string, turno : any)
   {
     const docRef = doc(this.firestore, 'turnos', docId);
     return updateDoc(docRef, {Estado : turno.estado, Comentario: turno.reseña, Diagnostico: turno.diagnostico});
   }
 
-  ModificarTurnoCalificacion( docId: string, calificacion : string) 
+  ModificarTurnoCalificacion( docId: string, calificacion : string)
   {
     const docRef = doc(this.firestore, 'turnos', docId);
     return updateDoc(docRef, {Calificacion : calificacion});

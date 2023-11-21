@@ -29,7 +29,7 @@
                 <button class="comentario" *ngIf="turno.comentario != ''" (click)="Comentario(turno.comentario)">Ver reseña</button>
                 <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Diagnostico(turno)">Ver Diagnostico</button>
                 <button class="encuesta" *ngIf="turno.comentario != '' && turno.estado == 'fializado'" (click)="Encuesta()">Completar encuesta</button>
-                <button class="calificar" *ngIf="turno.estado == 'fializado'" (click)="Calificar(turno.id)">Calificar</button>
+                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion == '' " (click)="Calificar(turno.id)">Calificar</button>
             </td>
         </tr>
     </table>
