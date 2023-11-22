@@ -17,6 +17,12 @@ a:hover, label:hover{
     background-color: #80fcfa;
     color: black;
     cursor: pointer;
+    &.usuario
+    {
+        color:#f2f2f2;
+        background: none;
+        cursor: default;
+    }
 }
 
 .derecha{

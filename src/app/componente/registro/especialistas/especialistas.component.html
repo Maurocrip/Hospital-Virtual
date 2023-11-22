@@ -97,7 +97,7 @@
                    <label>Selecciona Especialidad</label>
                    <select id="especialidades" multiple (change)="Selecion()">
                       <option value="">-----</option>
-                      <option *ngFor="let especialidad of global.arrayEspecialidades" value={{especialidad}}>{{especialidad}}</option>
+                      <option *ngFor="let especialidad of global.arrayEspecialidades" value={{especialidad.nombre}}>{{especialidad.nombre}}</option>
                    </select>
                    <small 
                     *ngIf="this.especialista.especialiadad.includes('')">

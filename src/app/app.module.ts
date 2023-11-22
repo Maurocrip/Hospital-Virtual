@@ -22,9 +22,13 @@ import { SolicitarTurnosComponent } from './componente/turnos/solicitar-turnos/s
 import { TurnosPacienteComponent } from './componente/turnos/mostrar/turnos-paciente/turnos-paciente.component';
 import { TurnosAdminComponent } from './componente/turnos/mostrar/turnos-admin/turnos-admin.component';
 import { TurnosEspecialistaComponent } from './componente/turnos/mostrar/turnos-especialista/turnos-especialista.component';
-import { PerfilComponent } from './componente/perfil/perfil.component';
 import { MostrarComponent } from './componente/turnos/mostrar/mostrar.component';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { PerfilPacienteComponent } from './componente/perfil/perfil-paciente/perfil-paciente.component';
+import { PerfilEspecialistaComponent } from './componente/perfil/perfil-especialista/perfil-especialista.component';
+import { TablaPacienteComponent } from './componente/tabla-paciente/tabla-paciente.component';
+import { PacientesComponent } from './componente/pacientes/pacientes.component';
+
 
 @NgModule({
   declarations: [
@@ -43,8 +47,11 @@ import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recap
     TurnosPacienteComponent,
     TurnosAdminComponent,
     TurnosEspecialistaComponent,
-    PerfilComponent,
     MostrarComponent,
+    PerfilPacienteComponent,
+    PerfilEspecialistaComponent,
+    TablaPacienteComponent,
+    PacientesComponent,
     
   ],
   imports: [

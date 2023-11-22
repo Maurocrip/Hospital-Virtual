@@ -26,16 +26,16 @@
             <td>{{turno.fecha.hora}}</td>
             <td>
                 <button class="denegar" *ngIf="turno.estado == 'Esperando' || turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
-                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Comentario(turno.comentario)">Ver reseña</button>
-                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Diagnostico(turno)">Ver Diagnostico</button>
-                <button class="encuesta" *ngIf="turno.comentario != '' && turno.estado == 'fializado'" (click)="Encuesta()">Completar encuesta</button>
-                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion == '' " (click)="Calificar(turno.id)">Calificar</button>
+                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Mostrar(turno.comentario,2)">Ver reseña</button>
+                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Mostrar(turno,1)">Ver Diagnostico</button>
+                <button class="encuesta" *ngIf="turno.comentario != '' && turno.estado == 'fializado'" (click)="Mostrar(turno.id,4)">Completar encuesta</button>
+                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion == '' " (click)="Mostrar(turno.id,3)">Calificar</button>
             </td>
         </tr>
     </table>
 </div>
 
-<div class="fondo" *ngIf="mostrarDiag">
+<div class="fondo" *ngIf="mostrar==1">
     <div class="centro">
         <div class="titulo">
             <label>DIAGOSTICO</label>
@@ -46,12 +46,13 @@
             <label> Temperatura: {{diagnostico.temperatura}}</label>
             <label> Presion: {{diagnostico.presion}}</label>
             <label> Diagnostico: {{diagnostico.diagnostico}}</label>
-            <button class="Volver" (click)="VolverDiagMos()">Volver</button>
+            <label *ngFor="let problema of diagnostico.extras"> {{problema.clave}}: {{problema.valor}}</label>
+            <button class="Volver" (click)="Volver()">Volver</button>
         </div>
     </div>
 </div>
 
-<div class="fondo" *ngIf="mostrar">
+<div class="fondo" *ngIf="mostrar==2">
     <div class="centro">
         <div class="titulo">
             <label>COMENTARIO/RESEÑA</label>
@@ -63,7 +64,7 @@
     </div>
 </div>
 
-<div class="fondo" *ngIf="calificacion">
+<div class="fondo" *ngIf="mostrar==3">
     <div class="centro">
         <div class="titulo">
             <label>CALIFICACION</label>
@@ -74,14 +75,14 @@
                 <textarea [(ngModel)]="califiText"></textarea>
             </div>
             <div class="botones">
-                <button class="Volver" (click)="VolverCalif()">Volver</button>
+                <button class="Volver" (click)="Volver()">Volver</button>
                 <button (click)="GuardarCalif()">Guardar</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="fondo" *ngIf="mosEncu">
+<div class="fondo" *ngIf="mostrar==4">
     <div class="centro">
         <div class="titulo">
             <label>ENCUESTA</label>
@@ -110,7 +111,7 @@
                 <input type="text" [(ngModel)]="encuesta.recomendacion">
             </div>
             <div class="botones">
-                <button class="Volver" (click)="VolverEncu()">Volver</button>
+                <button class="Volver" (click)="Volver()">Volver</button>
                 <button (click)="GuardarEncu()">Guardar</button>
             </div>
         </div>

@@ -1,0 +1,4 @@
+<div *ngFor="let paciente of arrayPacientesDelDoctor">
+    <h4>{{paciente.nombre}}</h4>
+    <app-perfil-paciente [mailPaciente]="paciente.email" ></app-perfil-paciente>
+</div>

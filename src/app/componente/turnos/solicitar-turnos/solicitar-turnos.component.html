@@ -11,7 +11,7 @@
                     <div class="prueba1">
                         <div class="imagenes" *ngFor="let especialista of global.arrayEspecialista">
                             <label>{{especialista.nombre}}</label>
-                            <img src={{especialista.foto}} (click)="PruebaEspecialista(especialista)">
+                            <img class="fotoEspecialista" src={{especialista.foto}} (click)="PruebaEspecialista(especialista)">
                         </div>
                     </div>
                 </div>
@@ -19,18 +19,24 @@
                 <div *ngIf="pureba == 1" class="opcion">
                     <label>Selecciona Especialidad</label>
                     <div class="prueba1">
-                        <div class="imagenes" *ngFor="let especialidad of arrayEspeccialidades">
-                            <button (click)="PruebaEspecialidad(especialidad)">{{especialidad}} </button>
+                        <div class="imagenes" *ngFor="let especialidad of arrayEspecialidades">
+                            <img *ngIf="especialidad.foto!=''; else elseBlock" class="fotoEspecialidad" src={{especialidad.foto}} (click)="PruebaEspecialidad(especialidad.nombre)" >
+                            <ng-template #elseBlock>
+                                <img class="fotoEspecialidad" src="https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/especialidades%2Fimagen_2023-11-22_091741258.png?alt=media&token=ce4e2fb7-4b12-474a-a669-1ea4d137ab62" (click)="PruebaEspecialidad(especialidad.nombre)" >
+                            </ng-template>
                         </div>
                     </div>
                     <button (click)="VolverPrueba(0)">Volver</button>
                 </div>
 
                 <div *ngIf="pureba == 2" class="opcion">
-                    <label>Selecciona Fecha</label>
+                    <label *ngIf="this.arrayDiasTrabaja.length!=0; else elseBlock">Selecciona Fecha</label>
+                    <ng-template #elseBlock>
+                        <label>ESTE MEDICO NO TRABAJA</label>
+                    </ng-template>
                     <div class="prueba1">
                         <div class="imagenes" *ngFor="let dia of arrayFechasHabiles">
-                            <button (click)="PruebaFecha(dia)">{{dia.dia}}/{{dia.mes}}/{{dia.year}}</button>
+                            <button class="fecha" (click)="PruebaFecha(dia)">{{dia.year}}-{{dia.mes}}-{{dia.dia}}</button>
                         </div>
                     </div>
                     <button (click)="VolverPrueba(1)">Volver</button>
@@ -40,7 +46,7 @@
                     <label>Selecciona Horario</label>
                     <div class="prueba1">
                         <div class="imagenes" *ngFor="let horario of arrayHorarios">
-                            <button (click)="PruebaHorario(horario)">{{horario}}</button>
+                            <button class="horario"  (click)="PruebaHorario(horario)">{{horario}}</button>
                         </div>
                     </div>
                     <button (click)="VolverPrueba(2)">Volver</button>

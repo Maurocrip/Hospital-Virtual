@@ -46,21 +46,13 @@ button
     }
 }
 
-.denegar
+.denegar,.rechazar
 {
+    color: black !important;
     background-color: #710707;
     &:hover
     {
         background-color: #ac2b2b; 
-    }
-}
-
-.rechazar
-{
-    background-color: #bd6006;
-    &:hover
-    {
-        background-color: #ffaa58; 
     }
 }
 
@@ -179,6 +171,15 @@ td
     &:hover
     {
         background-color: #fffffd; 
+    }
+}
+
+.calificar
+{
+    background-color: #bd6006;
+    &:hover
+    {
+        background-color: #ffaa58; 
     }
 }
 

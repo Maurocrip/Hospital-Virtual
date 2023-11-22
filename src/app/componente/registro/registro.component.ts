@@ -26,7 +26,7 @@ export class RegistroComponent
     }
     else
     {
-      this.router.navigate(['usuario']);
+      this.router.navigate(['logueado/admin/usuario']);
     }
   }
 }

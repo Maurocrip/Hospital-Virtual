@@ -28,43 +28,45 @@
                 <button class="denegar" *ngIf="turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
                 <button *ngIf="turno.estado == 'Esperando'" (click)="Aceptar(turno.id)">Aceptar</button>
                 <button class="rechazar" *ngIf="turno.estado == 'Esperando'" (click)="Rechazar(turno)">Rechazar</button>
-                <button class="finalizar" *ngIf="turno.estado == 'aceptado'" (click)="Finalizar(turno)">Finalizar</button>
-                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Comentario(turno)">Ver reseña</button>
-                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Diagnostico(turno)">Ver Diagnostico</button>
+                <button class="finalizar" *ngIf="turno.estado == 'aceptado'" (click)="Mostrar(turno,3)">Finalizar</button>
+                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Mostrar(turno,1)">Ver reseña</button>
+                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion != '' " (click)="Mostrar(turno.calificacion,4)">Calificacion</button>
+                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Mostrar(turno,2)">Ver Diagnostico</button>
             </td>
         </tr>
     </table>
 </div>
 
-<div class="fondo" *ngIf="comentario">
+<div class="fondo" *ngIf="mostrar==1">
     <div class="centro">
         <div class="titulo">
             <label>Cometario/Reseña</label>
         </div>
         <div class="formulario">
             <label >{{escritura}}</label>
-            <button class="Volver" (click)="VolverCom()">Volver</button>
+            <button class="Volver" (click)="Volver()">Volver</button>
         </div>
     </div>
 </div>
 
-<div class="fondo" *ngIf="mostrarDiag">
+<div class="fondo" *ngIf="mostrar==2">
     <div class="centro">
         <div class="titulo">
             <label>DIAGOSTICO</label>
         </div>
         <div class="formulario">
-            <label>Peso: {{diagnostico.peso}}</label>
+            <label> Peso: {{diagnostico.peso}}</label>
             <label> Altura: {{diagnostico.altura}}</label>
             <label> Temperatura: {{diagnostico.temperatura}}</label>
             <label> Presion: {{diagnostico.presion}}</label>
             <label> Diagnostico: {{diagnostico.diagnostico}}</label>
-            <button class="Volver" (click)="VolverDiagMos()">Volver</button>
+            <label *ngFor="let problema of diagnostico.extras"> {{problema.clave}}: {{problema.valor}}</label>
+            <button class="Volver" (click)="Volver()">Volver</button>
         </div>
     </div>
 </div>
 
-<div class="fondo" *ngIf="crearDiag">
+<div class="fondo" *ngIf="mostrar==3">
     <div class="centro">
         <div class="titulo">
             <label>DIAGOSTICO</label>
@@ -78,6 +80,10 @@
             <input type="number" [(ngModel)]="diagnostico.temperatura">
             <label class="nd"> Presion</label>
             <input type="number" [(ngModel)]="diagnostico.presion">
+            <button *ngIf="diagnostico.extras.length<3; else elseBlock" (click)="Mostrar(null,5)" >Agregar Problemas</button>
+            <ng-template #elseBlock>
+                <label class="nd">No puedes agregar mas de 3 problemas</label>
+            </ng-template>
             <label class="nd"> Diagnostico</label>
             <input type="text" [(ngModel)]="diagnostico.diagnostico">
         </div>
@@ -86,9 +92,36 @@
             <textarea #texto class="texto"></textarea>
         </div>
         <div class="botones">
-            <button class="Volver" (click)="VolverDiag()">Volver</button>
+            <button class="Volver" (click)="Volver()">Volver</button>
             <button (click)="Guardar()">Confirmar</button>
         </div>
     </div>
 </div>
 
+<div class="fondo" *ngIf="mostrar == 4">
+    <div class="centro">
+        <div class="titulo">
+            <label>Calificacion</label>
+        </div>
+        <div class="formulario">
+            <label >{{califText}}</label>
+            <button class="Volver" (click)="Volver()">Volver</button>
+        </div>
+    </div>
+</div>
+
+<div class="fondo" *ngIf="mostrar == 5">
+    <div class="centro">
+        <div class="titulo">
+            <label>Problema</label>
+        </div>
+        <div class="formulario">
+            <label class="nd"> Nombre del problema</label>
+            <input type="text" [(ngModel)]="problema.clave">
+            <label class="nd"> Informacio</label>
+            <input type="text" [(ngModel)]="problema.valor">
+            <button class="Volver" (click)="VolverProblema()">Volver</button>
+            <button class="Volver" (click)="Agregar()">Agregar</button>
+        </div>
+    </div>
+</div>

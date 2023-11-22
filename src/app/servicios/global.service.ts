@@ -11,6 +11,8 @@ import { Turno } from '../Clases/Turno';
 import { Fecha } from '../Clases/Fecha';
 import { Diagnostico } from '../Clases/Diagnostico';
 import { BehaviorSubject } from 'rxjs';
+import { Especialidades } from '../Clases/Especialidades';
+import { Encuesta } from '../Clases/Encuesta';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,7 @@ export class GlobalService {
 
   public arrayPasietes : Array<Paciente> =[];
   public arrayTurnos : Array<Turno> =[];
-  public arrayEspecialidades : Array<string> =[];
+  public arrayEspecialidades : Array<Especialidades> =[];
   public arrayEspecialista : Array<Especialista> =[];
   public arrayUsuario : any =[];
   public arrayAdmin : Array<Admin> =[];
@@ -83,7 +85,8 @@ export class GlobalService {
         this.arrayTurnos.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"],element["Hora"]),element["Especialista"],
         element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"], element["Id"], 
         element["Comentario"], new Diagnostico(element["Diagnostico"].peso,element["Diagnostico"].altura,element["Diagnostico"].diagnostico,
-        element["Diagnostico"].temperatura,element["Diagnostico"].presion), element["Calificacion"]));   
+        element["Diagnostico"].temperatura,element["Diagnostico"].presion), element["Calificacion"],
+        new Encuesta(element["Encuesta"].Recomendacion,element["Encuesta"].Atencion,element["Encuesta"].Higiene,element["Encuesta"].HorarioRespetado)));   
       }
       this._miArraySub.next(this.arrayTurnos);
     })
@@ -94,7 +97,7 @@ export class GlobalService {
       this.arrayEspecialidades =[];
       for(let element of respuesta)
       {
-        this.arrayEspecialidades.push(element["Especialidad"]);         
+        this.arrayEspecialidades.push(new Especialidades(element["Especialidad"], element["Foto"]));         
       }
     });
   }

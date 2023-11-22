@@ -54,3 +54,34 @@ button
         background-color: #c70505; 
     }
 }
+
+.fondo
+{
+    position: absolute;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    background: #000000a6;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 1px;
+}
+
+.centro
+{
+    background: #77c0ff;
+    padding: 10px;
+    display: flex;
+    border: solid 2px;
+    flex-direction: column;
+    align-items: center;
+    & button
+    {
+        background-color: antiquewhite;
+        &:hover
+        {
+            background-color: white;
+        }
+    }
+}

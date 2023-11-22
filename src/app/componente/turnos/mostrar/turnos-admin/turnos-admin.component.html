@@ -25,28 +25,28 @@
             <td>{{turno.fecha.dia}}/{{turno.fecha.mes}}/{{turno.fecha.year}}</td>
             <td>{{turno.fecha.hora}}</td>
             <td>
-                <button *ngIf="turno.estado == 'Esperando'" (click)="Cancelar(turno)">Cancelar</button>
-                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Comentario(turno)">Ver reseña</button>
-                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Diagnostico(turno)">Ver Diagnostico</button>
-                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion != '' " (click)="Calificar(turno.calificacion)">Calificacion</button>
-                <button class="encuesta" *ngIf="turno.comentario != '' && turno.estado == 'fializado'" (click)="Encuesta(turno.emailPas)">Ver encuesta</button>
+                <button *ngIf="turno.estado == 'Esperando' || turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
+                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Mostrar(turno,1)">Ver reseña</button>
+                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Mostrar(turno,2)">Ver Diagnostico</button>
+                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion != '' " (click)="Mostrar(turno.calificacion,3)">Calificacion</button>
+                <button class="encuesta" *ngIf="turno.encuesta.higiene != '' && turno.estado == 'fializado'" (click)="Mostrar(turno.encuesta,4)">Ver encuesta</button>
             </td>
         </tr>
     </table>
 
-    <div class="fondo" *ngIf="comentario">
+    <div class="fondo" *ngIf="mostrar == 1">
       <div class="centro">
           <div class="titulo">
               <label>Cometario/Reseña</label>
           </div>
           <div class="formulario">
               <label >{{escritura}}</label>
-              <button class="Volver" (click)="VolverCom()">Volver</button>
+              <button class="Volver" (click)="Volver()">Volver</button>
           </div>
       </div>
   </div>
 
-  <div class="fondo" *ngIf="mostrarDiag">
+  <div class="fondo" *ngIf="mostrar == 2">
       <div class="centro">
           <div class="titulo">
               <label>DIAGOSTICO</label>
@@ -57,20 +57,39 @@
               <label> Temperatura: {{diagnostico.temperatura}}</label>
               <label> Presion: {{diagnostico.presion}}</label>
               <label> Diagnostico: {{diagnostico.diagnostico}}</label>
-              <button class="Volver" (click)="VolverDiagMos()">Volver</button>
+              <label *ngFor="let problema of diagnostico.extras"> {{problema.clave}}: {{problema.valor}}</label>
+              <button class="Volver" (click)="Volver()">Volver</button>
           </div>
       </div>
   </div>
 
-  <div class="fondo" *ngIf="calificacion">
-    <div class="centro">
-        <div class="titulo">
-            <label>Calificacion</label>
-        </div>
-        <div class="formulario">
-            <label >{{califText}}</label>
-            <button class="Volver" (click)="VolverCalif()">Volver</button>
+    <div class="fondo" *ngIf="mostrar == 3">
+        <div class="centro">
+            <div class="titulo">
+                <label>Calificacion</label>
+            </div>
+            <div class="formulario">
+                <label >{{califText}}</label>
+                <button class="Volver" (click)="Volver()">Volver</button>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="fondo" *ngIf="mostrar == 4">
+        <div class="centro">
+            <div class="titulo">
+                <label>ECUESTA</label>
+            </div>
+            <div class="formulario">
+                <label> Atencion: {{encuesta.atencion}}</label>
+                <label> Higiene: {{encuesta.higiene}}</label>
+                <label *ngIf="encuesta.horarioRespetado; else elseBlock"> HorarioRespetado: Si</label>
+                <ng-template #elseBlock>
+                    <label> HorarioRespetado: No</label>
+                </ng-template>
+                <label> Recomendacion: {{encuesta.recomendacion}}</label>
+                <button class="Volver" (click)="Volver()">Volver</button>
+            </div>
+        </div>
+    </div>
 </div>

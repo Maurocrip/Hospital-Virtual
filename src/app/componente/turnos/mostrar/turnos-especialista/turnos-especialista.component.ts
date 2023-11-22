@@ -13,19 +13,18 @@ import { GlobalService } from 'src/app/servicios/global.service';
 })
 export class TurnosEspecialistaComponent implements OnInit
 {
-
+  public problema : any = {clave : "", valor : ""}; 
   private obj :Turno=new Turno;
   public diagnostico : Diagnostico= new Diagnostico;
   public escritura : string = "";
   public estado : string = "";
-  public comentario : boolean = false;
-  public mostrarDiag : boolean = false;
-  public crearDiag : boolean = false;
+  public califText : string = "";
   @ViewChild('texto') texto: any;
   @ViewChild('busqueda') busqueda: any;
   @Output() newItemEvent = new EventEmitter<object>();
   public arrayTurnos : Array<Turno> =[];
   public arrrayTurosEspecialista : Array<Turno> =[];
+  public mostrar: number =0;
 
   constructor( public global : GlobalService, private firebase : FirebaseService, private error : ErroresService){}
 
@@ -42,7 +41,7 @@ export class TurnosEspecialistaComponent implements OnInit
           this.arrrayTurosEspecialista.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"],element["Hora"]),element["Especialista"],
           element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"], element["Id"],
           element["Comentario"], new Diagnostico(element["Diagnostico"].peso,element["Diagnostico"].altura,element["Diagnostico"].diagnostico,
-          element["Diagnostico"].temperatura,element["Diagnostico"].presion), element["Calificacion"]));
+          element["Diagnostico"].temperatura,element["Diagnostico"].presion, element["Diagnostico"].extras), element["Calificacion"]));
         }
       }
       this.arrayTurnos = [...this.arrrayTurosEspecialista];
@@ -64,41 +63,13 @@ export class TurnosEspecialistaComponent implements OnInit
     this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres rechazarlo", Id :turno.id, Estado: "rechazado"});
   }
 
-  Finalizar(turno : Turno)
-  {
-    this.obj = turno;
-    this.crearDiag = true;
-  }
-
-  Comentario(turno : Turno)
-  {
-    this.comentario=true;
-    this.estado=turno.estado;
-    this.escritura=turno.comentario;
-  }
-
-  VolverCom()
-  {
-    this.comentario = false;
-  }
-
-  VolverDiag()
-  {
-    this.crearDiag = false;
-  }
-
-  VolverDiagMos()
-  {
-    this.mostrarDiag = false;
-  }
-
   Guardar()
   {
     if(this.diagnostico.peso !=0 && this.diagnostico.altura !=0 && this.diagnostico.diagnostico !="" && this.diagnostico.presion !=0 && this.diagnostico.temperatura !=0 && this.texto.nativeElement.value !="")
     {
       this.firebase.ModificarTurnoDiagnostico(this.obj.id, {estado: "fializado", reseña : this.texto.nativeElement.value,
-      diagnostico: {peso : this.diagnostico.peso, altura : this.diagnostico.altura, diagnostico :this.diagnostico.diagnostico, temperatura : this.diagnostico.temperatura, presion : this.diagnostico.presion}});
-      this.crearDiag = false;
+      diagnostico: {peso : this.diagnostico.peso, altura : this.diagnostico.altura, diagnostico :this.diagnostico.diagnostico, temperatura : this.diagnostico.temperatura, presion : this.diagnostico.presion, extras : this.diagnostico.extras}});
+      this.mostrar = 0;
     }
     else
     {
@@ -106,11 +77,40 @@ export class TurnosEspecialistaComponent implements OnInit
     }
   }
 
-  Diagnostico(turno : Turno)
+  Mostrar(objeto : any, opcion : number)
   {
-    this.diagnostico = turno.diagnostico;
-    this.mostrarDiag = true;
+    switch(opcion)
+    {
+      case 1:
+        this.estado=objeto.estado;
+        this.escritura=objeto.comentario;
+      break
+      case 2:
+        this.diagnostico = objeto.diagnostico;
+        console.log(this.diagnostico);
+      break
+      case 3:
+        this.diagnostico = new Diagnostico;
+        this.obj = objeto;
+      break
+      case 4:
+        this.califText = objeto;
+      break
+    }
+    this.mostrar = opcion;
   }
+
+  Volver()
+  {
+    this.mostrar = 0;
+  }
+
+  VolverProblema()
+  {
+    this.mostrar = 3;
+    this.problema = {clave : "", valor : ""};
+  }
+
 
   Buscar()
   {
@@ -124,11 +124,44 @@ export class TurnosEspecialistaComponent implements OnInit
     {
       for (let turno of this.arrrayTurosEspecialista)
       {
-        if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombrePas.toLocaleLowerCase().includes(busqueda))
+        let fecha = turno.fecha.dia+"/"+turno.fecha.mes+"/"+turno.fecha.year;
+        if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombreEsp.toLocaleLowerCase().includes(busqueda) ||
+        turno.nombrePas.toLocaleLowerCase().includes(busqueda)||
+        turno.estado.toLocaleLowerCase().includes(busqueda)||
+        fecha.toLocaleLowerCase().includes(busqueda)||
+        turno.fecha.hora.toLocaleLowerCase().includes(busqueda)||
+        turno.diagnostico.altura.toString().includes(busqueda)||
+        turno.diagnostico.temperatura.toString().includes(busqueda)||
+        turno.diagnostico.diagnostico.toLocaleLowerCase().includes(busqueda)||
+        turno.diagnostico.peso.toString().includes(busqueda)||
+        turno.diagnostico.presion.toString().includes(busqueda))
         {
           this.arrayTurnos.push(turno);
         }
+        else
+        {
+          for(let datos of turno.diagnostico.extras)
+          {
+            if(datos.valor.includes(busqueda) || datos.clave.includes(busqueda))
+            {
+              this.arrayTurnos.push(turno);
+            }
+          }
+        }
       }
+    }
+  }
+
+  Agregar()
+  {
+    if(this.problema.valor !="" &&this.problema.clave !="")
+    {
+      this.diagnostico.extras.push(this.problema);
+      this.VolverProblema();
+    }
+    else
+    {
+      this.error.MostrarError("CI");
     }
   }
 }

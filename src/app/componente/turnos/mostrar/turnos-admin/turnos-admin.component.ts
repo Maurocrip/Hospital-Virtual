@@ -1,6 +1,8 @@
+import { trigger } from '@angular/animations';
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Diagnostico } from 'src/app/Clases/Diagnostico';
 import { Encuesta } from 'src/app/Clases/Encuesta';
+import { Fecha } from 'src/app/Clases/Fecha';
 import { Turno } from 'src/app/Clases/Turno';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { GlobalService } from 'src/app/servicios/global.service';
@@ -12,32 +14,31 @@ import { GlobalService } from 'src/app/servicios/global.service';
 })
 export class TurnosAdminComponent
 {
+  public mostrar : number =0;
   public encuesta : Encuesta = new Encuesta;
-  public mostrarDiag : boolean = false;
   public diagnostico : Diagnostico= new Diagnostico;
   public escritura : string = "";
   public califText : string = "";
-  public calificacion : boolean = false;
   public estado : string = "";
   public arrayTurnos : Array<Turno> =[];
-  public arrayEncuestas : Array<Encuesta> =[];
   @ViewChild('busqueda') busqueda: any;
-  public comentario: boolean =false;
-  constructor( public global : GlobalService, private firebase : FirebaseService)
-  {
-    this.arrayTurnos = [...this.global.arrayTurnos];
-  }
   @Output() newItemEvent = new EventEmitter<object>();
+
+  constructor( public global : GlobalService, private firebase : FirebaseService){}
 
   ngOnInit(): void
   {
-    this.firebase.TraerEncuesta()
+    this.firebase.TraerTurnos()
     .subscribe((res)=>
     {
-      this.arrayEncuestas =[];
+      this.arrayTurnos =[];
       for(let element of res)
       {
-        this.arrayEncuestas.push(new Encuesta( element["Recomendacion"], element["Atencion"] , element["Higiene"] , element["HorarioRespetado"], element["Paciente"]));
+        this.arrayTurnos.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"],element["Hora"]),element["Especialista"],
+        element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"], element["Id"], 
+        element["Comentario"], new Diagnostico(element["Diagnostico"].peso,element["Diagnostico"].altura,element["Diagnostico"].diagnostico,
+        element["Diagnostico"].temperatura,element["Diagnostico"].presion, element["Diagnostico"].extras), element["Calificacion"],
+        new Encuesta(element["Encuesta"].Recomendacion,element["Encuesta"].Atencion,element["Encuesta"].Higiene,element["Encuesta"].HorarioRespetado)));
       }
     })
   }
@@ -67,49 +68,29 @@ export class TurnosAdminComponent
     }
   }
 
-  Comentario(turno : Turno)
+  Mostrar(objeto : any, opcion : number)
   {
-    this.comentario=true;
-    this.estado=turno.estado;
-    this.escritura=turno.comentario;
-  }
-
-  Diagnostico(turno : Turno)
-  {
-    this.diagnostico = turno.diagnostico;
-    this.mostrarDiag = true;
-  }
-
-  VolverCom()
-  {
-    this.comentario = false;
-  }
-
-  VolverDiagMos()
-  {
-    this.mostrarDiag = false;
-  }
-
-  VolverCalif()
-  {
-    this.calificacion = false;
-  }
-
-  Calificar(calif : string)
-  {
-    this.calificacion = true;
-    this.califText = calif;
-  }
-
-  Encuesta(email : string)
-  {
-    for(let encuesta of this.arrayEncuestas)
+    switch(opcion)
     {
-      if(encuesta.emailPaciente == email)
-      {
-        this.encuesta = encuesta;
-        break
-      }
+      case 1:
+        this.estado=objeto.estado;
+        this.escritura=objeto.comentario;
+      break
+      case 2:
+        this.diagnostico = objeto.diagnostico;
+      break
+      case 3:
+        this.califText = objeto;
+      break
+      case 4:
+        this.encuesta = objeto;
+      break
     }
+    this.mostrar = opcion;
+  }
+
+  Volver()
+  {
+    this.mostrar = 0;
   }
 }

@@ -1,0 +1,30 @@
+<table class="table">
+    <tr>
+        <th class="a"colspan="100%">Historial medico</th>
+    </tr>
+    <tr>
+        <th>Paciente</th>
+        <th>Especialista</th>
+        <th>Fecha</th>
+        <th>Peso</th>
+        <th>Altura</th>
+        <th>Temperatura</th>
+        <th>Precion</th>
+        <th>Diagnostico</th>
+        <th>Otros problemas</th>
+    </tr>
+    <tr *ngFor="let turno of arrayTurnos">
+        <td>{{turno.nombrePas}}</td>
+        <td>{{turno.nombreEsp}}</td>
+        <td>{{turno.fecha.year}}-{{turno.fecha.mes}}-{{turno.fecha.dia}} {{turno.fecha.hora}}</td>
+        <td>{{turno.diagnostico.peso}}</td>
+        <td>{{turno.diagnostico.altura}}</td>
+        <td>{{turno.diagnostico.temperatura}}</td>
+        <td>{{turno.diagnostico.presion}}</td>
+        <td>{{turno.diagnostico.diagnostico}}</td>
+        <td>
+            <label *ngFor="let problema of turno.diagnostico.extras">{{problema.clave}}: {{problema.valor}}</label>
+        </td>
+    </tr>
+</table>
+

@@ -14,14 +14,11 @@ import { GlobalService } from 'src/app/servicios/global.service';
 })
 export class TurnosPacienteComponent implements OnInit
 {
+  public mostrar: number =0;
   public encuesta : Encuesta = new Encuesta;
   private id : string ="";
   public diagnostico : Diagnostico= new Diagnostico;
-  public mostrarDiag : boolean = false;
   public escritura : string = "";
-  public mostrar : boolean = false;
-  public calificacion : boolean = false;
-  public mosEncu : boolean = false;
   public califiText : string = "";
   @ViewChild('higiene') higiene: any;
   @ViewChild('busqueda') busqueda: any;
@@ -44,7 +41,7 @@ export class TurnosPacienteComponent implements OnInit
           this.arrrayTurosPaciente.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"],element["Hora"]),element["Especialista"],
           element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"], element["Id"],
           element["Comentario"], new Diagnostico(element["Diagnostico"].peso,element["Diagnostico"].altura,element["Diagnostico"].diagnostico,
-          element["Diagnostico"].temperatura,element["Diagnostico"].presion), element["Calificacion"]));
+          element["Diagnostico"].temperatura,element["Diagnostico"].presion,element["Diagnostico"].extras), element["Calificacion"]));
         }
       }
       this.arrayTurnos = [...this.arrrayTurosPaciente];
@@ -56,61 +53,20 @@ export class TurnosPacienteComponent implements OnInit
     this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cancelar", Id :turno.id, Estado : "cancelado"});
   }
 
-  Comentario(reseña : string)
-  {
-    this.mostrar=true;
-    this.escritura=reseña;
-  }
-
-  Volver()
-  {
-    this.mostrar = false;
-  }
-
-  Encuesta()
-  {
-    this.mosEncu = true;
-  }
-
-  Calificar(id : string)
-  {
-    this.id = id;
-    this.calificacion=true
-  }
-
-  Diagnostico(turno : Turno)
-  {
-    this.diagnostico = turno.diagnostico;
-    this.mostrarDiag = true;
-  }
-
-  VolverDiagMos()
-  {
-    this.mostrarDiag = false;
-  }
-
-  VolverEncu()
-  {
-    this.mosEncu = false;
-  }
-
-  VolverCalif()
-  {
-    this.calificacion = false;
-  }
-
   GuardarCalif()
   {
-    this.firebase.ModificarTurnoCalificacion(this.id,this.califiText)
-    this.calificacion = false;
+    this.firebase.ModificarTurnoCalificacion(this.id,this.califiText);
+    this.califiText = "";
+    this.mostrar = 0;
   }
 
   GuardarEncu()
   {
     if((this.encuesta.atencion >0 || this.encuesta.atencion <=10) && this.encuesta.higiene !="")
     {
-      this.firebase.GuardarEncuesta(this.encuesta);
-      this.mosEncu = false;
+      this.firebase.ModificarTurnoEncuesta(this.id, this.encuesta);
+      this.encuesta = new Encuesta;
+      this.mostrar = 0;
     }
     else
     {
@@ -134,11 +90,54 @@ export class TurnosPacienteComponent implements OnInit
     {
       for (let turno of this.arrrayTurosPaciente)
       {
-        if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombreEsp.toLocaleLowerCase().includes(busqueda))
+        let fecha = turno.fecha.dia+"/"+turno.fecha.mes+"/"+turno.fecha.year;
+        if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombreEsp.toLocaleLowerCase().includes(busqueda) ||
+        turno.nombrePas.toLocaleLowerCase().includes(busqueda)||
+        turno.estado.toLocaleLowerCase().includes(busqueda)||
+        fecha.toLocaleLowerCase().includes(busqueda)||
+        turno.fecha.hora.toLocaleLowerCase().includes(busqueda)||
+        turno.diagnostico.altura.toString().includes(busqueda)||
+        turno.diagnostico.temperatura.toString().includes(busqueda)||
+        turno.diagnostico.diagnostico.toLocaleLowerCase().includes(busqueda)||
+        turno.diagnostico.peso.toString().includes(busqueda)||
+        turno.diagnostico.presion.toString().includes(busqueda))
         {
           this.arrayTurnos.push(turno);
         }
+        else
+        {
+          for(let datos of turno.diagnostico.extras)
+          {
+            if(datos.valor.includes(busqueda) || datos.clave.includes(busqueda))
+            {
+              this.arrayTurnos.push(turno);
+            }
+          }
+        }
       }
     }
+  }
+
+  Mostrar(objeto : any, opcion : number)
+  {
+    switch(opcion)
+    {
+      case 1:
+        this.diagnostico = objeto.diagnostico;
+      break
+      case 2:
+        this.escritura=objeto;
+      break
+      case 3:
+      case 4:
+        this.id = objeto;
+      break
+    }
+    this.mostrar = opcion;
+  }
+
+  Volver()
+  {
+    this.mostrar = 0;
   }
 }

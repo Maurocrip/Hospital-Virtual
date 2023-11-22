@@ -11,6 +11,8 @@ import { GlobalService } from 'src/app/servicios/global.service';
 })
 export class UsuariosComponent
 {
+  public paciente : string = "";
+  public mostrar : boolean = false;
   constructor(private router: Router, private firebase : FirebaseService, public global : GlobalService){}
 
   Denegar(especialista : Especialista)
@@ -23,6 +25,17 @@ export class UsuariosComponent
   {
     especialista.estado = "habilitado";
    this.firebase.ModificarEspecialistaEstado(especialista.id,especialista.estado);
+  }
+
+  historial(mail : string)
+  {
+    this.paciente = mail;
+    this.mostrar = true
+  }
+
+  Volver()
+  {
+    this.mostrar = false;
   }
 
   NuevosUsuarios()

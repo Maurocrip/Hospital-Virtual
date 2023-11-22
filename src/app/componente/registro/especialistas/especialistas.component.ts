@@ -8,6 +8,7 @@ import { sendEmailVerification } from '@angular/fire/auth';
 import { getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import { Storage } from '@angular/fire/storage';
 import { Especialista } from 'src/app/Clases/Especialista';
+import { Especialidades } from 'src/app/Clases/Especialidades';
 
 @Component({
   selector: 'app-especialistas',
@@ -17,6 +18,7 @@ import { Especialista } from 'src/app/Clases/Especialista';
 
 export class EspecialistasComponent
 { 
+  public especialidadClas : Especialidades = new Especialidades
   public especialista : Especialista = new Especialista;
   public file : File | undefined;
   @ViewChild('select') select: any;
@@ -50,11 +52,12 @@ export class EspecialistasComponent
     }
   }
 
-  AgregarEspecialidad()
+  async AgregarEspecialidad()
   {
     if(this.especialidad.nativeElement.value.replaceAll(" ", "")!="")
     {
-      this.firebase.GuardarEspecialidades(this.especialidad.nativeElement.value);
+      this.especialidadClas.nombre = this.especialidad.nativeElement.value;
+      this.firebase.GuardarEspecialidades(this.especialidadClas);
       this.especialidad.nativeElement.value = "";
     }
   }
@@ -105,7 +108,7 @@ export class EspecialistasComponent
   }
 
   async GuardarImagen(foto : any)
-  {
+  {  
     let path : string = "especialista/"+ this.especialista.dni+Date.now()+"."+foto.name.split(".").pop();
     const imagReferencia = ref(this.storage, path);
     return uploadBytes(imagReferencia, foto)

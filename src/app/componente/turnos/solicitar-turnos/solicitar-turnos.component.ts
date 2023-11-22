@@ -16,10 +16,10 @@ export class SolicitarTurnosComponent
 {
   public pureba : number = 0
   @ViewChild('paciente') paciente: any;
-  public arrayEspeccialidades : Array<any> =[];
+  public arrayEspecialidades : Array<any> =[];
   public arrayFechasHabiles : Array<any> =[];
   public arrayHorarios : Array<any> =[];
-  public arrayTurnos : Array<any> =[];
+  public arrayDiasTrabaja : Array<any> =[];
   public arrayFechasDesHabiles : Array<any> =[];
   public turno : Turno = new Turno();
 
@@ -94,9 +94,9 @@ export class SolicitarTurnosComponent
 
       fecha = new Fecha(dia,mes,year);
 
-      for (let i = 0; i < this.arrayTurnos.length; i++) 
+      for (let turno of this.arrayDiasTrabaja) 
       {
-        if(new Date(year,mes-1,dia).getDay() == this.arrayTurnos[i].Value)
+        if(new Date(year,mes-1,dia).getDay() == turno.Value)
         {
           this.arrayFechasHabiles.push(new Fecha(dia,mes,year));
           break;
@@ -131,9 +131,11 @@ export class SolicitarTurnosComponent
       this.firebase.GuardarTurnos(this.turno);
       Swal.fire({text :"Nos vemos pronto", icon:"success", title: "Turno Creado"});
       this.turno = new Turno();
+      this.arrayEspecialidades=[];
+      this.arrayDiasTrabaja=[];
+      this.arrayFechasDesHabiles = [];
       this.arrayFechasHabiles = [];
-      this.arrayHorarios=[];
-      this.paciente.nativeElement.value = "";
+      this.arrayHorarios = [];
       this.pureba =0;
     }
     else
@@ -197,17 +199,29 @@ export class SolicitarTurnosComponent
     this.pureba =1;
     this.turno.emailEsp = especialista.email;
     this.turno.nombreEsp = especialista.nombre;
-    this.arrayTurnos = especialista.diasHabiles;
+    this.arrayDiasTrabaja = especialista.diasHabiles;
     if(typeof especialista.especialiadad !== "string")
     {
-      for(let epecialidad of especialista.especialiadad)
+      for(let especialidad of especialista.especialiadad)
       {
-        this.arrayEspeccialidades.push(epecialidad);
+        for(let especialidad2 of this.global.arrayEspecialidades)
+        {
+          if(especialidad == especialidad2.nombre)
+          {
+            this.arrayEspecialidades.push(especialidad2);
+          }
+        }
       }
     }
     else
     {
-      this.arrayEspeccialidades.push(especialista.especialiadad);
+      for(let especialidad2 of this.global.arrayEspecialidades)
+        {
+          if(especialista.especialiadad == especialidad2.nombre)
+          {
+            this.arrayEspecialidades.push(especialidad2);
+          }
+        }
     }
   }
 
@@ -215,7 +229,10 @@ export class SolicitarTurnosComponent
   {
     this.pureba =2;
     this.turno.especialidad = especialidad;
-    this.CargarArrayFechas();
+    if(this.arrayDiasTrabaja.length!=0)
+    {
+      this.CargarArrayFechas();
+    }
   }
 
   PruebaFecha(dia:Fecha)
@@ -252,8 +269,8 @@ export class SolicitarTurnosComponent
       case 0:
         this.turno.emailEsp = "";
         this.turno.nombreEsp = "";
-        this.arrayEspeccialidades=[];
-        this.arrayTurnos=[];
+        this.arrayEspecialidades=[];
+        this.arrayDiasTrabaja=[];
       break;
       case 1:
         this.turno.especialidad = "";

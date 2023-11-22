@@ -60,17 +60,28 @@ button
     background-color: #007b7b;
 }
 
-img
+.fotoEspecialista
 {
     border-radius: 100%;
     width: 100px;
     height: 100px;
     cursor: pointer;
 }
+.fotoEspecialidad
+{
+    border-radius: 15%;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    border: solid 1px;
+    cursor: pointer;
+}
 
 .prueba1
 {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .imagenes
@@ -78,4 +89,16 @@ img
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.fecha
+{
+    border-radius: 0px;
+    margin: 0px 10px 10px 0px;
+}
+
+.horario
+{
+    border-radius: 10px;
+    margin: 0px 10px 10px 0px;
 }

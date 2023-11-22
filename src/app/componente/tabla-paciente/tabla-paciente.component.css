@@ -1,0 +1,28 @@
+.a
+{
+    justify-content: center;
+    background-color: green;
+    margin: 10px 0px 0px 0px;
+}
+table
+{
+    background-color: #e2e9ff;
+    width: 100%;
+    text-align: center;
+    min-width: 1000px
+}
+
+td
+{
+    border: black 2px solid;
+    & label
+    {
+        background: none;
+    }
+}
+
+th
+{
+    background-color: #77c0ff;
+    border: black 2px solid;
+}
