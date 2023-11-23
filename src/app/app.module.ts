@@ -28,7 +28,7 @@ import { PerfilPacienteComponent } from './componente/perfil/perfil-paciente/per
 import { PerfilEspecialistaComponent } from './componente/perfil/perfil-especialista/perfil-especialista.component';
 import { TablaPacienteComponent } from './componente/tabla-paciente/tabla-paciente.component';
 import { PacientesComponent } from './componente/pacientes/pacientes.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [

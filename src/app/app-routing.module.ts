@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, provideRouter } from '@angular/router';
 import { LoginComponent } from './componente/login/login.component';
 import { RegistroComponent } from './componente/registro/registro.component';
 import { HomeComponent } from './componente/home/home.component';
 import { VeriPasieteComponent } from './componente/verificacion/veri-pasiete/veri-pasiete.component';
 import { VeriEspecilistaComponent } from './componente/verificacion/veri-especilista/veri-especilista.component';
 
+
 const routes: Routes = 
 [
-  {path: "login", component: LoginComponent}, 
-  {path: "registro", component: RegistroComponent},
+  {path: "login", component: LoginComponent, data: { animation: 'openClosePage' }}, 
+  {path: "registro", component: RegistroComponent, data: { animation: 'openClosePage' }},
   {path: "validacionPas", component: VeriPasieteComponent},  
   {path: "validacionEsp", component: VeriEspecilistaComponent}, 
   {path: "home", component: HomeComponent},  
