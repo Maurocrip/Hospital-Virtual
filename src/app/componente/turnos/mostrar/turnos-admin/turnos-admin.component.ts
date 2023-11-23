@@ -21,6 +21,7 @@ export class TurnosAdminComponent
   public califText : string = "";
   public estado : string = "";
   public arrayTurnos : Array<Turno> =[];
+  public arrayEncuestas : Array<Encuesta> =[];
   @ViewChild('busqueda') busqueda: any;
   @Output() newItemEvent = new EventEmitter<object>();
 
@@ -46,6 +47,7 @@ export class TurnosAdminComponent
   Cancelar(turno : Turno)
   {
     this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cancelar", Id :turno.id});
+    this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cancelar", Id :turno.id});
   }
 
   Buscar()
@@ -58,6 +60,7 @@ export class TurnosAdminComponent
     }
     else
     {
+      for (let turno of this.global.arrayTurnos)
       for (let turno of this.global.arrayTurnos)
       {
         if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombreEsp.toLocaleLowerCase().includes(busqueda))
