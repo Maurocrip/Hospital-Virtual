@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Diagnostico } from 'src/app/Clases/Diagnostico';
 import { Fecha } from 'src/app/Clases/Fecha';
 import { Turno } from 'src/app/Clases/Turno';
@@ -15,8 +15,10 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 })
 export class PerfilPacienteComponent 
 {
+  @ViewChild('especialista') especialista: any;
   @Input() mailPaciente :string ="";
   public arrayTurnos : Array<Turno> = [];
+  public arrayMostrarTurnos : Array<Turno> = [];
   constructor(private firebase : FirebaseService, public global : GlobalService)
   {
     this.firebase.TraerTurnos()
@@ -33,6 +35,7 @@ export class PerfilPacienteComponent
           element["Diagnostico"].temperatura,element["Diagnostico"].presion,element["Diagnostico"].extras), element["Calificacion"]));
         }
       }
+      this.arrayMostrarTurnos = [...this.arrayTurnos];
     })
   }
 
@@ -41,7 +44,7 @@ export class PerfilPacienteComponent
     let toDay = new Date();
     let hola : string = "";
     let string : Array<any[]> = [['Paciente', 'Especialista', 'Fecha','Peso', 'Altura', 'Temperatura','Precion', 'Diagnostico', 'Otros problemas']];
-    for(let turno of this.arrayTurnos) 
+    for(let turno of this.arrayMostrarTurnos) 
     {
       for(let problema of turno.diagnostico.extras)
       {
@@ -97,5 +100,24 @@ export class PerfilPacienteComponent
       };
       img.src = url;
     });
+  }
+
+  Selecion()
+  {
+    if(this.especialista.nativeElement.value!='')
+    {
+      this.arrayMostrarTurnos = [];
+      for(let turno of this.arrayTurnos)
+      {
+        if(turno.nombreEsp == this.especialista.nativeElement.value)
+        {
+          this.arrayMostrarTurnos.push(turno);
+        }
+      }
+    }
+    else
+    {
+      this.arrayMostrarTurnos = [...this.arrayTurnos];
+    }
   }
 }

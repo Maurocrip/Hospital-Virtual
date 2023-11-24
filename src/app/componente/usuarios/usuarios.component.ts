@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Especialista } from 'src/app/Clases/Especialista';
+import { Turno } from 'src/app/Clases/Turno';
+import { ExelService } from 'src/app/servicios/exel.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { GlobalService } from 'src/app/servicios/global.service';
 
@@ -13,7 +15,7 @@ export class UsuariosComponent
 {
   public paciente : string = "";
   public mostrar : boolean = false;
-  constructor(private router: Router, private firebase : FirebaseService, public global : GlobalService){}
+  constructor(private router: Router, private firebase : FirebaseService, public global : GlobalService, private exel :ExelService){}
 
   Denegar(especialista : Especialista)
   {
@@ -41,5 +43,18 @@ export class UsuariosComponent
   NuevosUsuarios()
   {
     this.router.navigate(['registro']);
+  }
+
+  Descargar(emailPaciente : string, nombre : string)
+  {
+    let array : Array<Turno> = [];
+    for(let turno of this.global.arrayTurnos)
+    {
+      if(turno.emailPas == emailPaciente)
+      {
+        array.push(turno);
+      }
+    }
+    this.exel.descargarExel(array,nombre);
   }
 }

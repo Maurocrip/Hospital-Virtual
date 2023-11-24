@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ApplicationConfig, NgModule } from '@angular/core';
 import { RouterModule, Routes, provideRouter } from '@angular/router';
 import { LoginComponent } from './componente/login/login.component';
 import { RegistroComponent } from './componente/registro/registro.component';
@@ -9,14 +9,20 @@ import { VeriEspecilistaComponent } from './componente/verificacion/veri-especil
 
 const routes: Routes = 
 [
-  {path: "login", component: LoginComponent, data: { animation: 'openClosePage' }}, 
-  {path: "registro", component: RegistroComponent, data: { animation: 'openClosePage' }},
+  {path: "login", component: LoginComponent, data: { animation: 'login' }}, 
+  {path: "registro", component: RegistroComponent, data: { animation: 'registro' }},
   {path: "validacionPas", component: VeriPasieteComponent},  
   {path: "validacionEsp", component: VeriEspecilistaComponent}, 
-  {path: "home", component: HomeComponent},  
+  {path: "home", component: HomeComponent, data: { animation: 'home' }},  
   { path: 'logueado', loadChildren: () => import('./modulos/logueado/logueado.module').then(m => m.LogueadoModule)},
   {path: '', redirectTo: "login", pathMatch: "full"},
 ];
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes)
+  ]
+};
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

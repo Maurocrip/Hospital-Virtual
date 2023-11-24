@@ -1,0 +1,123 @@
+.fondo
+{
+    height: 900px;
+    background-color: rgb(246, 197, 18);
+}
+
+.centro
+{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.interior
+{
+    border: solid;
+    background-color: #7aaacc;
+}
+
+.opcion
+{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    & small
+    {
+        color: #921e1e;
+        font-size: large;
+    };
+}
+
+.titulo
+{
+    border: solid;
+    background-color: #007b7b;
+    border-radius: 15px 15px 0px 0px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    & label
+    {
+        margin: 10px;
+    }
+}
+
+.opcion--botoness
+{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    justify-content: space-between;
+}
+
+button
+{
+    border-radius: 30px;
+    background-color: #007b7b;
+}
+
+.fotoEspecialista
+{
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+.fotoEspecialidad
+{
+    border-radius: 15%;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    border: solid 1px;
+    cursor: pointer;
+}
+
+.historial
+{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center
+}
+.pacientes
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center
+}
+
+.imagenes
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fecha
+{
+    border-radius: 0px;
+    margin: 0px 10px 10px 0px;
+}
+
+.horario
+{
+    border-radius: 10px;
+    margin: 0px 10px 10px 0px;
+}
+
+.favbutton
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    & button:hover
+    {
+        background-color: #f6f44d;
+    }
+}

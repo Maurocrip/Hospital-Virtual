@@ -64,7 +64,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    RecaptchaModule
+    RecaptchaModule,
+    BrowserAnimationsModule 
   ],
   providers: [
     {

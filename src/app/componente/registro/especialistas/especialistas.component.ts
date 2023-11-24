@@ -42,7 +42,7 @@ export class EspecialistasComponent
   Selecion()
   {
     this.especialista.especialiadad = [];
-    let especialidades :  any = document.getElementById("especialidades")
+    let especialidades :  any = document.getElementById("especialidades");
     for(let i = 0 ; i<especialidades.length; i++)
     {
       if(especialidades.options[i].selected)

@@ -1,4 +1,32 @@
-<div *ngFor="let paciente of arrayPacientesDelDoctor">
-    <h4>{{paciente.nombre}}</h4>
-    <app-perfil-paciente [mailPaciente]="paciente.email" ></app-perfil-paciente>
+<div class="fondo">
+    <div class="centro">
+        <form class="formulario">
+            <div class="titulo">
+                <label>PACIENTES</label>
+            </div>
+            <div class="interior">
+                <div class="opcion" *ngIf="prueba == 0">
+                    <label>Selecciona Especialista</label>
+                    <div class="favbutton">
+                        <button class="fab" (click)="Cambiar()">+</button>
+                        <div class="pacientes" *ngIf="habilitar">
+                            <div class="imagenes" *ngFor="let paciente of arrayPacientesDelDoctor">
+                                <label>{{paciente.nombre}}</label>
+                                <img class="fotoEspecialista" src={{paciente.foto1}} (click)="PruebaEspecialista(paciente)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="opcion" *ngIf="prueba == 1">
+                        <div class="historial">
+                            <app-perfil-paciente [mailPaciente]="paciente.email" ></app-perfil-paciente>
+                            <button (click)="Volver()" >Volver</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+

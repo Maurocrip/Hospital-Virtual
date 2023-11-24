@@ -11,4 +11,9 @@ export class Fecha
     this.year =year;
     this.hora = hora;
   }
+
+  public FechaToString() : string
+  {
+    return this.dia + "/"+ this.mes + "/" +this.year;
+  }
 }

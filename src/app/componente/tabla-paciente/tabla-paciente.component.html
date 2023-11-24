@@ -12,6 +12,7 @@
         <th>Precion</th>
         <th>Diagnostico</th>
         <th>Otros problemas</th>
+        <th *ngIf="global.tipo == 'especialista'" >Reseña</th>
     </tr>
     <tr *ngFor="let turno of arrayTurnos">
         <td>{{turno.nombrePas}}</td>
@@ -25,6 +26,7 @@
         <td>
             <label *ngFor="let problema of turno.diagnostico.extras">{{problema.clave}}: {{problema.valor}}</label>
         </td>
+        <td *ngIf="global.tipo == 'especialista'" >{{turno.comentario}}</td>
     </tr>
 </table>
 

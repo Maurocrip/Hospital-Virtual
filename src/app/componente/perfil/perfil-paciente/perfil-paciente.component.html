@@ -1,2 +1,11 @@
-<app-tabla-paciente [arrayTurnos]="arrayTurnos"></app-tabla-paciente>
-<button *ngIf="global.tipo == 'paciente'" (click)="Descargar()" >Descargar</button>
+<div class="opciones" *ngIf="global.tipo == 'paciente'">
+    <div>
+        <label>Elija un especialista</label>
+        <select #especialista (change)="Selecion()">
+            <option value="">Todos</option>
+            <option *ngFor="let especialidad of global.arrayEspecialista" value={{especialidad.nombre}}>{{especialidad.nombre}}</option>
+         </select>
+    </div>
+    <button (click)="Descargar()" >Descargar</button>
+</div>
+<app-tabla-paciente [arrayTurnos]="arrayMostrarTurnos"></app-tabla-paciente>

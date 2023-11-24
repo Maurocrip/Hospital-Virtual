@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Turno } from 'src/app/Clases/Turno';
 import { GlobalService } from 'src/app/servicios/global.service';
 
@@ -9,5 +9,6 @@ import { GlobalService } from 'src/app/servicios/global.service';
 })
 export class TablaPacienteComponent 
 {
+  constructor(public global : GlobalService){}
   @Input() arrayTurnos : Array<Turno> = [];
 }

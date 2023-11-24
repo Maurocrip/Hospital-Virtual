@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { Diagnostico } from 'src/app/Clases/Diagnostico';
-import { Fecha } from 'src/app/Clases/Fecha';
 import { Paciente } from 'src/app/Clases/Paciente';
-import { Turno } from 'src/app/Clases/Turno';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { GlobalService } from 'src/app/servicios/global.service';
 
@@ -13,6 +10,9 @@ import { GlobalService } from 'src/app/servicios/global.service';
 })
 export class PacientesComponent 
 {
+  public habilitar :boolean = false;
+  public paciente : Paciente = new Paciente;
+  public prueba :number = 0;
   public arrayPacientesDelDoctor : Array<Paciente> = [];
   constructor(private firebase : FirebaseService, public global : GlobalService)
   {
@@ -33,4 +33,26 @@ export class PacientesComponent
       }
     })
   }
+
+  PruebaEspecialista(paciente: Paciente)
+  {
+    this.prueba = 1;
+    this.paciente = paciente;
+  }
+  Volver()
+  {
+    this.prueba = 0;
+  }
+  Cambiar()
+  {
+    if(this.habilitar)
+    {
+      this.habilitar = false;
+    }
+    else
+    {
+      this.habilitar = true;
+    }
+  }
+
 }

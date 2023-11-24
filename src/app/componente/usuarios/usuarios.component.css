@@ -5,6 +5,32 @@
     margin: 10px 0px 0px 0px;
 }
 
+.historial
+{
+    border-radius: 20px;
+    padding: 0px 10px;
+    background-color: #d7aae9;
+    &:hover
+    {
+        background-color: #b946e6; 
+    } 
+}
+.descarga
+{
+    border-radius: 20px;
+    padding: 0px 10px;
+    background-color: #8dafed;
+    &:hover
+    {
+        background-color: #4081f9; 
+    }   
+}
+
+.carta
+{
+    width: 400px;
+}
+
 .total
 {
     margin: 10px;
