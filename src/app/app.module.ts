@@ -29,6 +29,7 @@ import { PerfilEspecialistaComponent } from './componente/perfil/perfil-especial
 import { TablaPacienteComponent } from './componente/tabla-paciente/tabla-paciente.component';
 import { PacientesComponent } from './componente/pacientes/pacientes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EstadisticasComponent } from './componente/estadisticas/estadisticas.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PerfilEspecialistaComponent,
     TablaPacienteComponent,
     PacientesComponent,
+    EstadisticasComponent,
     
   ],
   imports: [

@@ -6,7 +6,19 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 })
 export class ErroresService {
 
-  constructor() { }
+  private tost;
+  constructor() { 
+    this.tost = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }});
+  }
 
   MostrarError(codigoError : string)
   {
@@ -70,5 +82,12 @@ export class ErroresService {
   GenerarAlerta(texto : string, icono : SweetAlertIcon, titulo : string)
   {
     Swal.fire({text :texto, icon:icono, title: titulo});
+  }
+  Generartost(texto : string, icono : SweetAlertIcon, color : string)
+  {
+    this.tost.fire({icon: icono,
+    title: texto,
+    background: color,
+    color: "black"});
   }
 }

@@ -3,6 +3,7 @@ import { FirebaseService } from './servicios/firebase.service';
 import { ChildrenOutletContexts, Router } from '@angular/router';
 import { GlobalService } from './servicios/global.service';
 import { slideInAnimation } from './animaciones/animation';
+import { ErroresService } from './servicios/errores.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ import { slideInAnimation } from './animaciones/animation';
 export class AppComponent implements OnInit{
   public perfil = false;
 
-  constructor(private firebase : FirebaseService, private router: Router, public global : GlobalService, private contexts: ChildrenOutletContexts){}
+  constructor(private firebase : FirebaseService, private router: Router, public global : GlobalService, private contexts: ChildrenOutletContexts, private errores : ErroresService){}
   ngOnInit(): void 
   {
     if(this.global.usuario!="")
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit{
     this.perfil = false;
     this.global.tipo ="";
     this.global.usuario="";
+    this.errores.Generartost("Nos vemos","success","pink");
     this.router.navigate(['login']);
   }
 }

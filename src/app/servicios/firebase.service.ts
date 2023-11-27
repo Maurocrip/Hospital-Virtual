@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
-import { Firestore, collection, collectionData, doc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, OrderByDirection, collection, collectionData, doc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Admin } from '../Clases/Admin';
 import { Paciente } from '../Clases/Paciente';
 import { Especialista } from '../Clases/Especialista';
 import { Turno } from '../Clases/Turno';
 import { Encuesta } from '../Clases/Encuesta';
 import { Especialidades } from '../Clases/Especialidades';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import { Especialidades } from '../Clases/Especialidades';
 export class FirebaseService {
 
   readonly auth = getAuth();
+  readonly colLogins = collection(this.firestore, 'logins');
   readonly colPacientes = collection(this.firestore, 'pacientes');
   readonly colEspecialidades = collection(this.firestore, 'especialidades');
   readonly colUsuarios = collection(this.firestore, 'usuario');
@@ -26,6 +28,26 @@ export class FirebaseService {
   TraerPacientes()
   {
     return collectionData(this.colPacientes);
+  }
+
+  getAllSnapshot<T=Array<any>>(collectionName: string, order:string, modo:OrderByDirection = 'desc'): Observable<T[]> 
+  {    
+    let docs = query(collection(this.firestore, collectionName), orderBy(order,modo));
+    return new Observable(subscriber => 
+    {
+      const unsubscribe = onSnapshot(docs, querySnapshot => 
+      {
+        const collection: T[] = [];
+
+        querySnapshot.forEach(doc => {
+          const simpleDoc = { ...doc.data() as T };
+          collection.push(simpleDoc);
+        });
+
+        subscriber.next(collection);
+      });
+      return () => unsubscribe();
+    });
   }
 
   TraerTurnos()
@@ -117,6 +139,13 @@ export class FirebaseService {
       EmailPaciente: turno.emailPas, Estado : turno.estado, Comentario: turno.comentario,
       Diagnostico: {peso : turno.diagnostico.peso, altura : turno.diagnostico.altura, diagnostico : turno.diagnostico.diagnostico, extras : turno.diagnostico.extras}, Calificacion : turno.calificacion,
       Encuesta : {Recomendacion : turno.encuesta.recomendacion, Atencion : turno.encuesta.atencion, HorarioRespetado : turno.encuesta.horarioRespetado, Higiene : turno.encuesta.higiene}});
+  }
+
+  GuardarLogins(login : any) : void
+  {
+    const documento = doc(this.colLogins);
+    const id = documento.id;
+    setDoc(documento,{ Usuario: login.usuario, Fecha: login.fecha});
   }
 //-----------------------------------------------MODIFICAR----------------------------------------------------------------------------------------
   ModificarEspecialistaEstado( docId: string, estado : string)

@@ -41,10 +41,10 @@ input
 
 button
 {
-    background-color: #007b7b;
+    background-color: #c6fffc85;
     border-radius: 10px;
 }
 button:hover
 {
-    background-color: rgb(81, 255, 0);
+    background-color: #10ffab;
 }

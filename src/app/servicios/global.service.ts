@@ -13,6 +13,7 @@ import { Diagnostico } from '../Clases/Diagnostico';
 import { BehaviorSubject } from 'rxjs';
 import { Especialidades } from '../Clases/Especialidades';
 import { Encuesta } from '../Clases/Encuesta';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -106,6 +107,9 @@ export class GlobalService {
   {
     this.usuario = element;
     this.tipo = tipo;
+    let date : Date = new Date();
+    this.firebase.GuardarLogins({ usuario: element.email, fecha: date});
+    this.errores.Generartost("Estas logueado","success","#89ff87");
     this.router.navigate(['home']);
   }
 

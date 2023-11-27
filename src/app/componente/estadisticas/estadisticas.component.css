@@ -1,0 +1,32 @@
+table
+{
+    background-color: #e2e9ff;
+    width: 100%;
+    text-align: center;
+    min-width: 1000px
+}
+
+.fondo
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+td
+{
+    border: black 2px solid;
+}
+
+th
+{
+    background-color: #77c0ff;
+    border: black 2px solid;
+}
+
+.a
+{
+    justify-content: center;
+    background-color: green;
+    margin: 10px 0px 0px 0px;
+}

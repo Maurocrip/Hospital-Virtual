@@ -14,6 +14,16 @@ export class Fecha
 
   public FechaToString() : string
   {
-    return this.dia + "/"+ this.mes + "/" +this.year;
+    let retorno = "";
+    if (this.dia>=10)
+    {
+      retorno = this.dia + "/"+ this.mes + "/" +this.year;
+    }
+    else
+    {
+      retorno = "0"+ this.dia + "/"+ this.mes + "/" +this.year;
+    }
+
+    return retorno;
   }
 }

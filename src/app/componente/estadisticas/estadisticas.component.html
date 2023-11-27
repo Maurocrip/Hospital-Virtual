@@ -1,0 +1,35 @@
+<div class="fondo">
+    <div id="especialista" style="width: 600px;height:400px;"></div>
+    <div id="Semana" style="width: 600px;height:400px;"></div>
+    <div>
+        <table class="table">
+            <tr>
+                <th class="a"colspan="100%">Logins</th>
+            </tr>
+            <tr>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+            </tr>
+            <tr *ngFor="let login of arrayLogins">
+                <td>{{login.Usuario}}</td>
+                <td>{{login.Fecha}}</td>
+                <td>{{login.Hora}}</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <label>Turnos entre fechas</label>
+        <input #inicioSoli type="date">
+        <input #finSoli type="date">
+        <button (click)="FiltrarSolicitados()">Filtrar</button>
+        <div id="Solicitados" style="width: 1000px;height:400px; overflow-x: scroll;"></div>
+    </div>
+    <div>
+        <label>Turnos finalizados entre fechas</label>
+        <input #iniciofina type="date">
+        <input #finfina type="date">
+        <button (click)="FiltrarFinalizados()">Filtrar</button>
+        <div id="Finalizados" style="width: 600px;height:400px;"></div>
+    </div>
+</div>

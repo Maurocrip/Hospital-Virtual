@@ -22,7 +22,7 @@
             <td>{{turno.nombrePas}}</td>
             <td [ngClass]="{denegar: turno.estado=='cancelado', rechazar: turno.estado=='rechazado',finalizar: turno.estado=='fializado',
             aceptar: turno.estado=='aceptado'}">{{turno.estado}}</td>
-            <td>{{turno.fecha.dia}}/{{turno.fecha.mes}}/{{turno.fecha.year}}</td>
+            <td>{{turno.fecha.FechaToString()}}</td>
             <td>{{turno.fecha.hora}}</td>
             <td>
                 <button class="denegar" *ngIf="turno.estado == 'Esperando' || turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>

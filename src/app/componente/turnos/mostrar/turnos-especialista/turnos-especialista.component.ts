@@ -124,11 +124,10 @@ export class TurnosEspecialistaComponent implements OnInit
     {
       for (let turno of this.arrrayTurosEspecialista)
       {
-        let fecha = turno.fecha.dia+"/"+turno.fecha.mes+"/"+turno.fecha.year;
         if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombreEsp.toLocaleLowerCase().includes(busqueda) ||
         turno.nombrePas.toLocaleLowerCase().includes(busqueda)||
         turno.estado.toLocaleLowerCase().includes(busqueda)||
-        fecha.toLocaleLowerCase().includes(busqueda)||
+        turno.fecha.FechaToString().toLocaleLowerCase().includes(busqueda)||
         turno.fecha.hora.toLocaleLowerCase().includes(busqueda)||
         turno.diagnostico.altura.toString().includes(busqueda)||
         turno.diagnostico.temperatura.toString().includes(busqueda)||
@@ -154,7 +153,7 @@ export class TurnosEspecialistaComponent implements OnInit
 
   Agregar()
   {
-    if(this.problema.valor !="" &&this.problema.clave !="")
+    if(this.problema.valor != "" && this.problema.clave != "")
     {
       this.diagnostico.extras.push(this.problema);
       this.VolverProblema();

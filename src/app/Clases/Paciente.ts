@@ -1,3 +1,5 @@
+import { Turno } from "./Turno";
+
 export class Paciente 
 {
   public nombre : string = "";

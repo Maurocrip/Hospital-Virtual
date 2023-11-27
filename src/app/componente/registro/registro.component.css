@@ -8,7 +8,11 @@
 }
 .fondo
 {
-    background-color: rgb(246, 197, 18);
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/fondos%2FfondoLoginRegister.jpg?alt=media&token=6ae89d2d-3ce9-44c5-a8e0-87bc88f11304);
+    background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     height: 900px;
 }
 .opciones

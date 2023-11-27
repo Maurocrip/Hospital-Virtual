@@ -22,8 +22,12 @@ input
 }
 .fondo
 {
-    background-color: rgb(246, 197, 18);
-    height: 900px;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/hospitalonline-54e32.appspot.com/o/fondos%2FfondoLoginRegister.jpg?alt=media&token=6ae89d2d-3ce9-44c5-a8e0-87bc88f11304);
+    background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 902px;
 }
 .centro
 {
@@ -45,7 +49,7 @@ button
 }
 button:hover
 {
-    background-color: rgb(81, 255, 0);
+    background-color: #007b7b;
 }
 .login
 {
@@ -99,7 +103,7 @@ button:hover
     height: 90px;
     width: 90px;
     display: flex;
-    background-color: #ff8989;
+    background-color: #89d4ff;
     border-radius: 100%;
     align-items: center;
     justify-content: center;

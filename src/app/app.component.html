@@ -2,6 +2,7 @@
   <div class="derecha">
     <a routerLink="home">Home</a>
     <a *ngIf="this.global.tipo =='admin'" routerLink="logueado/admin/usuario">Usuarios</a>
+    <a *ngIf="this.global.tipo =='admin'" routerLink="logueado/admin/estadistica">Estadisticas</a>
     <a *ngIf="this.global.tipo =='admin' || this.global.tipo =='paciente'" routerLink="logueado/solicitar">Solicitar Turnos</a>
     <a *ngIf="this.global.tipo !=''" routerLink="logueado/mostrarTurnos">Mis Turnos</a>
     <a *ngIf="this.global.tipo =='especialista'" routerLink="logueado/especialista/perfilEspe">Perfil</a>

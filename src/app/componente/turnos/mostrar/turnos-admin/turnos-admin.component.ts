@@ -61,7 +61,6 @@ export class TurnosAdminComponent
     else
     {
       for (let turno of this.global.arrayTurnos)
-      for (let turno of this.global.arrayTurnos)
       {
         if(turno.especialidad.toLocaleLowerCase().includes(busqueda)|| turno.nombreEsp.toLocaleLowerCase().includes(busqueda))
         {
