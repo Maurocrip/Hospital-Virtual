@@ -1,9 +1,71 @@
 table
 {
     background-color: #e2e9ff;
-    width: 100%;
     text-align: center;
-    min-width: 1000px
+}
+h5
+{
+    display: flex;
+    margin: 10px 0px 0px 0px;
+    justify-content: center;
+}
+
+.tabla
+{
+    overflow-y: scroll;
+    max-height: 300px;
+    width: 100%;
+    min-width: 1000px;
+}
+
+.graficos
+{
+    width: 100%;
+    height: 350px;
+}
+.opciones
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: solid 1px;
+    background: wheat;
+    & label
+    {
+        font-size: large;
+    }
+}
+.contenedor
+{   
+    min-width: 1850px;
+    height: 465px;
+    margin: 6px;
+    border: solid 3px;
+    background: #d69059f5;
+}
+
+.botonLogin
+{
+    margin-top: 0px !important;
+    padding: 5px;
+    width: 100% !important;
+    display: flex !important;
+    margin-bottom: 0px !important;
+    justify-content: center !important;
+    border-top: solid 2px;
+    background-color: #90fc9b;
+}
+
+.botonTorta
+{
+    width: 100% !important;
+    display: flex !important;
+    margin-bottom: 0px !important;
+    padding: 3px;
+    justify-content: center !important;
+    border-top: solid 2px;
+    background-color: #90fc9b;
 }
 
 .fondo
@@ -11,6 +73,72 @@ table
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.torta
+{
+    width: 100%;
+    height: 356px;
+    margin: 2px;
+}
+.graficoDias
+{
+    width: 50%;
+    height: 400px;
+    border: solid 2px;
+    background: #a3b2d0;
+    margin: 2px;
+}
+
+.graficoTorta
+{
+    width: 49%;
+    display: flex;
+    height: 401px;
+    border: solid;
+    background: #a6efd3;
+    margin: 2px;
+    flex-direction: column;
+}
+
+.boton
+{
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.tituloDias
+{
+    display: flex;
+    background: #3e65c6;
+    border-bottom: solid 2px;
+}
+
+.fechas
+{
+    margin-right: 5px;
+}
+
+button
+{
+    border-radius: 15px;
+    background: #a0a0a0;
+    &:hover
+    {
+        background-color: white;
+    }
+}
+
+.titulo
+{
+    display: flex;
+    width: 70%;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 td
@@ -28,5 +156,23 @@ th
 {
     justify-content: center;
     background-color: green;
-    margin: 10px 0px 0px 0px;
+    width: 100%;
+    display: flex;
+    border-bottom: solid 2px;
+}
+
+.graficoTabla
+{
+    width: 100%;
+    margin: 5px;
+    border: solid;
+}
+
+.descarga
+{
+    display: flex;
+    padding: 10px;
+    border-top: solid 1px;
+    background: wheat;
+    justify-content: center;
 }

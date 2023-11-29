@@ -31,6 +31,7 @@ export const slideInAnimation =
         ], { optional: true }),
       ]),
     ]),
+
     transition('login => registro', 
     [
       style({ position: 'relative' }),
@@ -59,6 +60,7 @@ export const slideInAnimation =
         query('@*', animateChild(), { optional: true })
       ]),
     ]),
+
     transition('home => login', 
     [
         style({ position: 'relative' }),
@@ -87,6 +89,7 @@ export const slideInAnimation =
         query('@*', animateChild(), { optional: true })
       ]),
     ]),
+
     transition('login => home', 
     [
         style({ position: 'relative' }),
@@ -115,6 +118,7 @@ export const slideInAnimation =
         ], { optional: true }),
       ]),
     ]),
+
     transition('home => registro', 
     [
         style({ position: 'relative' }),
@@ -143,6 +147,7 @@ export const slideInAnimation =
         query('@*', animateChild(), { optional: true })
       ]),
     ]),
+
     transition('registro => home', 
     [
         style({ position: 'relative' }),
@@ -171,4 +176,4 @@ export const slideInAnimation =
         ], { optional: true }),
       ]),
     ])
-]);
+  ]);

@@ -13,7 +13,8 @@ import { ErroresService } from './servicios/errores.service';
     slideInAnimation
   ]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit
+{
   public perfil = false;
 
   constructor(private firebase : FirebaseService, private router: Router, public global : GlobalService, private contexts: ChildrenOutletContexts, private errores : ErroresService){}
@@ -25,7 +26,8 @@ export class AppComponent implements OnInit{
     }
   }
 
-  getRouteAnimationData() {
+  getRouteAnimationData() 
+  {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 

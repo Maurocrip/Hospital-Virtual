@@ -1,35 +1,73 @@
 <div class="fondo">
-    <div id="especialista" style="width: 600px;height:400px;"></div>
-    <div id="Semana" style="width: 600px;height:400px;"></div>
-    <div>
-        <table class="table">
-            <tr>
-                <th class="a"colspan="100%">Logins</th>
-            </tr>
-            <tr>
-                <th>Usuario</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-            </tr>
-            <tr *ngFor="let login of arrayLogins">
-                <td>{{login.Usuario}}</td>
-                <td>{{login.Fecha}}</td>
-                <td>{{login.Hora}}</td>
-            </tr>
-        </table>
+    <div class="graficoTorta">
+        <div class="torta" id="especialista"></div>
+        <div class="boton botonTorta">
+            <button (click)="Descargar('Turnos por especialista','especialista')">Descargar</button>
+        </div>
     </div>
-    <div>
-        <label>Turnos entre fechas</label>
-        <input #inicioSoli type="date">
-        <input #finSoli type="date">
-        <button (click)="FiltrarSolicitados()">Filtrar</button>
-        <div id="Solicitados" style="width: 1000px;height:400px; overflow-x: scroll;"></div>
+    <div class="graficoDias">
+        <div class="tituloDias">
+            <div class="titulo">
+                <h5>Turnos por dias</h5>
+            </div>
+            <div class="boton">
+                <button (click)="Descargar('turnos por dia','Semana')">Descargar</button>
+            </div>
+        </div>
+        <div id="Semana" style="width: 100%; height: 100%; "></div>
     </div>
-    <div>
-        <label>Turnos finalizados entre fechas</label>
-        <input #iniciofina type="date">
-        <input #finfina type="date">
-        <button (click)="FiltrarFinalizados()">Filtrar</button>
-        <div id="Finalizados" style="width: 600px;height:400px;"></div>
+    <div class="graficoTabla">
+        <label class="a">Logins</label>
+        <div class="tabla">
+            <table class="table">
+                <tr>
+                    <th>Usuario</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                </tr>
+                <tr *ngFor="let login of arrayLogins">
+                    <td>{{login.Usuario}}</td>
+                    <td>{{login.Fecha}}</td>
+                    <td>{{login.Hora}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="boton botonLogin">
+            <button (click)="DescargarLogis()">Descargar</button>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="opciones">
+            <div>    
+                <label class="fechas">Fecha de inicio: </label>
+                <input #inicioSoli (change)="FiltrarSolicitados()" type="date">
+            </div>
+            <label>Turnos entre fechas</label>
+            <div>    
+                <label class="fechas">Fecha final: </label>
+                <input #finSoli (change)="FiltrarSolicitados()" type="date">
+            </div>
+        </div>
+        <div class="graficos" id="Solicitados"></div>
+        <div class="descarga">
+            <button (click)="Descargar('Turnos Solicitados','Solicitados')">Descargar</button>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="opciones">
+            <div>    
+                <label class="fechas">Fecha de inicio: </label>
+                <input #iniciofina (change)="FiltrarFinalizados()" type="date">
+            </div>
+            <label>Turnos finalizados entre fechas</label>
+            <div>    
+                <label class="fechas">Fecha final: </label>
+                <input #finfina (change)="FiltrarFinalizados()" type="date">
+            </div>
+        </div>
+        <div class="graficos" id="Finalizados"></div>
+        <div class="descarga">
+            <button (click)="Descargar('Turnos Filtrados','Finalizados')">Descargar</button>
+        </div>
     </div>
 </div>

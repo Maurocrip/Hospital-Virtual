@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as echarts from 'echarts';
-import { stream } from 'exceljs';
-import { timestamp } from 'rxjs';
-import { Especialista } from 'src/app/Clases/Especialista';
-import { Fecha } from 'src/app/Clases/Fecha';
-import { ErroresService } from 'src/app/servicios/errores.service';
+import html2canvas from 'html2canvas';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { GlobalService } from 'src/app/servicios/global.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 type EChartsOption = echarts.EChartsOption;
 
 @Component({
@@ -128,6 +127,11 @@ export class EstadisticasComponent implements OnInit
       yAxis: {
         type: 'value'
       },
+      grid:{
+        left: "5%",
+        right: "5%",
+        top: 30
+      },
       series: [
         {
           data: arrayValores,
@@ -175,6 +179,10 @@ export class EstadisticasComponent implements OnInit
       yAxis: {
         type: 'value'
       },
+      grid:{
+        left: "2%",
+        right: "1%"
+      },
       series: [
         {
           data: arrayValores,
@@ -221,6 +229,10 @@ export class EstadisticasComponent implements OnInit
       },
       yAxis: {
         type: 'value'
+      },
+      grid:{
+        left: "2%",
+        right: "1%",
       },
       series: [
         {
@@ -291,6 +303,100 @@ export class EstadisticasComponent implements OnInit
     
     return {Fecha :`${day}/${month}/${year}`, Valor : 0};
   }
-}
 
+  async convertirGraficoAImagen(id: string) : Promise<string> 
+  {
+    const chartElement = document.getElementById(id)!;
+
+    return html2canvas(chartElement).then(canvas => 
+    {
+      const imagenBase64 = canvas.toDataURL('image/png');
+      return imagenBase64;
+    });
+  }
+
+  async Descargar(titulo : string,id: string)
+  {
+    let toDay = new Date();
+
+    const pdf : any = {
+      pageMargins: [ 5, 10, 10, 10 ],
+      watermark: 'Hospital de mauro racioppi',
+      content:[ 
+        {text: titulo, style: 'header'},
+        {image: await this.convertirGraficoAImagen(id), fit: [600, 600],alignment: 'center'},
+        {text: 'Fecha de emisión: '+ toDay.toDateString()}
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          alignment: 'center'
+        },
+
+      }
+    }
+   const PDF = pdfMake.createPdf(pdf);
+   PDF.open();
+  }
+
+  async DescargarLogis()
+  {
+    let toDay = new Date();
+    let tabla : Array<any[]> = [['Usuario', 'Fecha', 'Hora']];
+
+    for(let login of this.arrayLogins) 
+    {
+      const nuevaFila = [login.Usuario, login.Fecha, login.Hora];
+      tabla.push(nuevaFila);
+    }
+
+    const pdf : any = {
+      pageMargins: [ 5, 10, 10, 10 ],
+      watermark: 'Hospital de mauro racioppi',
+      content:[
+        {image: await this.getBase64ImageFromURL("https://t3.ftcdn.net/jpg/05/14/36/48/360_F_514364850_xLOQX6SOY2qcjAIcTowsi3xYvHmhmvs0.jpg"), width: 50,height: 50,alignment: 'center'},  
+        {text: 'Logins hechos', style: 'header'},
+        {text: 'Esta tabla muestra los logins de los usuarios: '},
+        {table: {body: tabla}},
+        {text: 'Fecha de emisión: '+ toDay.toDateString()}
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          alignment: 'center'
+        },
+
+      }
+    }
+   const PDF = pdfMake.createPdf(pdf);
+   PDF.open();
+  }
+
+  getBase64ImageFromURL(url) 
+  {
+    return new Promise((resolve, reject) => 
+    {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+      img.onload = () => 
+      {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        resolve(dataURL);
+      };
+      img.onerror = error => 
+      {
+        reject(error);
+      };
+      img.src = url;
+    });
+  }
+
+}
 
