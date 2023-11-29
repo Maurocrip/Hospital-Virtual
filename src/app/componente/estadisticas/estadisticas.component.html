@@ -2,7 +2,7 @@
     <div class="graficoTorta">
         <div class="torta" id="especialista"></div>
         <div class="boton botonTorta">
-            <button (click)="Descargar('Turnos por especialista','especialista')">Descargar</button>
+            <button appBotonGraficos color="#a0a0a0" colorHover="white" (click)="Descargar('Turnos por especialista','especialista')">Descargar</button>
         </div>
     </div>
     <div class="graficoDias">
@@ -11,7 +11,7 @@
                 <h5>Turnos por dias</h5>
             </div>
             <div class="boton">
-                <button (click)="Descargar('turnos por dia','Semana')">Descargar</button>
+                <button appBotonGraficos color="#a0a0a0" colorHover="white" (click)="Descargar('turnos por dia','Semana')">Descargar</button>
             </div>
         </div>
         <div id="Semana" style="width: 100%; height: 100%; "></div>
@@ -27,13 +27,13 @@
                 </tr>
                 <tr *ngFor="let login of arrayLogins">
                     <td>{{login.Usuario}}</td>
-                    <td>{{login.Fecha}}</td>
-                    <td>{{login.Hora}}</td>
+                    <td>{{login.Fecha | fechaFormato : 1}}</td>
+                    <td>{{login.Fecha | horaFormato}}</td>
                 </tr>
             </table>
         </div>
         <div class="boton botonLogin">
-            <button (click)="DescargarLogis()">Descargar</button>
+            <button appBotonGraficos color="#a0a0a0" colorHover="white" (click)="DescargarLogis()">Descargar</button>
         </div>
     </div>
     <div class="contenedor">
@@ -50,14 +50,14 @@
         </div>
         <div class="graficos" id="Solicitados"></div>
         <div class="descarga">
-            <button (click)="Descargar('Turnos Solicitados','Solicitados')">Descargar</button>
+            <button appBotonGraficos color="#a0a0a0" colorHover="white" (click)="Descargar('Turnos Solicitados','Solicitados')">Descargar</button>
         </div>
     </div>
     <div class="contenedor">
         <div class="opciones">
             <div>    
                 <label class="fechas">Fecha de inicio: </label>
-                <input #iniciofina (change)="FiltrarFinalizados()" type="date">
+                <input #iniciofina color="#a0a0a0" (change)="FiltrarFinalizados()" type="date">
             </div>
             <label>Turnos finalizados entre fechas</label>
             <div>    
@@ -67,7 +67,7 @@
         </div>
         <div class="graficos" id="Finalizados"></div>
         <div class="descarga">
-            <button (click)="Descargar('Turnos Filtrados','Finalizados')">Descargar</button>
+            <button appBotonGraficos color="#a0a0a0" colorHover="white" (click)="Descargar('Turnos Filtrados','Finalizados')">Descargar</button>
         </div>
     </div>
 </div>

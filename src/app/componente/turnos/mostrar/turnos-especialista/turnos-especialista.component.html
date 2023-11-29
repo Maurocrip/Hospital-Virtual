@@ -20,18 +20,17 @@
             <td>{{turno.nombreEsp}}</td>
             <td>{{turno.especialidad}}</td>
             <td>{{turno.nombrePas}}</td>
-            <td [ngClass]="{denegar: turno.estado=='cancelado', rechazar: turno.estado=='rechazado',finalizar: turno.estado=='fializado',
-            aceptar: turno.estado=='aceptado'}">{{turno.estado}}</td>
+            <td appColorEstados estado= "{{turno.estado}}">{{turno.estado}}</td>
             <td>{{turno.fecha.FechaToString()}}</td>
             <td>{{turno.fecha.hora}}</td>
             <td>
-                <button class="denegar" *ngIf="turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
-                <button *ngIf="turno.estado == 'Esperando'" (click)="Aceptar(turno.id)">Aceptar</button>
-                <button class="rechazar" *ngIf="turno.estado == 'Esperando'" (click)="Rechazar(turno)">Rechazar</button>
-                <button class="finalizar" *ngIf="turno.estado == 'aceptado'" (click)="Mostrar(turno,3)">Finalizar</button>
-                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Mostrar(turno,1)">Ver reseña</button>
-                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion != '' " (click)="Mostrar(turno.calificacion,4)">Calificacion</button>
-                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Mostrar(turno,2)">Ver Diagnostico</button>
+                <button appBotonGraficos color="#710707" colorHover="#c70505" *ngIf="turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
+                <button appBotonGraficos color="#34730d" colorHover="#2eb512" *ngIf="turno.estado == 'Esperando'" (click)="Aceptar(turno.id)">Aceptar</button>
+                <button appBotonGraficos color="#710707" colorHover="#c70505" *ngIf="turno.estado == 'Esperando'" (click)="Rechazar(turno)">Rechazar</button>
+                <button appBotonGraficos color="#025ce1" colorHover="#029ee1" *ngIf="turno.estado == 'aceptado'" (click)="Mostrar(turno,3)">Finalizar</button>
+                <button appBotonGraficos color="#bd6006" colorHover="#e0d857" *ngIf="turno.comentario != ''" (click)="Mostrar(turno,1)">Ver reseña</button>
+                <button appBotonGraficos color="#34730d" colorHover="#ffaa58" *ngIf="turno.estado == 'fializado' && turno.calificacion != '' " (click)="Mostrar(turno.calificacion,4)">Calificacion</button>
+                <button appBotonGraficos color="#520684" colorHover="#b4139c" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Mostrar(turno,2)">Ver Diagnostico</button>
             </td>
         </tr>
     </table>
@@ -44,7 +43,7 @@
         </div>
         <div class="formulario">
             <label >{{escritura}}</label>
-            <button class="Volver" (click)="Volver()">Volver</button>
+            <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="Volver()">Volver</button>
         </div>
     </div>
 </div>
@@ -61,7 +60,7 @@
             <label> Presion: {{diagnostico.presion}}</label>
             <label> Diagnostico: {{diagnostico.diagnostico}}</label>
             <label *ngFor="let problema of diagnostico.extras"> {{problema.clave}}: {{problema.valor}}</label>
-            <button class="Volver" (click)="Volver()">Volver</button>
+            <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="Volver()">Volver</button>
         </div>
     </div>
 </div>
@@ -73,14 +72,17 @@
         </div>
         <div class="formulario">
             <label class="nd"> Peso</label>
-            <input type="number" [(ngModel)]="diagnostico.peso">
+            <input type="number" min="0" [(ngModel)]="diagnostico.peso">
             <label class="nd"> Altura</label>
-            <input type="number" [(ngModel)]="diagnostico.altura">
+            <input type="number" min="0" [(ngModel)]="diagnostico.altura">
             <label class="nd"> Temperatura</label>
-            <input type="number" [(ngModel)]="diagnostico.temperatura">
+            <input type="number" min="0" [(ngModel)]="diagnostico.temperatura">
             <label class="nd"> Presion</label>
-            <input type="number" [(ngModel)]="diagnostico.presion">
-            <button *ngIf="diagnostico.extras.length<3; else elseBlock" (click)="Mostrar(null,5)" >Agregar Problemas</button>
+            <input type="number" min="0" [(ngModel)]="diagnostico.presion">
+            <div *ngIf="diagnostico.extras.length<3; else elseBlock">
+                <button appBotonGraficos color="#34730d" colorHover="#2eb512" (click)="Mostrar(null,5)">Agregar Problemas</button>
+                <label class="nd">Hay {{diagnostico.extras.length}} problemas agregados</label>
+            </div>
             <ng-template #elseBlock>
                 <label class="nd">No puedes agregar mas de 3 problemas</label>
             </ng-template>
@@ -92,8 +94,8 @@
             <textarea #texto class="texto"></textarea>
         </div>
         <div class="botones">
-            <button class="Volver" (click)="Volver()">Volver</button>
-            <button (click)="Guardar()">Confirmar</button>
+            <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="Volver()">Volver</button>
+            <button appBotonGraficos color="#34730d" colorHover="#2eb512" (click)="Guardar()">Confirmar</button>
         </div>
     </div>
 </div>
@@ -105,7 +107,7 @@
         </div>
         <div class="formulario">
             <label >{{califText}}</label>
-            <button class="Volver" (click)="Volver()">Volver</button>
+            <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="Volver()">Volver</button>
         </div>
     </div>
 </div>
@@ -120,8 +122,8 @@
             <input type="text" [(ngModel)]="problema.clave">
             <label class="nd"> Informacio</label>
             <input type="text" [(ngModel)]="problema.valor">
-            <button class="Volver" (click)="VolverProblema()">Volver</button>
-            <button class="Volver" (click)="Agregar()">Agregar</button>
+            <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="VolverProblema()">Volver</button>
+            <button appBotonGraficos color="#34730d" colorHover="#2eb512" (click)="Agregar()">Agregar</button>
         </div>
     </div>
 </div>

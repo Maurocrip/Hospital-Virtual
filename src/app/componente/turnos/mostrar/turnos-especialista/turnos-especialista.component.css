@@ -36,52 +36,16 @@ th
 
 button
 {
-    background-color: #34730d;
     border: none;
     border-radius: 10px;
     margin: 10px;
-    &:hover
-    {
-        background-color: #2eb512; 
-    }
 }
 
 .denegar,.rechazar
 {
     color: black !important;
-    background-color: #710707;
-    &:hover
-    {
-        background-color: #ac2b2b; 
-    }
 }
 
-.finalizar
-{
-    background-color: #025ce1;
-    &:hover
-    {
-        background-color: #029ee1; 
-    }
-}
-
-.diagnostico
-{
-    background-color: #520684;
-    &:hover
-    {
-        background-color: #b4139c; 
-    }
-}
-
-.comentario
-{
-    background-color: #a09805;
-    &:hover
-    {
-        background-color: #e0d857; 
-    }
-}
 
 .fondo
 {
@@ -150,37 +114,6 @@ button
 td
 {
     background: none !important;
-    &.finalizar
-    {
-        color: #2c68ff;
-    }
-    &.aceptar
-    {
-        color: #337107;
-    }
-    &.denegar,.rechazar
-    {
-        color: #da0f0f;
-    }
-
-}
-
-.Volver
-{
-    background-color: wheat;
-    &:hover
-    {
-        background-color: #fffffd; 
-    }
-}
-
-.calificar
-{
-    background-color: #bd6006;
-    &:hover
-    {
-        background-color: #ffaa58; 
-    }
 }
 
 .botones

@@ -34,12 +34,12 @@ export class EstadisticasComponent implements OnInit
     this.firebase.getAllSnapshot("logins","Fecha").subscribe((res)=>
     {
       this.arrayLogins = [...res];
-      for(let a of this.arrayLogins)
+      /*for(let a of this.arrayLogins)
       {
         let prueba = a.Fecha.toDate();
         a.Fecha = prueba.getDate()+"/"+prueba.getMonth()+"/"+prueba.getFullYear();
         a.Hora = prueba.getHours()+":"+prueba.getMinutes()+":"+prueba.getSeconds();
-      }
+      }*/
     })
   }
 
@@ -347,7 +347,10 @@ export class EstadisticasComponent implements OnInit
 
     for(let login of this.arrayLogins) 
     {
-      const nuevaFila = [login.Usuario, login.Fecha, login.Hora];
+      let prueba = login.Fecha.toDate();
+      let fecha = prueba.getDate()+"/"+prueba.getMonth()+"/"+prueba.getFullYear();
+      let hora = prueba.getHours()+":"+prueba.getMinutes()+":"+prueba.getSeconds();
+      const nuevaFila = [login.Usuario, fecha, hora];
       tabla.push(nuevaFila);
     }
 

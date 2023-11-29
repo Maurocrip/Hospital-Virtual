@@ -123,16 +123,6 @@ h5
     margin-right: 5px;
 }
 
-button
-{
-    border-radius: 15px;
-    background: #a0a0a0;
-    &:hover
-    {
-        background-color: white;
-    }
-}
-
 .titulo
 {
     display: flex;

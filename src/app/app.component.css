@@ -1,11 +1,11 @@
-/* CSS Del navbar */
+
 .topnav {
     overflow: hidden;
     background-color: #272626;
     padding: 10px 12px;
 }
 
-a, label{
+a{
     color: #f2f2f2;
     text-align: center;
     padding: 14px 16px;
@@ -13,7 +13,7 @@ a, label{
     font-size: 17px;
 }
 
-a:hover, label:hover{
+a:hover{
     background-color: #80fcfa;
     color: black;
     cursor: pointer;
@@ -23,55 +23,4 @@ a:hover, label:hover{
         background: none;
         cursor: default;
     }
-}
-
-.derecha{
-    float: left;
-}
-
-.izquierda{
-    float: right;
-}
-
-/* CSS Del chat desplegable */
-#btn-menu{
-    display: none;
-}
-.container-menu{
-    position: absolute;
-    background: rgba(0,0,0,0.5);
-    width: 100%;
-    height: 100%;
-    top: 0;left: 0;
-    transition: all 500ms ease;
-    opacity: 0;
-    visibility: hidden;
-}
-#btn-menu:checked ~ .container-menu{
-    opacity: 1;
-    visibility: visible;
-}
-.cont-menu{
-    width: 100%;
-    max-width: 50%;
-    background: #1c1c1c;
-    height: 100%;
-    position: relative;
-    transition: all 500ms ease;
-    transform: translateX(-100%);
-}
-#btn-menu:checked ~ .container-menu .cont-menu{
-    transform: translateX(0%);
-}
-.cont-menu label{
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
-}
-.cerrar{
-    height: 30px;
-    padding: 0%;
 }

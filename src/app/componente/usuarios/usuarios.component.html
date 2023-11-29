@@ -16,7 +16,7 @@
                                     <img src={{paciente.foto1}} width="225px" height="225px">
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title text-center">{{paciente.nombre}} {{paciente.apellido}}</h4>
+                                    <h4 class="card-title text-center">{{paciente.nombre | mayusculaPrimeraletra}} {{paciente.apellido | mayusculaPrimeraletra}}</h4>
                                     <label class="card-text">Tiene {{paciente.edad}} años</label>
                                     <br>
                                     <label class="card-text"> Su DNI es {{paciente.dni}}</label>
@@ -51,8 +51,8 @@
             <th>Opciones</th>
         </tr>
         <tr *ngFor="let especialista of global.arrayEspecialista">
-            <td>{{especialista.nombre}}</td>
-            <td>{{especialista.apellido}}</td>
+            <td>{{especialista.nombre | mayusculaPrimeraletra}}</td>
+            <td>{{especialista.apellido | mayusculaPrimeraletra}}</td>
             <td>{{especialista.edad}}</td>
             <td>{{especialista.dni}}</td>
             <td>{{especialista.email}}</td>
@@ -80,8 +80,8 @@
             <th>foto</th>
         </tr>
         <tr *ngFor="let especialista of global.arrayAdmin">
-            <td>{{especialista.nombre}}</td>
-            <td>{{especialista.apellido}}</td>
+            <td>{{especialista.nombre | mayusculaPrimeraletra}}</td>
+            <td>{{especialista.apellido | mayusculaPrimeraletra}}</td>
             <td>{{especialista.edad}}</td>
             <td>{{especialista.dni}}</td>
             <td>{{especialista.email}}</td>

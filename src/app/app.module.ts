@@ -30,6 +30,12 @@ import { TablaPacienteComponent } from './componente/tabla-paciente/tabla-pacien
 import { PacientesComponent } from './componente/pacientes/pacientes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EstadisticasComponent } from './componente/estadisticas/estadisticas.component';
+import { FechaFormatoPipe } from './pipes/fecha-formato.pipe';
+import { MayusculaPrimeraletraPipe } from './pipes/mayuscula-primeraletra.pipe';
+import { HoraFormatoPipe } from './pipes/hora-formato.pipe';
+import { BotonHoverDirective } from './directivas/boton-hover.directive';
+import { NavBarDirective } from './directivas/nav-bar.directive';
+import { ColorEstadosDirective } from './directivas/color-estados.directive';
 
 @NgModule({
   declarations: [
@@ -54,6 +60,12 @@ import { EstadisticasComponent } from './componente/estadisticas/estadisticas.co
     TablaPacienteComponent,
     PacientesComponent,
     EstadisticasComponent,
+    FechaFormatoPipe,
+    MayusculaPrimeraletraPipe,
+    HoraFormatoPipe,
+    BotonHoverDirective,
+    NavBarDirective,
+    ColorEstadosDirective,
     
   ],
   imports: [

@@ -1,5 +1,5 @@
 <div class="topnav">
-  <div class="derecha">
+  <div appNavBar float="left">
     <a routerLink="home">Home</a>
     <a *ngIf="this.global.tipo =='admin'" routerLink="logueado/admin/usuario">Usuarios</a>
     <a *ngIf="this.global.tipo =='admin'" routerLink="logueado/admin/estadistica">Estadisticas</a>
@@ -9,13 +9,13 @@
     <a *ngIf="this.global.tipo =='paciente'" routerLink="logueado/paciente/perfilPas">Perfil</a>
     <a *ngIf="this.global.tipo =='especialista'" routerLink="logueado/especialista/pacientes">Pacientes</a>
   </div>
-  <div class="izquierda" *ngIf="this.global.usuario!=''; else elseBlock">
+  <div appNavBar float="right" *ngIf="this.global.usuario!=''; else elseBlock">
     <a class="usuario">{{this.global.usuario.nombre}}</a>
     <a class="usuario">{{this.global.tipo}}</a>
-    <a class="perfil" (click)="LogOut()">log out</a>
+    <a (click)="LogOut()">log out</a>
   </div>
   <ng-template #elseBlock>
-      <div class="izquierda">
+      <div appNavBar float="right">
           <a routerLink="login">Login</a>
           <a routerLink="registro">registrarse</a>
       </div>

@@ -17,19 +17,18 @@
             <th>Opciones</th>
         </tr>
         <tr *ngFor="let turno of arrayTurnos">
-            <td>{{turno.nombreEsp}}</td>
+            <td>{{turno.nombreEsp | mayusculaPrimeraletra}}</td>
             <td>{{turno.especialidad}}</td>
-            <td>{{turno.nombrePas}}</td>
-            <td [ngClass]="{denegar: turno.estado=='cancelado', rechazar: turno.estado=='rechazado',finalizar: turno.estado=='fializado',
-            aceptar: turno.estado=='aceptado'}">{{turno.estado}}</td>
-            <td>{{turno.fecha.FechaToString()}}</td>
+            <td>{{turno.nombrePas | mayusculaPrimeraletra}}</td>
+            <td appColorEstados estado= "{{turno.estado}}">{{turno.estado}}</td>
+            <td>{{turno.fecha | fechaFormato: 2}}</td>
             <td>{{turno.fecha.hora}}</td>
             <td>
-                <button *ngIf="turno.estado == 'Esperando' || turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
-                <button class="comentario" *ngIf="turno.comentario != ''" (click)="Mostrar(turno,1)">Ver reseña</button>
-                <button class="diagnostico" *ngIf="turno.diagnostico.diagnostico != ''" (click)="Mostrar(turno,2)">Ver Diagnostico</button>
-                <button class="calificar" *ngIf="turno.estado == 'fializado' && turno.calificacion != '' " (click)="Mostrar(turno.calificacion,3)">Calificacion</button>
-                <button class="encuesta" *ngIf="turno.encuesta.higiene != '' && turno.estado == 'fializado'" (click)="Mostrar(turno.encuesta,4)">Ver encuesta</button>
+                <button appBotonGraficos color="#710707" colorHover="#c70505" *ngIf="turno.estado == 'Esperando' || turno.estado == 'aceptado'" (click)="Cancelar(turno)">Cancelar</button>
+                <button appBotonGraficos color="#a09805" colorHover="#e0d857" *ngIf="turno.comentario != ''" (click)="Mostrar(turno,1)">Ver reseña</button>
+                <button appBotonGraficos color="#520684" colorHover="#b4139c"  *ngIf="turno.diagnostico.diagnostico != ''" (click)="Mostrar(turno,2)">Ver Diagnostico</button>
+                <button appBotonGraficos color="#bd6006" colorHover="#ffaa58"  *ngIf="turno.estado == 'fializado' && turno.calificacion != '' " (click)="Mostrar(turno.calificacion,3)">Calificacion</button>
+                <button appBotonGraficos color="#025ce1" colorHover="#e0d857"  *ngIf="turno.encuesta.higiene != '' && turno.estado == 'fializado'" (click)="Mostrar(turno.encuesta,4)">Ver encuesta</button>
             </td>
         </tr>
     </table>
@@ -41,7 +40,7 @@
           </div>
           <div class="formulario">
               <label >{{escritura}}</label>
-              <button class="Volver" (click)="Volver()">Volver</button>
+              <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="Volver()">Volver</button>
           </div>
       </div>
   </div>
@@ -52,13 +51,13 @@
               <label>DIAGOSTICO</label>
           </div>
           <div class="formulario">
-              <label>Peso: {{diagnostico.peso}}</label>
+              <label> Peso: {{diagnostico.peso}}</label>
               <label> Altura: {{diagnostico.altura}}</label>
               <label> Temperatura: {{diagnostico.temperatura}}</label>
               <label> Presion: {{diagnostico.presion}}</label>
               <label> Diagnostico: {{diagnostico.diagnostico}}</label>
               <label *ngFor="let problema of diagnostico.extras"> {{problema.clave}}: {{problema.valor}}</label>
-              <button class="Volver" (click)="Volver()">Volver</button>
+              <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="Volver()">Volver</button>
           </div>
       </div>
   </div>
@@ -70,7 +69,7 @@
             </div>
             <div class="formulario">
                 <label >{{califText}}</label>
-                <button class="Volver" (click)="Volver()">Volver</button>
+                <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="Volver()">Volver</button>
             </div>
         </div>
     </div>
@@ -88,7 +87,7 @@
                     <label> HorarioRespetado: No</label>
                 </ng-template>
                 <label> Recomendacion: {{encuesta.recomendacion}}</label>
-                <button class="Volver" (click)="Volver()">Volver</button>
+                <button appBotonGraficos color="wheat" colorHover="#fffffd" (click)="Volver()">Volver</button>
             </div>
         </div>
     </div>

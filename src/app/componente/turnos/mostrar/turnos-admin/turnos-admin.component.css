@@ -31,14 +31,9 @@ th
 
 button
 {
-    background-color: #710707;
     border: none;
     border-radius: 10px;
     margin: 10px;
-    &:hover
-    {
-        background-color: #c70505;
-    }
 }
 
 .nd
@@ -74,18 +69,6 @@ button
 td
 {
     background: none !important;
-    &.finalizar
-    {
-        color: #2c68ff;
-    }
-    &.aceptar
-    {
-        color: #337107;
-    }
-    &.denegar,.rechazar
-    {
-        color: #da0f0f;
-    }
 }
 
 .fondo
@@ -116,14 +99,6 @@ td
     padding: 3px;
 }
 
-.calificar
-{
-    background-color: #bd6006;
-    &:hover
-    {
-        background-color: #ffaa58; 
-    }
-}
 
 .formulario
 {
@@ -139,38 +114,4 @@ td
     }
 }
 
-.Volver
-{
-    background-color: wheat;
-    &:hover
-    {
-        background-color: #fffffd; 
-    }
-}
 
-.diagnostico
-{
-    background-color: #520684;
-    &:hover
-    {
-        background-color: #b4139c;
-    }
-}
-
-.encuesta
-{
-    background-color: #025ce1;
-    &:hover
-    {
-        background-color: #029ee1; 
-    }
-}
-
-.comentario
-{
-    background-color: #a09805;
-    &:hover
-    {
-        background-color: #e0d857;
-    }
-}

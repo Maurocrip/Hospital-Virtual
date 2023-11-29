@@ -15,9 +15,9 @@
         <th *ngIf="global.tipo == 'especialista'" >Reseña</th>
     </tr>
     <tr *ngFor="let turno of arrayTurnos">
-        <td>{{turno.nombrePas}}</td>
-        <td>{{turno.nombreEsp}}</td>
-        <td>{{turno.fecha.year}}-{{turno.fecha.mes}}-{{turno.fecha.dia}} {{turno.fecha.hora}}</td>
+        <td>{{turno.nombrePas | mayusculaPrimeraletra}}</td>
+        <td>{{turno.nombreEsp | mayusculaPrimeraletra}}</td>
+        <td>{{turno.fecha | fechaFormato : 2}}</td>
         <td>{{turno.diagnostico.peso}}</td>
         <td>{{turno.diagnostico.altura}}</td>
         <td>{{turno.diagnostico.temperatura}}</td>

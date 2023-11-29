@@ -3,7 +3,7 @@
         <label>Elija un especialista</label>
         <select #especialista (change)="Selecion()">
             <option value="">Todos</option>
-            <option *ngFor="let especialidad of global.arrayEspecialista" value={{especialidad.nombre}}>{{especialidad.nombre}}</option>
+            <option *ngFor="let especialidad of global.arrayEspecialista" value={{especialidad.nombre}}>{{especialidad.nombre | mayusculaPrimeraletra}}</option>
          </select>
     </div>
     <button (click)="Descargar()" >Descargar</button>
