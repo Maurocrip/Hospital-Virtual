@@ -1,27 +1,48 @@
 # AppHospital
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+Hola, soy Mauro Racioppi alumno de la Universidad Tecnologica Nacional (UTN) y actualmente estoy cursando el 4to cuatrimestre de la tecnicatura en programacion.
+Este es mi hospital virtual, a continuacion les mostrare un paso a paso de lo mas importante.
 
-## Development server
+## Home
+Esta es la paqguina del home:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+![image](https://github.com/Maurocrip/Hospital-Virtual/assets/98592404/85f197f6-e44f-4a23-bc2a-30dc9241bc9a)
 
-## Code scaffolding
+## Login
+Este es el login, con su fab button con los accesos rapidos para loguearse
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![image](https://github.com/Maurocrip/Hospital-Virtual/assets/98592404/89d18370-5bbd-4535-b2b3-4f4e6bcc85a1)
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Registro
+Este es la parte del registro, aca podemos elegir entre registrarnos como pacientes o como especialistas
 
-## Running unit tests
+![image](https://github.com/Maurocrip/Hospital-Virtual/assets/98592404/5ef88d59-8702-4183-9125-f2a46755223b)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+*Paciente:*
+![image](https://github.com/Maurocrip/Hospital-Virtual/assets/98592404/1edbe352-8cb8-4212-b6cc-7307b43b0c59)
 
-## Running end-to-end tests
+*Especialista:*
+![image](https://github.com/Maurocrip/Hospital-Virtual/assets/98592404/76f38fad-9247-4090-8c7d-6a00cee9b96c)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+## Administrador
+Cundo nos logueamos como administrador nos aparecen las siguientes opciones:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![image](https://github.com/Maurocrip/Hospital-Virtual/assets/98592404/18d63a28-a7d7-41d8-9919-b9266b515866)
+
+## Especialista
+Cundo nos logueamos como especialista nos aparecen las siguientes opciones:
+
+![image](https://github.com/Maurocrip/Hospital-Virtual/assets/98592404/3b50afc5-15f4-4cb9-88ec-a784d641eb3e)
+
+
+## Pacientes
+Cundo nos logueamos como pacientes nos aparecen las siguientes opciones:
+
+![image](https://github.com/Maurocrip/Hospital-Virtual/assets/98592404/810d0e3e-78d2-40ed-9f59-cc2f4d4035d5)
+
+## Gracias
+Si quieres saber mas al respecto de las opciones de cada uno de los diferentes roles, lo invito a que lo descubra usted mismo:
+
+https://hospitalonline-54e32.web.app/home
