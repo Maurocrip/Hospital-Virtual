@@ -18,6 +18,7 @@ export class RegistroComponent
     this.tipo = numero;
   }
 
+
   Volver()
   {
     if(this.tipo!=0)

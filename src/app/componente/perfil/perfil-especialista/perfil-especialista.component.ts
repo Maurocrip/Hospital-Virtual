@@ -34,7 +34,7 @@ export class PerfilEspecialistaComponent
   Guardar()
   {
     this.firebase.ModificarEspecialistaDias(this.global.usuario.id,this.arrayDiasGuardar);
-    this.arrayDiasGuardar = [];
+    this.Borrar();
   }
 
 }

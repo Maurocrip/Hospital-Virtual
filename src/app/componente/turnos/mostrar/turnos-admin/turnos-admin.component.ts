@@ -1,5 +1,4 @@
-import { trigger } from '@angular/animations';
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Diagnostico } from 'src/app/Clases/Diagnostico';
 import { Encuesta } from 'src/app/Clases/Encuesta';
 import { Fecha } from 'src/app/Clases/Fecha';
@@ -32,21 +31,12 @@ export class TurnosAdminComponent
     this.firebase.TraerTurnos()
     .subscribe((res)=>
     {
-      this.arrayTurnos =[];
-      for(let element of res)
-      {
-        this.arrayTurnos.push(new Turno( new Fecha(element["Dia"],element["Mes"],element["Año"],element["Hora"]),element["Especialista"],
-        element["Paciente"],element["EmailEspecialista"],element["EmailPaciente"],element["Especialidad"],element["Estado"], element["Id"], 
-        element["Comentario"], new Diagnostico(element["Diagnostico"].peso,element["Diagnostico"].altura,element["Diagnostico"].diagnostico,
-        element["Diagnostico"].temperatura,element["Diagnostico"].presion, element["Diagnostico"].extras), element["Calificacion"],
-        new Encuesta(element["Encuesta"].Recomendacion,element["Encuesta"].Atencion,element["Encuesta"].Higiene,element["Encuesta"].HorarioRespetado)));
-      }
+      this.arrayTurnos =[...this.global.arrayTurnos];
     })
   }
 
   Cancelar(turno : Turno)
   {
-    this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cancelar", Id :turno.id});
     this.newItemEvent.emit({Valor : true, Texto : "Escribe el porque quieres cancelar", Id :turno.id});
   }
 

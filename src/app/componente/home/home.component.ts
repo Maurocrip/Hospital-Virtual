@@ -6,7 +6,8 @@ import { GlobalService } from 'src/app/servicios/global.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent 
+{
   public nombre : string;
   public tipo : string;
   constructor(private global : GlobalService)

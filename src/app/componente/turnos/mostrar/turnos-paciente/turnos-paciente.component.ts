@@ -78,6 +78,7 @@ export class TurnosPacienteComponent implements OnInit
   {
     this.encuesta.higiene =this.higiene.nativeElement.value;
   }
+  
   Buscar()
   {
     this.arrayTurnos = [];

@@ -1,11 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as echarts from 'echarts';
-import html2canvas from 'html2canvas';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { GlobalService } from 'src/app/servicios/global.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+import { PdfService } from 'src/app/servicios/pdf.service';
 type EChartsOption = echarts.EChartsOption;
 
 @Component({
@@ -20,31 +17,20 @@ export class EstadisticasComponent implements OnInit
   @ViewChild('iniciofina') iniciofina: any;
   @ViewChild('finfina') finfina: any;
   public arrayLogins : Array<any> = []
-  constructor(private global : GlobalService, private firebase : FirebaseService) {}
+  constructor(private global : GlobalService, private firebase : FirebaseService, private pdf : PdfService) {}
   
   ngOnInit(): void 
   {
     this.GenerarGraficos();
-    this.Logis();
-  }
-
-  private Logis()
-  {
-
-    this.firebase.getAllSnapshot("logins","Fecha").subscribe((res)=>
-    {
-      this.arrayLogins = [...res];
-      /*for(let a of this.arrayLogins)
-      {
-        let prueba = a.Fecha.toDate();
-        a.Fecha = prueba.getDate()+"/"+prueba.getMonth()+"/"+prueba.getFullYear();
-        a.Hora = prueba.getHours()+":"+prueba.getMinutes()+":"+prueba.getSeconds();
-      }*/
-    })
   }
 
   private GenerarGraficos()
   {
+    this.firebase.getAllSnapshot("logins","Fecha").subscribe((res)=>
+    {
+      this.arrayLogins = [...res];
+    })
+
     this.firebase.TraerTurnos().subscribe(()=>
     {
       this.GraficoEspecialista();
@@ -122,7 +108,8 @@ export class EstadisticasComponent implements OnInit
     option = {
       xAxis: {
         type: 'category',
-        data: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
+        data: ['Domigo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+        axisLabel: { interval: 0, rotate: 0 }
       },
       yAxis: {
         type: 'value'
@@ -143,134 +130,98 @@ export class EstadisticasComponent implements OnInit
     option && myChart.setOption(option);
   }
 
-  private GraficoTurnosSolicitados(startDate: Date, endDate: Date)
+  private GraficoEntreFechas(id: string, startDate: Date, endDate: Date, estado: string): void 
   {
-    let chartDom = document.getElementById('Solicitados')!;
+    let chartDom = document.getElementById(id);
+    if (!chartDom) return;
+  
     let myChart = echarts.init(chartDom);
-    let option: EChartsOption;
-    let arrayGeneral : Array<any> = [];
-    let arrayTiempo : Array<any> = [];
-    let arrayValores : Array<any> = [];
-
-    arrayGeneral = [...this.getDaysBetweenDates(startDate,endDate)];
-    
-    for(let turno of this.global.arrayTurnos)
+    let arrayFechas = this.RellenarFechas(startDate, endDate);
+    let arrayEspecialistas = this.global.arrayEspecialista.map(especialista => `${especialista.nombre} ${especialista.apellido}`);
+    let arrayEspecialistasEmail = this.global.arrayEspecialista.map(especialista => especialista.email);
+    let arrayData = Array(arrayFechas.length).fill(0);
+  
+    let arraySerie = this.global.arrayEspecialista.map(especialista => 
+    ({
+      name: `${especialista.nombre} ${especialista.apellido}`,
+      type: 'line',
+      step: 'middle',
+      data: [...arrayData]
+    }));
+  
+    for (let turno of this.global.arrayTurnos) 
     {
-      for(let opcion of arrayGeneral)
+      let fechaString = turno.fecha.FechaToString();
+      let indexFecha = arrayFechas.indexOf(fechaString);
+      
+      if (indexFecha !== -1 && turno.estado === estado) 
       {
-        if(turno.fecha.FechaToString() == opcion.Fecha && turno.estado != 'cancelado')
-        {
-          opcion.Valor++;
-          break;
-        }
-      } 
+        arraySerie[arrayEspecialistasEmail.indexOf(turno.emailEsp)].data[indexFecha]++;
+      }
     }
-
-    for(let opcion of arrayGeneral)
+  
+    let option = 
     {
-      arrayTiempo.push(opcion.Fecha);
-      arrayValores.push(opcion.Valor);
-    }
-    option = {
-      xAxis: {
-        type: 'category',
-        data: arrayTiempo
+      tooltip: 
+      { 
+        trigger: 'axis' 
       },
-      yAxis: {
-        type: 'value'
+      legend: 
+      { 
+        data: arrayEspecialistas 
       },
-      grid:{
-        left: "2%",
-        right: "1%"
+      grid: 
+      { 
+        left: '1%', 
+        right: '1%', 
+        bottom: '3%', 
+        containLabel: true 
       },
-      series: [
-        {
-          data: arrayValores,
-          type: 'bar'
-        }
-      ]
-    };
-    
-    option && myChart.setOption(option);
-  }
-
-  private GraficoTurnosFinalizados(startDate: Date, endDate: Date)
-  {
-    let chartDom = document.getElementById('Finalizados')!;
-    let myChart = echarts.init(chartDom);
-    let option: EChartsOption;
-    let arrayGeneral : Array<any> = [];
-    let arrayTiempo : Array<any> = [];
-    let arrayValores : Array<any> = [];
-
-    arrayGeneral = [...this.getDaysBetweenDates(startDate,endDate)];
-    
-    for(let turno of this.global.arrayTurnos)
-    {
-      for(let opcion of arrayGeneral)
-      {
-        if(turno.fecha.FechaToString() == opcion.Fecha && turno.estado == 'fializado')
-        {
-          opcion.Valor++;
-          break;
-        }
-      } 
-    }
-
-    for(let opcion of arrayGeneral)
-    {
-      arrayTiempo.push(opcion.Fecha);
-      arrayValores.push(opcion.Valor);
-    }
-    option = {
-      xAxis: {
-        type: 'category',
-        data: arrayTiempo
+      xAxis: 
+      { 
+        type: 'category', 
+        data: arrayFechas, 
+        axisLabel: 
+        { interval: 0, 
+          rotate: 30 
+        } 
       },
-      yAxis: {
-        type: 'value'
+      yAxis: 
+      { 
+        type: 'value' 
       },
-      grid:{
-        left: "2%",
-        right: "1%",
-      },
-      series: [
-        {
-          data: arrayValores,
-          type: 'bar'
-        }
-      ]
-    };
-    
-    option && myChart.setOption(option);
+      series: arraySerie
+    } as echarts.EChartsOption;
+  
+    myChart.setOption(option);
   }
 
   FiltrarSolicitados()
   { 
     let fechaInit = this.inicioSoli.nativeElement.value;
     let fechaFin = this.finSoli.nativeElement.value;
-    if(fechaInit != "" && fechaFin != "")
+    this.CrearGraficos(fechaInit,fechaFin,'Esperando','Solicitados');
+  }
+
+  private CrearGraficos(fechaInit : any, fechaFin : any, estado : string , id : string)
+  {
+    if(fechaInit && fechaFin)
     {
-      let fechaInicio :  Array<any> = this.TransformarFecha(fechaInit);
-      let fechaFinal :  Array<any> = this.TransformarFecha(fechaFin);
-      let day1 = new Date(fechaInicio[0], fechaInicio[1]-1, fechaInicio[2]);
-      let day2 = new Date(fechaFinal[0], fechaFinal[1]-1, fechaFinal[2]);;
-      this.GraficoTurnosSolicitados(day1,day2);
+      this.GraficoEntreFechas(id,this.generarFechas(fechaInit),this.generarFechas(fechaFin),estado);
     }
+  }
+
+  private generarFechas(fecha : any) : Date
+  {
+    let fechaPartida :  Array<any> = this.TransformarFecha(fecha);
+    return new Date(fechaPartida[0], fechaPartida[1]-1, fechaPartida[2]);
   }
 
   FiltrarFinalizados()
   {
     let fechaInit = this.iniciofina.nativeElement.value;
     let fechaFin = this.finfina.nativeElement.value;
-    if(fechaInit != "" && fechaFin != "")
-    {
-      let fechaInicio :  Array<any> = this.TransformarFecha(fechaInit);
-      let fechaFinal :  Array<any> = this.TransformarFecha(fechaFin);
-      let day1 = new Date(fechaInicio[0], fechaInicio[1]-1, fechaInicio[2]);
-      let day2 = new Date(fechaFinal[0], fechaFinal[1]-1, fechaFinal[2]);
-      this.GraficoTurnosFinalizados(day1,day2);
-    }
+    this.CrearGraficos(fechaInit,fechaFin,'fializado','Finalizados');
   }
 
   private TransformarFecha(fecha : string) :  Array<any>
@@ -283,12 +234,14 @@ export class EstadisticasComponent implements OnInit
     return arrayFecha;
   }
 
-  getDaysBetweenDates(startDate: Date, endDate: Date): string[] {
-    const daysArray: any[] = [];
-    const currentDate = new Date(startDate);
+  private RellenarFechas(startDate: Date, endDate: Date): string[] 
+  {
+    let daysArray: any[] = [];
+    let currentDate = new Date(startDate);
 
-    while (currentDate <= endDate) {
-      const formattedDate = this.formatDate(currentDate);
+    while (currentDate <= endDate) 
+    {
+      let formattedDate = this.FormatoFecha(currentDate);
       daysArray.push(formattedDate);
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -296,53 +249,22 @@ export class EstadisticasComponent implements OnInit
     return daysArray;
   }
 
-  private formatDate(date: Date): any {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
+  private FormatoFecha(date: Date): any 
+  {
+    let day = date.getDate().toString().padStart(2, '0');
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let year = date.getFullYear();
     
-    return {Fecha :`${day}/${month}/${year}`, Valor : 0};
+    return `${day}/${month}/${year}`;
   }
 
-  async convertirGraficoAImagen(id: string) : Promise<string> 
+  async Descargar(titulo : string, id: string)
   {
-    const chartElement = document.getElementById(id)!;
-
-    return html2canvas(chartElement).then(canvas => 
-    {
-      const imagenBase64 = canvas.toDataURL('image/png');
-      return imagenBase64;
-    });
-  }
-
-  async Descargar(titulo : string,id: string)
-  {
-    let toDay = new Date();
-
-    const pdf : any = {
-      pageMargins: [ 5, 10, 10, 10 ],
-      watermark: 'Hospital de mauro racioppi',
-      content:[ 
-        {text: titulo, style: 'header'},
-        {image: await this.convertirGraficoAImagen(id), fit: [600, 600],alignment: 'center'},
-        {text: 'Fecha de emisión: '+ toDay.toDateString()}
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          alignment: 'center'
-        },
-
-      }
-    }
-   const PDF = pdfMake.createPdf(pdf);
-   PDF.open();
+    this.pdf.DescargarGrafico(titulo,id);
   }
 
   async DescargarLogis()
   {
-    let toDay = new Date();
     let tabla : Array<any[]> = [['Usuario', 'Fecha', 'Hora']];
 
     for(let login of this.arrayLogins) 
@@ -350,56 +272,10 @@ export class EstadisticasComponent implements OnInit
       let prueba = login.Fecha.toDate();
       let fecha = prueba.getDate()+"/"+prueba.getMonth()+"/"+prueba.getFullYear();
       let hora = prueba.getHours()+":"+prueba.getMinutes()+":"+prueba.getSeconds();
-      const nuevaFila = [login.Usuario, fecha, hora];
+      let nuevaFila = [login.Usuario, fecha, hora];
       tabla.push(nuevaFila);
     }
-
-    const pdf : any = {
-      pageMargins: [ 5, 10, 10, 10 ],
-      watermark: 'Hospital de mauro racioppi',
-      content:[
-        {image: await this.getBase64ImageFromURL("https://t3.ftcdn.net/jpg/05/14/36/48/360_F_514364850_xLOQX6SOY2qcjAIcTowsi3xYvHmhmvs0.jpg"), width: 50,height: 50,alignment: 'center'},  
-        {text: 'Logins hechos', style: 'header'},
-        {text: 'Esta tabla muestra los logins de los usuarios: '},
-        {table: {body: tabla}},
-        {text: 'Fecha de emisión: '+ toDay.toDateString()}
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          alignment: 'center'
-        },
-
-      }
-    }
-   const PDF = pdfMake.createPdf(pdf);
-   PDF.open();
+    this.pdf.DescargarTabla(tabla,"LOGINS","Esta tabla muestra los logis que se hicieron: ");
   }
-
-  getBase64ImageFromURL(url) 
-  {
-    return new Promise((resolve, reject) => 
-    {
-      var img = new Image();
-      img.setAttribute("crossOrigin", "anonymous");
-      img.onload = () => 
-      {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        resolve(dataURL);
-      };
-      img.onerror = error => 
-      {
-        reject(error);
-      };
-      img.src = url;
-    });
-  }
-
 }
 

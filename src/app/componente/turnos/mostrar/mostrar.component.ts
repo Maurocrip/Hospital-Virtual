@@ -28,7 +28,6 @@ export class MostrarComponent
     this.escritura = objeto.Texto;
     this.id = objeto.Id;
     this.estado = objeto.Estado;
-    console.log(this.id);
   }
 
   Volver()

@@ -13,13 +13,13 @@ import { Diagnostico } from '../Clases/Diagnostico';
 import { BehaviorSubject } from 'rxjs';
 import { Especialidades } from '../Clases/Especialidades';
 import { Encuesta } from '../Clases/Encuesta';
-import { Timestamp } from '@angular/fire/firestore';
+import { getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GlobalService {
-
+export class GlobalService 
+{
 
   private _miArraySub = new BehaviorSubject<any[]>([]);
   public miArrayObs = this._miArraySub.asObservable();
@@ -146,5 +146,19 @@ export class GlobalService {
     {
       Swal.fire({text :texto, icon:"success", title: "EXITO"});
     };
+  }
+
+  async GuardarImagen(foto : any, path : string, storage : any)
+  {
+    const imagReferencia = ref(storage, path);
+    return uploadBytes(imagReferencia, foto)
+    .then(()=>
+    {
+      return getDownloadURL(imagReferencia);
+    })
+    .catch((error)=>
+    {
+      console.log(error);
+    });
   }
 }

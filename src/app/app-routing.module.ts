@@ -18,7 +18,8 @@ const routes: Routes =
   {path: '', redirectTo: "login", pathMatch: "full"},
 ];
 
-export const appConfig: ApplicationConfig = {
+export const appConfig: ApplicationConfig = 
+{
   providers: [
     provideRouter(routes)
   ]

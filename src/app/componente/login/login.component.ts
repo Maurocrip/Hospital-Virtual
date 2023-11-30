@@ -98,6 +98,7 @@ export class LoginComponent
               if(element.email == this.firebase.auth.currentUser?.email)
               {
                 this.global.UsuarioLogueado("admin", element);
+                break;
               }
             }
           break;

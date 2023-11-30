@@ -39,10 +39,12 @@ export class PacientesComponent
     this.prueba = 1;
     this.paciente = paciente;
   }
+  
   Volver()
   {
     this.prueba = 0;
   }
+
   Cambiar()
   {
     if(this.habilitar)

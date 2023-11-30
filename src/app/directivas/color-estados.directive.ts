@@ -14,13 +14,16 @@ export class ColorEstadosDirective implements OnInit
       case "cancelado":
       case 'rechazado':
         this.el.nativeElement.style.color = "#da0f0f";
-        break;
+      break;
       case 'fializado':
         this.el.nativeElement.style.color = "#2c68ff";
-        break;
+      break;
       case 'aceptado':
         this.el.nativeElement.style.color = "#337107";
-        break;
+      break;
+      case 'Esperando':
+        this.el.nativeElement.style.color = "#840177";
+      break;
       
       default:
         this.el.nativeElement.style.color = "black";

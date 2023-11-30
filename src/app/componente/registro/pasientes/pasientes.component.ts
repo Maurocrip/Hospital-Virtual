@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import { Storage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService  } from 'src/app/servicios/firebase.service';
@@ -7,7 +6,6 @@ import { sendEmailVerification } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { GlobalService } from 'src/app/servicios/global.service';
 import { ErroresService } from 'src/app/servicios/errores.service';
-import Swal from 'sweetalert2';
 import { Paciente } from 'src/app/Clases/Paciente';
 
 @Component({
@@ -45,8 +43,8 @@ export class PasientesComponent
       this.firebase.RegistrarUsuario(this.paciente.email, this.paciente.contra)
       .then(async(res)=> 
       {
-        this.paciente.foto1 = await this.GuardarImagen(this.file1);
-        this.paciente.foto2 = await this.GuardarImagen(this.file2);
+        this.paciente.foto1 = await this.global.GuardarImagen(this.file1,"pasientes/"+ this.paciente.dni+Date.now()+"."+this.file1.name.split(".").pop(),this.storage);
+        this.paciente.foto2 = await this.global.GuardarImagen(this.file2,"pasientes/"+ this.paciente.dni+Date.now()+"."+this.file1.name.split(".").pop(),this.storage);
         this.firebase.GuardarPaciente(this.paciente);
         sendEmailVerification(res.user)
         .then(()=>
@@ -72,21 +70,6 @@ export class PasientesComponent
     {
       this.errores.MostrarError("CI");
     }
-  }
-
-  async GuardarImagen(foto : any)
-  {
-    let path : string = "pasientes/"+ this.paciente.dni+Date.now()+"."+foto.name.split(".").pop();
-    const imagReferencia = ref(this.storage, path);
-    return uploadBytes(imagReferencia, foto)
-    .then(()=>
-    {
-      return getDownloadURL(imagReferencia);
-    })
-    .catch((error)=>
-    {
-      console.log(error);
-    });
   }
 
   imgUpload(event: any, opcion : boolean) 

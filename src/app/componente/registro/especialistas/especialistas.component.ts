@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErroresService } from 'src/app/servicios/errores.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { GlobalService } from 'src/app/servicios/global.service';
 import { sendEmailVerification } from '@angular/fire/auth';
-import { getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import { Storage } from '@angular/fire/storage';
 import { Especialista } from 'src/app/Clases/Especialista';
 import { Especialidades } from 'src/app/Clases/Especialidades';
@@ -34,7 +33,6 @@ export class EspecialistasComponent
       edad :["",[Validators.required, Validators.max(99), Validators.min(0)]],
       dni :["",[Validators.required, Validators.max(99999999), Validators.min(10000000)]],
       contraseña :["",[Validators.required]],
-      //especial :["",[this.noTieneNumeros]],
       foto :["",[Validators.required]]
     });
   }
@@ -72,7 +70,7 @@ export class EspecialistasComponent
         this.firebase.RegistrarUsuario(this.especialista.email, this.especialista.contra)
         .then(async(res)=> 
         {
-          this.especialista.foto = await this.GuardarImagen(this.file);
+          this.especialista.foto = await this.global.GuardarImagen(this.file,"especialista/"+ this.especialista.dni+Date.now()+"."+ this.file.name.split(".").pop(), this.storage);
           this.firebase.GuardarEspecialista(this.especialista);
           sendEmailVerification(res.user)
           .then(()=> 
@@ -107,21 +105,6 @@ export class EspecialistasComponent
     }
   }
 
-  async GuardarImagen(foto : any)
-  {  
-    let path : string = "especialista/"+ this.especialista.dni+Date.now()+"."+foto.name.split(".").pop();
-    const imagReferencia = ref(this.storage, path);
-    return uploadBytes(imagReferencia, foto)
-    .then(()=>
-    {
-      return getDownloadURL(imagReferencia);
-    })
-    .catch((error)=>
-    {
-      console.log(error);
-    });
-  }
-
   imgUpload(event: any) 
   {
     const auxFile: File = event.target.files[0];
@@ -132,20 +115,4 @@ export class EspecialistasComponent
   {
     this.recaptcha = response;
   }
-
-  /*private noTieneNumeros(control : AbstractControl): null | object
-  {
-    let nombre : string = control.value;
-    const regex = /^[0-9]*$/;
-    const onlyNumbers = regex.test(nombre); 
-    console.log(onlyNumbers)// true
-    if(onlyNumbers)
-    {
-      return {contieneNumeros:true}
-    }
-    else
-    {
-      return null
-    }
-  }*/
 }

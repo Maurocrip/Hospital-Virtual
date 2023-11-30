@@ -4,9 +4,7 @@ import { Fecha } from 'src/app/Clases/Fecha';
 import { Turno } from 'src/app/Clases/Turno';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { GlobalService } from 'src/app/servicios/global.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+import { PdfService } from 'src/app/servicios/pdf.service';
 
 @Component({
   selector: 'app-perfil-paciente',
@@ -17,14 +15,13 @@ export class PerfilPacienteComponent
 {
   @ViewChild('especialista') especialista: any;
   @Input() mailPaciente :string ="";
-  public arrayTurnos : Array<Turno> = [];
-  public arrayMostrarTurnos : Array<Turno> = [];
-  constructor(private firebase : FirebaseService, public global : GlobalService)
+  public arrayTurnos : Array<any> = [];
+  public arrayMostrarTurnos : Array<any> = [];
+
+  constructor(private firebase : FirebaseService, public global : GlobalService, private pdf : PdfService)
   {
-    this.firebase.TraerTurnos()
-    .subscribe((res)=>
+    this.firebase.TraerTurnos().subscribe((res)=>
     {
-      this.arrayTurnos =[];
       for(let element of res)
       {
         if(element["EmailPaciente"] == this.global.usuario.email || element["EmailPaciente"] == this.mailPaciente)
@@ -41,65 +38,21 @@ export class PerfilPacienteComponent
 
   async Descargar()
   {
-    let toDay = new Date();
-    let hola : string = "";
-    let string : Array<any[]> = [['Paciente', 'Especialista', 'Fecha','Peso', 'Altura', 'Temperatura','Precion', 'Diagnostico', 'Otros problemas']];
+    let problemas : string = "";
+    let tabla : Array<any[]> = [['Paciente', 'Especialista', 'Fecha','Peso', 'Altura', 'Temperatura','Precion', 'Diagnostico', 'Otros problemas']];
     for(let turno of this.arrayMostrarTurnos) 
     {
       for(let problema of turno.diagnostico.extras)
       {
-        hola +=problema.clave + ":" + problema.valor + "\n";
+        problemas +=problema.clave + ":" + problema.valor + "\n";
       }
       const nuevaFila = [turno.nombrePas, turno.nombreEsp, turno.fecha.year+'/'+ turno.fecha.mes+'/'+turno.fecha.dia,turno.diagnostico.peso, 
-      turno.diagnostico.altura, turno.diagnostico.temperatura,turno.diagnostico.presion, turno.diagnostico.diagnostico, hola];
-      string.push(nuevaFila);
+      turno.diagnostico.altura, turno.diagnostico.temperatura,turno.diagnostico.presion, turno.diagnostico.diagnostico, problemas];
+      tabla.push(nuevaFila);
     }
 
-    const pdf : any = {
-      pageMargins: [ 5, 10, 10, 10 ],
-      watermark: 'Hospital de mauro racioppi',
-      content:[
-        {image: await this.getBase64ImageFromURL("https://t3.ftcdn.net/jpg/05/14/36/48/360_F_514364850_xLOQX6SOY2qcjAIcTowsi3xYvHmhmvs0.jpg"), width: 50,height: 50,alignment: 'center'},  
-        {text: 'Historial Clinico', style: 'header'},
-        {text: 'Este es el historial clinico del paciente: '+this.global.usuario.nombre},
-        {table: {body: string}},
-        {text: 'Fecha de emisión: '+ toDay.toDateString()}
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          alignment: 'center'
-        },
+    this.pdf.DescargarTabla(tabla,'Historial Clinico','Este es el historial clinico del paciente: '+this.global.usuario.nombre);
 
-      }
-    }
-   const PDF = pdfMake.createPdf(pdf);
-   PDF.open();
-  }
-
-  getBase64ImageFromURL(url) 
-  {
-    return new Promise((resolve, reject) => 
-    {
-      var img = new Image();
-      img.setAttribute("crossOrigin", "anonymous");
-      img.onload = () => 
-      {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        resolve(dataURL);
-      };
-      img.onerror = error => 
-      {
-        reject(error);
-      };
-      img.src = url;
-    });
   }
 
   Selecion()
@@ -107,13 +60,7 @@ export class PerfilPacienteComponent
     if(this.especialista.nativeElement.value!='')
     {
       this.arrayMostrarTurnos = [];
-      for(let turno of this.arrayTurnos)
-      {
-        if(turno.nombreEsp == this.especialista.nativeElement.value)
-        {
-          this.arrayMostrarTurnos.push(turno);
-        }
-      }
+      this.arrayMostrarTurnos = this.arrayTurnos.filter(turno => turno.nombreEsp == this.especialista.nativeElement.value);
     }
     else
     {
